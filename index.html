@@ -515,7 +515,7 @@ function renderTimeTabs(){
 }
 function selectTime(id){selectedTime=id;renderTimeTabs();drawChart()}
 
-function startMarket(){stopMarket();ASSETS.forEach(a=>{if(!trendData[a.id])trendData[a.id]={dir:Math.random()>.4?1:-1,ticks:~~(Math.random()*20)+8}});marketInterval=setInterval(tickMarket,2500)}
+function startMarket(){stopMarket();ASSETS.forEach(a=>{if(!trendData[a.id])trendData[a.id]={dir:Math.random()>.4?1:-1,ticks:~~(Math.random()*20)+8}});marketInterval=setInterval(tickMarket,3000)}
 function stopMarket(){if(marketInterval)clearInterval(marketInterval);marketInterval=null;if(yieldInterval)clearInterval(yieldInterval);yieldInterval=null}
 
 // ============ YIELD (Passive Income) ============
@@ -646,33 +646,26 @@ function updateUI(){
 // ============ RANKING ============
 function renderRanking(child){
   const el=document.getElementById('rankList');
-  // Generate simulated competitors + real player
-  const competitors=[
-    {name:'🤖 RoboTrader',value:getSimValue(180,50)},
-    {name:'🦊 RaposaEsper',value:getSimValue(150,40)},
-    {name:'🐢 TartaLenta',value:getSimValue(90,20)},
-    {name:'🦁 LeaoFeroz',value:getSimValue(200,60)},
-    {name:'🐰 CoelhoVeloz',value:getSimValue(130,30)},
-  ];
-  const myValue=calcTotal(child);
-  const all=[...competitors,{name:`⭐ ${child.name} (Voce)`,value:myValue,me:true}];
-  all.sort((a,b)=>b.value-a.value);
+  // Only real players from localStorage
+  const allChildren=Object.values(load('children')||{});
+  const players=allChildren.map(c=>{
+    const tv=calcTotal(c);
+    const numAssets=ASSETS.filter(a=>(c.assets?.[a.id]?.qty||0)>0).length;
+    return{name:c.name,value:tv,numAssets,me:c.id===child.id};
+  });
+  players.sort((a,b)=>b.value-a.value);
 
-  el.innerHTML=all.map((p,i)=>{
+  if(players.length===0){el.innerHTML='<p style="color:var(--text2);text-align:center;font-size:.8rem;">Nenhum investidor ainda</p>';return}
+
+  el.innerHTML=players.map((p,i)=>{
     const posClass=i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-other';
     const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
     return`<div class="rank-item ${p.me?'me':''}">
       <div class="rank-pos ${posClass}">${medal||i+1}</div>
-      <div class="rank-info"><div class="rank-name">${p.name}</div><div class="rank-assets">${p.me?ASSETS.filter(a=>(child.assets?.[a.id]?.qty||0)>0).length+' ativos':'investidor virtual'}</div></div>
+      <div class="rank-info"><div class="rank-name">${p.me?'⭐ ':''} ${p.name}${p.me?' (Voce)':''}</div><div class="rank-assets">${p.numAssets} ativo${p.numAssets!==1?'s':''}</div></div>
       <div class="rank-value" style="color:${p.me?'var(--gold)':'var(--text)'}">${fmt(p.value)}</div>
     </div>`;
   }).join('');
-}
-function getSimValue(base,variance){
-  // Simulated competitors with slow drift
-  const time=Date.now()/60000;// minutes
-  const drift=Math.sin(time*.1+base)*variance+Math.cos(time*.07+base*.5)*variance*.5;
-  return Math.max(50,base+drift);
 }
 
 function renderPortfolio(child){
