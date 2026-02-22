@@ -5,1239 +5,406 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Financial Child - Aprenda a Investir Brincando!</title>
   <style>
-    /* ========== RESET & BASE ========== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
-      --green: #22c55e;
-      --green-glow: #4ade80;
-      --red: #ef4444;
-      --red-glow: #f87171;
-      --blue: #3b82f6;
-      --purple: #8b5cf6;
-      --gold: #f59e0b;
-      --dark: #0f172a;
-      --dark2: #1e293b;
-      --dark3: #334155;
-      --text: #f1f5f9;
-      --text2: #94a3b8;
-      --card: #1e293b;
-      --card-border: #334155;
+      --green: #22c55e; --green-glow: #4ade80;
+      --red: #ef4444; --red-glow: #f87171;
+      --blue: #3b82f6; --purple: #8b5cf6;
+      --gold: #f59e0b; --orange: #f97316;
+      --cyan: #06b6d4; --pink: #ec4899;
+      --dark: #0f172a; --dark2: #1e293b; --dark3: #334155;
+      --text: #f1f5f9; --text2: #94a3b8;
+      --card: #1e293b; --card-border: #334155;
     }
+    body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--dark); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: var(--dark);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* ========== LOGIN SCREEN ========== */
-    .login-screen {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 20px;
-      background: linear-gradient(135deg, #0f172a 0%, #1a1a2e 50%, #16213e 100%);
-    }
-
-    .login-logo {
-      font-size: 3rem;
-      font-weight: 800;
-      margin-bottom: 8px;
-      background: linear-gradient(135deg, var(--green), var(--blue));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .login-subtitle {
-      color: var(--text2);
-      margin-bottom: 40px;
-      font-size: 1.1rem;
-    }
-
-    .login-box {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 40px;
-      width: 100%;
-      max-width: 420px;
-    }
-
-    .login-box h2 {
-      text-align: center;
-      margin-bottom: 24px;
-      font-size: 1.4rem;
-    }
-
-    .tab-switch {
-      display: flex;
-      gap: 0;
-      margin-bottom: 24px;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--card-border);
-    }
-
-    .tab-btn {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      background: var(--dark);
-      color: var(--text2);
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 600;
-      transition: all 0.3s;
-    }
-
-    .tab-btn.active {
-      background: var(--blue);
-      color: white;
-    }
-
-    .form-group {
-      margin-bottom: 16px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 6px;
-      color: var(--text2);
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      background: var(--dark);
-      color: var(--text);
-      font-size: 1rem;
-      outline: none;
-      transition: border 0.3s;
-    }
-
-    .form-group input:focus, .form-group select:focus {
-      border-color: var(--blue);
-    }
-
-    .btn {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 12px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s;
-      margin-top: 8px;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--blue), var(--purple));
-      color: white;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
-    }
-
-    .btn-green {
-      background: linear-gradient(135deg, var(--green), #16a34a);
-      color: white;
-    }
-
-    .btn-red {
-      background: linear-gradient(135deg, var(--red), #dc2626);
-      color: white;
-    }
-
-    .error-msg {
-      color: var(--red);
-      font-size: 0.85rem;
-      text-align: center;
-      margin-top: 8px;
-    }
-
-    .access-options {
-      display: flex;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .access-btn {
-      flex: 1;
-      padding: 16px;
-      border: 2px solid var(--card-border);
-      border-radius: 14px;
-      background: var(--dark);
-      color: var(--text);
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.3s;
-    }
-
-    .access-btn:hover {
-      border-color: var(--blue);
-      transform: translateY(-2px);
-    }
-
+    /* ========== LOGIN ========== */
+    .login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; background: linear-gradient(135deg, #0f172a 0%, #1a1a2e 50%, #16213e 100%); }
+    .login-logo { font-size: 3rem; font-weight: 800; margin-bottom: 8px; background: linear-gradient(135deg, var(--green), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .login-subtitle { color: var(--text2); margin-bottom: 40px; font-size: 1.1rem; }
+    .login-box { background: var(--card); border: 1px solid var(--card-border); border-radius: 20px; padding: 40px; width: 100%; max-width: 420px; }
+    .login-box h2 { text-align: center; margin-bottom: 24px; font-size: 1.4rem; }
+    .tab-switch { display: flex; margin-bottom: 24px; border-radius: 12px; overflow: hidden; border: 1px solid var(--card-border); }
+    .tab-btn { flex: 1; padding: 12px; border: none; background: var(--dark); color: var(--text2); cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: all 0.3s; }
+    .tab-btn.active { background: var(--blue); color: white; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; margin-bottom: 6px; color: var(--text2); font-size: 0.85rem; font-weight: 600; }
+    .form-group input, .form-group select { width: 100%; padding: 12px 16px; border: 1px solid var(--card-border); border-radius: 10px; background: var(--dark); color: var(--text); font-size: 1rem; outline: none; transition: border 0.3s; }
+    .form-group input:focus, .form-group select:focus { border-color: var(--blue); }
+    .btn { width: 100%; padding: 14px; border: none; border-radius: 12px; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 8px; }
+    .btn-primary { background: linear-gradient(135deg, var(--blue), var(--purple)); color: white; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(59,130,246,0.3); }
+    .error-msg { color: var(--red); font-size: 0.85rem; text-align: center; margin-top: 8px; }
+    .access-options { display: flex; gap: 12px; margin-top: 16px; }
+    .access-btn { flex: 1; padding: 16px; border: 2px solid var(--card-border); border-radius: 14px; background: var(--dark); color: var(--text); cursor: pointer; text-align: center; transition: all 0.3s; }
+    .access-btn:hover { border-color: var(--blue); transform: translateY(-2px); }
     .access-btn .icon { font-size: 2rem; display: block; margin-bottom: 8px; }
     .access-btn .label { font-weight: 700; font-size: 0.95rem; }
 
-    /* ========== PARENT DASHBOARD ========== */
-    .dashboard {
-      min-height: 100vh;
-      padding: 20px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--card-border);
-    }
-
-    .header-left h1 {
-      font-size: 1.5rem;
-      background: linear-gradient(135deg, var(--green), var(--blue));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .header-left small {
-      color: var(--text2);
-    }
-
-    .logout-btn {
-      padding: 8px 16px;
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      background: transparent;
-      color: var(--text2);
-      cursor: pointer;
-      font-size: 0.85rem;
-      transition: all 0.3s;
-    }
-
-    .logout-btn:hover {
-      border-color: var(--red);
-      color: var(--red);
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 20px;
-    }
-
-    .card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .stat-card {
-      background: var(--dark);
-      border-radius: 12px;
-      padding: 16px;
-      text-align: center;
-    }
-
-    .stat-card .stat-value {
-      font-size: 1.6rem;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-
-    .stat-card .stat-label {
-      color: var(--text2);
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
+    /* ========== PARENT ========== */
+    .dashboard { min-height: 100vh; padding: 20px; max-width: 900px; margin: 0 auto; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--card-border); }
+    .header-left h1 { font-size: 1.5rem; background: linear-gradient(135deg, var(--green), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .header-left small { color: var(--text2); }
+    .logout-btn { padding: 8px 16px; border: 1px solid var(--card-border); border-radius: 8px; background: transparent; color: var(--text2); cursor: pointer; font-size: 0.85rem; transition: all 0.3s; }
+    .logout-btn:hover { border-color: var(--red); color: var(--red); }
+    .card { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 24px; margin-bottom: 20px; }
+    .card h3 { font-size: 1.1rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 20px; }
+    .stat-card { background: var(--dark); border-radius: 12px; padding: 16px; text-align: center; }
+    .stat-card .stat-value { font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; }
+    .stat-card .stat-label { color: var(--text2); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
     .stat-green .stat-value { color: var(--green); }
     .stat-blue .stat-value { color: var(--blue); }
     .stat-gold .stat-value { color: var(--gold); }
     .stat-purple .stat-value { color: var(--purple); }
-
-    .config-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .btn-row {
-      display: flex;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .btn-row .btn {
-      flex: 1;
-    }
-
-    .btn-sm {
-      padding: 10px 16px;
-      font-size: 0.9rem;
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid var(--card-border);
-      color: var(--text);
-    }
-
-    .btn-outline:hover {
-      border-color: var(--blue);
-    }
-
-    .tx-list {
-      max-height: 300px;
-      overflow-y: auto;
-    }
-
-    .tx-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px;
-      border-bottom: 1px solid var(--card-border);
-    }
-
+    .config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .btn-row { display: flex; gap: 12px; margin-top: 16px; }
+    .btn-row .btn { flex: 1; }
+    .btn-sm { padding: 10px 16px; font-size: 0.9rem; }
+    .btn-outline { background: transparent; border: 1px solid var(--card-border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--blue); }
+    .tx-list { max-height: 300px; overflow-y: auto; }
+    .tx-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid var(--card-border); }
     .tx-item:last-child { border-bottom: none; }
-
-    .tx-type {
-      font-weight: 700;
-      font-size: 0.85rem;
-      padding: 4px 10px;
-      border-radius: 6px;
-    }
-
-    .tx-buy { background: rgba(34, 197, 94, 0.15); color: var(--green); }
-    .tx-sell { background: rgba(239, 68, 68, 0.15); color: var(--red); }
-
-    .tx-details {
-      text-align: right;
-    }
-
+    .tx-type { font-weight: 700; font-size: 0.85rem; padding: 4px 10px; border-radius: 6px; }
+    .tx-buy { background: rgba(34,197,94,0.15); color: var(--green); }
+    .tx-sell { background: rgba(239,68,68,0.15); color: var(--red); }
+    .tx-details { text-align: right; }
     .tx-details .tx-value { font-weight: 700; }
     .tx-details .tx-time { color: var(--text2); font-size: 0.8rem; }
 
-    /* ========== CHILD TRADING PANEL ========== */
-    .trading-panel {
-      min-height: 100vh;
-      padding: 16px;
-      max-width: 500px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-    }
+    /* ========== TRADING PANEL ========== */
+    .trading-panel { min-height: 100vh; padding: 16px; max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; }
+    .trading-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .trading-header h1 { font-size: 1.2rem; background: linear-gradient(135deg, var(--green), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .balance-display { text-align: right; }
+    .balance-display .label { font-size: 0.75rem; color: var(--text2); font-weight: 600; }
+    .balance-display .value { font-size: 1.3rem; font-weight: 800; color: var(--gold); }
 
-    .trading-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
+    /* Coin Selector */
+    .coin-tabs { display: flex; gap: 8px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 4px; }
+    .coin-tab { flex-shrink: 0; padding: 10px 16px; border-radius: 12px; border: 2px solid var(--card-border); background: var(--dark2); cursor: pointer; text-align: center; transition: all 0.3s; min-width: 90px; }
+    .coin-tab:hover { border-color: var(--blue); transform: translateY(-2px); }
+    .coin-tab.active { border-color: var(--blue); background: rgba(59,130,246,0.15); }
+    .coin-tab .coin-icon { font-size: 1.4rem; display: block; }
+    .coin-tab .coin-name { font-size: 0.75rem; font-weight: 800; margin-top: 2px; }
+    .coin-tab .coin-price { font-size: 0.7rem; font-weight: 600; margin-top: 2px; }
+    .coin-tab .coin-change { font-size: 0.65rem; font-weight: 700; }
+    .coin-change.up { color: var(--green); }
+    .coin-change.down { color: var(--red); }
 
-    .trading-header h1 {
-      font-size: 1.2rem;
-      background: linear-gradient(135deg, var(--green), var(--blue));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .balance-display {
-      text-align: right;
-    }
-
-    .balance-display .label {
-      font-size: 0.75rem;
-      color: var(--text2);
-      font-weight: 600;
-    }
-
-    .balance-display .value {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--gold);
-    }
-
-    /* Price Display */
-    .price-section {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 20px;
-      text-align: center;
-      margin-bottom: 16px;
-    }
-
-    .price-label {
-      color: var(--text2);
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .price-value {
-      font-size: 2.8rem;
-      font-weight: 900;
-      transition: color 0.5s;
-    }
-
+    /* Price Section */
+    .price-section { background: var(--card); border: 1px solid var(--card-border); border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 14px; }
+    .price-label { color: var(--text2); font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; }
+    .price-value { font-size: 2.8rem; font-weight: 900; transition: color 0.3s; }
     .price-up { color: var(--green); }
     .price-down { color: var(--red); }
     .price-stable { color: var(--text); }
-
-    .price-emoji {
-      font-size: 2rem;
-      margin-left: 8px;
-      display: inline-block;
-      animation: bounce 1s infinite;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    .price-change {
-      font-size: 0.95rem;
-      font-weight: 700;
-      margin-top: 4px;
-    }
+    .price-emoji { font-size: 2rem; margin-left: 8px; display: inline-block; animation: bounce 1s infinite; }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .price-change { font-size: 0.95rem; font-weight: 700; margin-top: 4px; }
+    .live-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--green); margin-right: 6px; animation: pulse 1s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
     /* Chart */
-    .chart-container {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 16px;
-      height: 200px;
-      position: relative;
-      overflow: hidden;
-    }
+    .chart-container { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 16px; margin-bottom: 14px; height: 180px; position: relative; overflow: hidden; }
+    .chart-canvas { width: 100%; height: 100%; }
 
-    .chart-canvas {
-      width: 100%;
-      height: 100%;
-    }
+    /* Holdings summary */
+    .holdings-bar { display: flex; gap: 8px; margin-bottom: 14px; }
+    .holding-item { flex: 1; background: var(--card); border: 1px solid var(--card-border); border-radius: 12px; padding: 10px; text-align: center; }
+    .holding-item .h-label { font-size: 0.7rem; color: var(--text2); font-weight: 600; }
+    .holding-item .h-value { font-size: 1.1rem; font-weight: 800; }
 
-    /* Holdings */
-    .holdings-bar {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
+    /* Portfolio mini cards */
+    .portfolio-section { margin-bottom: 14px; }
+    .portfolio-section h4 { font-size: 0.85rem; color: var(--text2); margin-bottom: 8px; }
+    .portfolio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .portfolio-coin { background: var(--card); border: 1px solid var(--card-border); border-radius: 10px; padding: 10px; display: flex; align-items: center; gap: 8px; }
+    .portfolio-coin .pc-icon { font-size: 1.3rem; }
+    .portfolio-coin .pc-info { flex: 1; }
+    .portfolio-coin .pc-name { font-size: 0.75rem; font-weight: 700; }
+    .portfolio-coin .pc-qty { font-size: 0.7rem; color: var(--text2); }
+    .portfolio-coin .pc-val { font-size: 0.85rem; font-weight: 800; text-align: right; }
 
-    .holding-item {
-      flex: 1;
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 12px;
-      text-align: center;
-    }
-
-    .holding-item .h-label {
-      font-size: 0.75rem;
-      color: var(--text2);
-      font-weight: 600;
-    }
-
-    .holding-item .h-value {
-      font-size: 1.2rem;
-      font-weight: 800;
-    }
-
-    /* Trade Buttons */
-    .trade-buttons {
-      display: flex;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-
-    .trade-btn {
-      flex: 1;
-      padding: 24px 16px;
-      border: none;
-      border-radius: 20px;
-      font-size: 1.3rem;
-      font-weight: 900;
-      cursor: pointer;
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .buy-btn {
-      background: linear-gradient(135deg, #166534, var(--green));
-      color: white;
-      box-shadow: 0 4px 15px rgba(34, 197, 94, 0.2);
-    }
-
-    .sell-btn {
-      background: linear-gradient(135deg, #991b1b, var(--red));
-      color: white;
-      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2);
-    }
-
-    .trade-btn:hover {
-      transform: translateY(-3px);
-    }
-
-    .trade-btn:active {
-      transform: translateY(0);
-    }
-
-    .trade-btn.glow-green {
-      animation: glowGreen 1.5s ease-in-out infinite;
-      box-shadow: 0 0 30px rgba(34, 197, 94, 0.5);
-    }
-
-    .trade-btn.glow-red {
-      animation: glowRed 1.5s ease-in-out infinite;
-      box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
-    }
-
-    .trade-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      transform: none !important;
-      animation: none !important;
-      box-shadow: none !important;
-    }
-
-    @keyframes glowGreen {
-      0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
-      50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.6), 0 0 60px rgba(34, 197, 94, 0.3); }
-    }
-
-    @keyframes glowRed {
-      0%, 100% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.3); }
-      50% { box-shadow: 0 0 40px rgba(239, 68, 68, 0.6), 0 0 60px rgba(239, 68, 68, 0.3); }
-    }
-
-    .trade-btn .btn-sub {
-      font-size: 0.7rem;
-      font-weight: 600;
-      opacity: 0.8;
-      display: block;
-      margin-top: 4px;
-      letter-spacing: 0;
-      text-transform: none;
-    }
-
-    /* Quantity selector */
-    .qty-selector {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-
-    .qty-selector label {
-      color: var(--text2);
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    .qty-controls {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .qty-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 1px solid var(--card-border);
-      background: var(--dark2);
-      color: var(--text);
-      font-size: 1.2rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-    }
-
+    /* Trade */
+    .trade-buttons { display: flex; gap: 14px; margin-bottom: 14px; }
+    .trade-btn { flex: 1; padding: 20px 14px; border: none; border-radius: 18px; font-size: 1.2rem; font-weight: 900; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+    .buy-btn { background: linear-gradient(135deg, #166534, var(--green)); color: white; box-shadow: 0 4px 15px rgba(34,197,94,0.2); }
+    .sell-btn { background: linear-gradient(135deg, #991b1b, var(--red)); color: white; box-shadow: 0 4px 15px rgba(239,68,68,0.2); }
+    .trade-btn:hover { transform: translateY(-3px); }
+    .trade-btn:active { transform: translateY(0); }
+    .trade-btn.glow-green { animation: glowGreen 1.5s ease-in-out infinite; box-shadow: 0 0 30px rgba(34,197,94,0.5); }
+    .trade-btn.glow-red { animation: glowRed 1.5s ease-in-out infinite; box-shadow: 0 0 30px rgba(239,68,68,0.5); }
+    .trade-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none!important; animation: none!important; box-shadow: none!important; }
+    @keyframes glowGreen { 0%,100%{box-shadow:0 0 20px rgba(34,197,94,0.3)} 50%{box-shadow:0 0 40px rgba(34,197,94,0.6),0 0 60px rgba(34,197,94,0.3)} }
+    @keyframes glowRed { 0%,100%{box-shadow:0 0 20px rgba(239,68,68,0.3)} 50%{box-shadow:0 0 40px rgba(239,68,68,0.6),0 0 60px rgba(239,68,68,0.3)} }
+    .trade-btn .btn-sub { font-size: 0.7rem; font-weight: 600; opacity: 0.8; display: block; margin-top: 4px; letter-spacing: 0; text-transform: none; }
+    .qty-selector { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 14px; }
+    .qty-selector label { color: var(--text2); font-size: 0.85rem; font-weight: 600; }
+    .qty-controls { display: flex; align-items: center; gap: 12px; }
+    .qty-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--card-border); background: var(--dark2); color: var(--text); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     .qty-btn:hover { border-color: var(--blue); }
+    .qty-value { font-size: 1.4rem; font-weight: 800; min-width: 30px; text-align: center; }
 
-    .qty-value {
-      font-size: 1.4rem;
-      font-weight: 800;
-      min-width: 30px;
-      text-align: center;
-    }
+    /* Progress */
+    .progress-section { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 14px; margin-bottom: 14px; }
+    .progress-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .progress-label { font-size: 0.85rem; color: var(--text2); font-weight: 600; }
+    .progress-value { font-size: 0.85rem; font-weight: 700; color: var(--gold); }
+    .progress-bar-bg { width: 100%; height: 20px; background: var(--dark); border-radius: 10px; overflow: hidden; position: relative; }
+    .progress-bar-fill { height: 100%; border-radius: 10px; transition: width 0.8s ease, background 0.5s; background: linear-gradient(90deg, var(--blue), var(--purple)); position: relative; }
+    .progress-bar-fill.near-goal { background: linear-gradient(90deg, var(--gold), #fbbf24); animation: pulseGold 1s ease-in-out infinite; }
+    .progress-bar-fill.goal-reached { background: linear-gradient(90deg, var(--green), var(--green-glow)); }
+    @keyframes pulseGold { 0%,100%{opacity:1} 50%{opacity:0.7} }
+    .progress-percent { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 0.7rem; font-weight: 800; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
 
-    /* Progress Bar */
-    .progress-section {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-
-    .progress-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-
-    .progress-label {
-      font-size: 0.85rem;
-      color: var(--text2);
-      font-weight: 600;
-    }
-
-    .progress-value {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--gold);
-    }
-
-    .progress-bar-bg {
-      width: 100%;
-      height: 20px;
-      background: var(--dark);
-      border-radius: 10px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      border-radius: 10px;
-      transition: width 0.8s ease, background 0.5s;
-      background: linear-gradient(90deg, var(--blue), var(--purple));
-      position: relative;
-    }
-
-    .progress-bar-fill.near-goal {
-      background: linear-gradient(90deg, var(--gold), #fbbf24);
-      animation: pulseGold 1s ease-in-out infinite;
-    }
-
-    .progress-bar-fill.goal-reached {
-      background: linear-gradient(90deg, var(--green), var(--green-glow));
-    }
-
-    @keyframes pulseGold {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
-    }
-
-    .progress-percent {
-      position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: white;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-    }
-
-    /* Timer */
-    .timer-bar {
-      text-align: center;
-      margin-bottom: 16px;
-    }
-
-    .timer-text {
-      font-size: 0.8rem;
-      color: var(--text2);
-      font-weight: 600;
-    }
-
-    .timer-bar-bg {
-      width: 100%;
-      height: 4px;
-      background: var(--dark3);
-      border-radius: 2px;
-      margin-top: 6px;
-      overflow: hidden;
-    }
-
-    .timer-bar-fill {
-      height: 100%;
-      background: var(--blue);
-      border-radius: 2px;
-      transition: width 1s linear;
-    }
-
-    /* Transaction feed */
-    .tx-feed {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 16px;
-    }
-
-    .tx-feed h4 {
-      font-size: 0.9rem;
-      color: var(--text2);
-      margin-bottom: 12px;
-    }
-
-    .tx-feed-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--card-border);
-      font-size: 0.85rem;
-    }
-
+    /* TX feed */
+    .tx-feed { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 14px; }
+    .tx-feed h4 { font-size: 0.9rem; color: var(--text2); margin-bottom: 10px; }
+    .tx-feed-item { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--card-border); font-size: 0.82rem; }
     .tx-feed-item:last-child { border-bottom: none; }
 
-    /* Celebration overlay */
-    .celebration-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.85);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      animation: fadeIn 0.5s;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .celebration-content {
-      text-align: center;
-      animation: scaleIn 0.5s;
-    }
-
-    @keyframes scaleIn {
-      from { transform: scale(0.5); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
+    /* Overlays */
+    .celebration-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; animation: fadeIn 0.5s; }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .celebration-content { text-align: center; animation: scaleIn 0.5s; }
+    @keyframes scaleIn { from{transform:scale(0.5);opacity:0} to{transform:scale(1);opacity:1} }
     .celebration-emoji { font-size: 5rem; margin-bottom: 16px; }
-    .celebration-title {
-      font-size: 2rem;
-      font-weight: 900;
-      background: linear-gradient(135deg, var(--gold), #fbbf24);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 8px;
-    }
-    .celebration-text {
-      color: var(--text2);
-      font-size: 1.1rem;
-      margin-bottom: 24px;
-    }
-
-    /* Notification toast */
-    .toast {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 12px 20px;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      z-index: 999;
-      animation: slideIn 0.3s, slideOut 0.3s 2.7s;
-      pointer-events: none;
-    }
-
+    .celebration-title { font-size: 2rem; font-weight: 900; background: linear-gradient(135deg, var(--gold), #fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
+    .celebration-text { color: var(--text2); font-size: 1.1rem; margin-bottom: 24px; }
+    .toast { position: fixed; top: 20px; right: 20px; padding: 12px 20px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; z-index: 999; animation: slideIn 0.3s, slideOut 0.3s 2.7s; pointer-events: none; }
     .toast-success { background: var(--green); color: white; }
     .toast-error { background: var(--red); color: white; }
-
-    @keyframes slideIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-
-    @keyframes slideOut {
-      from { transform: translateX(0); opacity: 1; }
-      to { transform: translateX(100%); opacity: 0; }
-    }
-
-    /* Paused overlay */
-    .paused-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 900;
-    }
-
-    .paused-content {
-      text-align: center;
-      color: var(--text2);
-    }
-
+    @keyframes slideIn { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
+    @keyframes slideOut { from{transform:translateX(0);opacity:1} to{transform:translateX(100%);opacity:0} }
+    .paused-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 900; }
+    .paused-content { text-align: center; color: var(--text2); }
     .paused-content .pause-icon { font-size: 4rem; margin-bottom: 12px; }
     .paused-content .pause-text { font-size: 1.3rem; font-weight: 700; }
 
-    /* Hide sections */
     .hidden { display: none !important; }
+    .market-status { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text2); }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+    .status-dot.paused { background: var(--red); animation: none; }
 
-    /* Responsive */
     @media (max-width: 500px) {
       .config-grid { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
       .price-value { font-size: 2.2rem; }
-      .trade-btn { padding: 20px 12px; font-size: 1.1rem; }
-    }
-
-    /* Market status indicator */
-    .market-status {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.8rem;
-      color: var(--text2);
-    }
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--green);
-      animation: pulse 2s infinite;
-    }
-
-    .status-dot.paused {
-      background: var(--red);
-      animation: none;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
+      .trade-btn { padding: 18px 10px; font-size: 1rem; }
+      .coin-tab { min-width: 75px; padding: 8px 10px; }
+      .portfolio-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- ============ LOGIN SCREEN ============ -->
+<!-- LOGIN -->
 <div id="loginScreen" class="login-screen">
   <div class="login-logo">Financial Child</div>
   <div class="login-subtitle">Aprenda a investir brincando!</div>
-
   <div class="login-box">
     <div class="tab-switch">
       <button class="tab-btn active" onclick="switchTab('login')">Entrar</button>
       <button class="tab-btn" onclick="switchTab('register')">Criar Conta</button>
     </div>
-
-    <!-- Login Form -->
     <div id="loginForm">
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="loginEmail" placeholder="seu@email.com">
-      </div>
-      <div class="form-group">
-        <label>Senha</label>
-        <input type="password" id="loginPassword" placeholder="Sua senha">
-      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="seu@email.com"></div>
+      <div class="form-group"><label>Senha</label><input type="password" id="loginPassword" placeholder="Sua senha"></div>
       <button class="btn btn-primary" onclick="handleLogin()">Entrar</button>
       <div id="loginError" class="error-msg hidden"></div>
-
       <div class="access-options">
-        <button class="access-btn" onclick="enterAsParent()">
-          <span class="icon">👨‍👩‍👧</span>
-          <span class="label">Sou Pai/Mae</span>
-        </button>
-        <button class="access-btn" onclick="showChildAccess()">
-          <span class="icon">🧒</span>
-          <span class="label">Sou Crianca</span>
-        </button>
+        <button class="access-btn" onclick="enterAsParent()"><span class="icon">👨‍👩‍👧</span><span class="label">Sou Pai/Mae</span></button>
+        <button class="access-btn" onclick="showChildAccess()"><span class="icon">🧒</span><span class="label">Sou Crianca</span></button>
       </div>
     </div>
-
-    <!-- Register Form -->
     <div id="registerForm" class="hidden">
-      <div class="form-group">
-        <label>Seu Nome</label>
-        <input type="text" id="regName" placeholder="Ex: Maria">
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="regEmail" placeholder="seu@email.com">
-      </div>
-      <div class="form-group">
-        <label>Senha</label>
-        <input type="password" id="regPassword" placeholder="Crie uma senha">
-      </div>
+      <div class="form-group"><label>Seu Nome</label><input type="text" id="regName" placeholder="Ex: Maria"></div>
+      <div class="form-group"><label>Email</label><input type="email" id="regEmail" placeholder="seu@email.com"></div>
+      <div class="form-group"><label>Senha</label><input type="password" id="regPassword" placeholder="Crie uma senha"></div>
       <button class="btn btn-primary" onclick="handleRegister()">Criar Conta</button>
       <div id="regError" class="error-msg hidden"></div>
     </div>
   </div>
 </div>
 
-<!-- ============ PARENT DASHBOARD ============ -->
+<!-- PARENT DASHBOARD -->
 <div id="parentDashboard" class="dashboard hidden">
   <div class="header">
-    <div class="header-left">
-      <h1>Financial Child</h1>
-      <small>Painel dos Pais</small>
-    </div>
+    <div class="header-left"><h1>Financial Child</h1><small>Painel dos Pais</small></div>
     <button class="logout-btn" onclick="logout()">Sair</button>
   </div>
-
-  <!-- No child yet: Setup -->
   <div id="setupChild" class="card">
     <h3>👶 Configurar Conta do Filho</h3>
     <div class="config-grid">
-      <div class="form-group">
-        <label>Nome da Crianca</label>
-        <input type="text" id="childName" placeholder="Ex: Joao">
+      <div class="form-group"><label>Nome da Crianca</label><input type="text" id="childName" placeholder="Ex: Joao"></div>
+      <div class="form-group"><label>Idade</label><input type="number" id="childAge" value="10" min="5" max="17"></div>
+      <div class="form-group"><label>Saldo Inicial (R$)</label><input type="number" id="childBalance" value="100" min="10" step="10"></div>
+      <div class="form-group"><label>Volatilidade</label>
+        <select id="childVolatility"><option value="baixa">Baixa (seguro)</option><option value="media" selected>Media (equilibrado)</option><option value="alta">Alta (aventureiro)</option></select>
       </div>
-      <div class="form-group">
-        <label>Idade</label>
-        <input type="number" id="childAge" value="10" min="5" max="17">
-      </div>
-      <div class="form-group">
-        <label>Saldo Inicial (R$)</label>
-        <input type="number" id="childBalance" value="100" min="10" step="10">
-      </div>
-      <div class="form-group">
-        <label>Preco Base da EKO (R$)</label>
-        <input type="number" id="childBasePrice" value="10" min="1" step="1">
-      </div>
-      <div class="form-group">
-        <label>Volatilidade</label>
-        <select id="childVolatility">
-          <option value="baixa">Baixa (seguro)</option>
-          <option value="media" selected>Media (equilibrado)</option>
-          <option value="alta">Alta (aventureiro)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Meta Financeira (R$)</label>
-        <input type="number" id="childGoal" value="150" min="20" step="10">
-      </div>
+      <div class="form-group"><label>Meta Financeira (R$)</label><input type="number" id="childGoal" value="200" min="20" step="10"></div>
     </div>
     <button class="btn btn-primary" onclick="createChildAccount()">Criar Conta do Filho</button>
   </div>
-
-  <!-- Child exists: Dashboard -->
   <div id="childDashboard" class="hidden">
     <div class="stats-grid">
-      <div class="stat-card stat-blue">
-        <div class="stat-value" id="pSaldo">R$ 0</div>
-        <div class="stat-label">Saldo</div>
-      </div>
-      <div class="stat-card stat-green">
-        <div class="stat-value" id="pEkos">0</div>
-        <div class="stat-label">EKOs</div>
-      </div>
-      <div class="stat-card stat-gold">
-        <div class="stat-value" id="pPreco">R$ 0</div>
-        <div class="stat-label">Preco EKO</div>
-      </div>
-      <div class="stat-card stat-purple">
-        <div class="stat-value" id="pTotal">R$ 0</div>
-        <div class="stat-label">Patrimonio</div>
-      </div>
+      <div class="stat-card stat-blue"><div class="stat-value" id="pSaldo">R$ 0</div><div class="stat-label">Saldo</div></div>
+      <div class="stat-card stat-green"><div class="stat-value" id="pMoedas">0</div><div class="stat-label">Moedas</div></div>
+      <div class="stat-card stat-gold"><div class="stat-value" id="pTotal">R$ 0</div><div class="stat-label">Patrimonio</div></div>
+      <div class="stat-card stat-purple"><div class="stat-value" id="pOps">0</div><div class="stat-label">Operacoes</div></div>
     </div>
-
-    <!-- Progress toward goal -->
     <div class="card">
       <h3>🎯 Progresso da Meta</h3>
-      <div class="progress-header">
-        <span class="progress-label" id="pChildName">Filho</span>
-        <span class="progress-value" id="pGoalText">R$0 / R$0</span>
-      </div>
-      <div class="progress-bar-bg">
-        <div class="progress-bar-fill" id="pProgressBar" style="width: 0%">
-          <span class="progress-percent" id="pProgressPct">0%</span>
-        </div>
-      </div>
+      <div class="progress-header"><span class="progress-label" id="pChildName">Filho</span><span class="progress-value" id="pGoalText">R$0 / R$0</span></div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="pProgressBar" style="width:0%"><span class="progress-percent" id="pProgressPct">0%</span></div></div>
     </div>
-
-    <!-- Config -->
     <div class="card">
       <h3>⚙️ Configuracoes</h3>
       <div class="config-grid">
-        <div class="form-group">
-          <label>Volatilidade</label>
-          <select id="editVolatility" onchange="updateConfig()">
-            <option value="baixa">Baixa</option>
-            <option value="media">Media</option>
-            <option value="alta">Alta</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Meta (R$)</label>
-          <input type="number" id="editGoal" min="20" step="10" onchange="updateConfig()">
-        </div>
+        <div class="form-group"><label>Volatilidade</label><select id="editVolatility" onchange="updateConfig()"><option value="baixa">Baixa</option><option value="media">Media</option><option value="alta">Alta</option></select></div>
+        <div class="form-group"><label>Meta (R$)</label><input type="number" id="editGoal" min="20" step="10" onchange="updateConfig()"></div>
       </div>
       <div class="btn-row">
         <button class="btn btn-sm btn-outline" onclick="toggleMarket()" id="toggleBtn">⏸ Pausar Mercado</button>
-        <button class="btn btn-sm btn-outline" onclick="resetChildAccount()" style="border-color: var(--red); color: var(--red);">🔄 Resetar</button>
+        <button class="btn btn-sm btn-outline" onclick="resetChildAccount()" style="border-color:var(--red);color:var(--red);">🔄 Resetar</button>
       </div>
     </div>
-
-    <!-- Code for child access -->
     <div class="card">
       <h3>🔑 Acesso da Crianca</h3>
-      <p style="color: var(--text2); font-size: 0.9rem; margin-bottom: 12px;">
-        Codigo de acesso para seu filho entrar no painel de trading:
-      </p>
-      <div style="background: var(--dark); padding: 16px; border-radius: 12px; text-align: center;">
-        <span id="childCode" style="font-size: 1.8rem; font-weight: 900; letter-spacing: 4px; color: var(--gold);"></span>
+      <p style="color:var(--text2);font-size:0.9rem;margin-bottom:12px;">Codigo de acesso para seu filho:</p>
+      <div style="background:var(--dark);padding:16px;border-radius:12px;text-align:center;">
+        <span id="childCode" style="font-size:1.8rem;font-weight:900;letter-spacing:4px;color:var(--gold);"></span>
       </div>
     </div>
-
-    <!-- Transactions -->
-    <div class="card">
-      <h3>📊 Historico de Operacoes</h3>
-      <div class="tx-list" id="pTxList">
-        <p style="color: var(--text2); text-align: center; padding: 20px;">Nenhuma operacao ainda</p>
-      </div>
-    </div>
+    <div class="card"><h3>📊 Historico de Operacoes</h3><div class="tx-list" id="pTxList"><p style="color:var(--text2);text-align:center;padding:20px;">Nenhuma operacao ainda</p></div></div>
   </div>
 </div>
 
-<!-- ============ CHILD ACCESS (code input) ============ -->
+<!-- CHILD ACCESS -->
 <div id="childAccessScreen" class="login-screen hidden">
   <div class="login-logo">Financial Child</div>
   <div class="login-subtitle">Area do Investidor 🚀</div>
   <div class="login-box">
     <h2>Digite seu codigo</h2>
-    <div class="form-group">
-      <label>Codigo de Acesso</label>
-      <input type="text" id="childCodeInput" placeholder="Ex: ABC123" maxlength="6"
-             style="text-align: center; font-size: 1.5rem; letter-spacing: 4px; font-weight: 800;">
-    </div>
+    <div class="form-group"><label>Codigo de Acesso</label><input type="text" id="childCodeInput" placeholder="Ex: ABC123" maxlength="6" style="text-align:center;font-size:1.5rem;letter-spacing:4px;font-weight:800;"></div>
     <button class="btn btn-primary" onclick="childLogin()">Entrar</button>
     <div id="childLoginError" class="error-msg hidden"></div>
-    <button class="btn btn-outline" style="margin-top: 12px;" onclick="backToLogin()">Voltar</button>
+    <button class="btn btn-outline" style="margin-top:12px;" onclick="backToLogin()">Voltar</button>
   </div>
 </div>
 
-<!-- ============ CHILD TRADING PANEL ============ -->
+<!-- TRADING PANEL -->
 <div id="tradingPanel" class="trading-panel hidden">
   <div class="trading-header">
     <div>
       <h1>Financial Child</h1>
-      <div class="market-status">
-        <div class="status-dot" id="marketDot"></div>
-        <span id="marketStatusText">Mercado aberto</span>
-      </div>
+      <div class="market-status"><div class="status-dot" id="marketDot"></div><span id="marketStatusText">Mercado ao vivo</span></div>
     </div>
-    <div class="balance-display">
-      <div class="label">SEU SALDO</div>
-      <div class="value" id="cBalance">R$ 0</div>
-    </div>
+    <div class="balance-display"><div class="label">SEU SALDO</div><div class="value" id="cBalance">R$ 0</div></div>
   </div>
 
-  <!-- Timer -->
-  <div class="timer-bar">
-    <span class="timer-text">Proximo preco em <strong id="timerCount">60</strong>s</span>
-    <div class="timer-bar-bg">
-      <div class="timer-bar-fill" id="timerFill" style="width: 100%"></div>
-    </div>
-  </div>
+  <!-- Coin Tabs -->
+  <div class="coin-tabs" id="coinTabs"></div>
 
   <!-- Price -->
   <div class="price-section">
-    <div class="price-label">PRECO DA EKO</div>
-    <div>
-      <span class="price-value price-stable" id="cPrice">R$ 10,00</span>
-      <span class="price-emoji" id="cEmoji">📊</span>
-    </div>
+    <div class="price-label"><span class="live-dot"></span>PRECO AO VIVO - <strong id="cCoinName">EKO</strong></div>
+    <div><span class="price-value price-stable" id="cPrice">R$ 10,00</span><span class="price-emoji" id="cEmoji">📊</span></div>
     <div class="price-change" id="cPriceChange"></div>
   </div>
 
   <!-- Chart -->
-  <div class="chart-container">
-    <canvas class="chart-canvas" id="priceChart"></canvas>
-  </div>
+  <div class="chart-container"><canvas class="chart-canvas" id="priceChart"></canvas></div>
 
   <!-- Holdings -->
   <div class="holdings-bar">
-    <div class="holding-item">
-      <div class="h-label">SEUS EKOs</div>
-      <div class="h-value" id="cEkos" style="color: var(--blue);">0</div>
-    </div>
-    <div class="holding-item">
-      <div class="h-label">VALOR EKOs</div>
-      <div class="h-value" id="cEkoValue" style="color: var(--purple);">R$ 0</div>
-    </div>
-    <div class="holding-item">
-      <div class="h-label">PATRIMONIO</div>
-      <div class="h-value" id="cTotal" style="color: var(--gold);">R$ 0</div>
-    </div>
+    <div class="holding-item"><div class="h-label">SUAS MOEDAS</div><div class="h-value" id="cEkos" style="color:var(--blue);">0</div></div>
+    <div class="holding-item"><div class="h-label">VALOR</div><div class="h-value" id="cEkoValue" style="color:var(--purple);">R$ 0</div></div>
+    <div class="holding-item"><div class="h-label">PATRIMONIO</div><div class="h-value" id="cTotal" style="color:var(--gold);">R$ 0</div></div>
   </div>
 
-  <!-- Quantity -->
+  <!-- Portfolio -->
+  <div class="portfolio-section"><h4>📦 Sua Carteira</h4><div class="portfolio-grid" id="portfolioGrid"></div></div>
+
+  <!-- QTY + Buttons -->
   <div class="qty-selector">
     <label>Quantidade:</label>
-    <div class="qty-controls">
-      <button class="qty-btn" onclick="changeQty(-1)">-</button>
-      <span class="qty-value" id="qtyValue">1</span>
-      <button class="qty-btn" onclick="changeQty(1)">+</button>
-    </div>
+    <div class="qty-controls"><button class="qty-btn" onclick="changeQty(-1)">-</button><span class="qty-value" id="qtyValue">1</span><button class="qty-btn" onclick="changeQty(1)">+</button></div>
   </div>
-
-  <!-- Trade Buttons -->
   <div class="trade-buttons">
-    <button class="trade-btn buy-btn" id="buyBtn" onclick="handleBuy()">
-      COMPRAR
-      <span class="btn-sub" id="buyCost">1 EKO = R$ 10,00</span>
-    </button>
-    <button class="trade-btn sell-btn" id="sellBtn" onclick="handleSell()">
-      VENDER
-      <span class="btn-sub" id="sellValue">1 EKO = R$ 10,00</span>
-    </button>
+    <button class="trade-btn buy-btn" id="buyBtn" onclick="handleBuy()">COMPRAR<span class="btn-sub" id="buyCost"></span></button>
+    <button class="trade-btn sell-btn" id="sellBtn" onclick="handleSell()">VENDER<span class="btn-sub" id="sellValue"></span></button>
   </div>
 
   <!-- Progress -->
   <div class="progress-section">
-    <div class="progress-header">
-      <span class="progress-label">🎯 Meta</span>
-      <span class="progress-value" id="cGoalText">R$0 / R$0</span>
-    </div>
-    <div class="progress-bar-bg">
-      <div class="progress-bar-fill" id="cProgressBar" style="width: 0%">
-        <span class="progress-percent" id="cProgressPct">0%</span>
-      </div>
-    </div>
+    <div class="progress-header"><span class="progress-label">🎯 Meta</span><span class="progress-value" id="cGoalText">R$0 / R$0</span></div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="cProgressBar" style="width:0%"><span class="progress-percent" id="cProgressPct">0%</span></div></div>
   </div>
 
-  <!-- Recent Transactions -->
-  <div class="tx-feed">
-    <h4>Ultimas Operacoes</h4>
-    <div id="cTxList">
-      <p style="color: var(--text2); text-align: center; padding: 12px; font-size: 0.9rem;">
-        Faca sua primeira operacao!
-      </p>
-    </div>
-  </div>
-
-  <button class="logout-btn" style="margin-top: 16px; width: 100%;" onclick="logout()">Sair</button>
+  <!-- TX -->
+  <div class="tx-feed"><h4>Ultimas Operacoes</h4><div id="cTxList"><p style="color:var(--text2);text-align:center;padding:12px;font-size:0.9rem;">Faca sua primeira operacao!</p></div></div>
+  <button class="logout-btn" style="margin-top:16px;width:100%;" onclick="logout()">Sair</button>
 </div>
 
-<!-- ============ CELEBRATION OVERLAY ============ -->
+<!-- Overlays -->
 <div id="celebrationOverlay" class="celebration-overlay hidden">
   <div class="celebration-content">
     <div class="celebration-emoji">🏆🎉🚀</div>
     <div class="celebration-title">META ATINGIDA!</div>
     <div class="celebration-text" id="celebrationText">Voce e um investidor incrivel!</div>
-    <button class="btn btn-primary" style="max-width: 200px; margin: 0 auto;" onclick="closeCelebration()">
-      Valeu! 🎊
-    </button>
+    <button class="btn btn-primary" style="max-width:200px;margin:0 auto;" onclick="closeCelebration()">Valeu! 🎊</button>
   </div>
 </div>
-
-<!-- ============ PAUSED OVERLAY ============ -->
 <div id="pausedOverlay" class="paused-overlay hidden">
-  <div class="paused-content">
-    <div class="pause-icon">⏸️</div>
-    <div class="pause-text">Mercado Pausado</div>
-    <p style="margin-top: 8px; font-size: 0.9rem;">Aguarde seu pai reabrir o mercado</p>
-  </div>
+  <div class="paused-content"><div class="pause-icon">⏸️</div><div class="pause-text">Mercado Pausado</div><p style="margin-top:8px;font-size:0.9rem;">Aguarde seu pai reabrir o mercado</p></div>
 </div>
-
 
 <script>
 // ============================================================
-// FINANCIAL CHILD - ENGINE COMPLETA
+// FINANCIAL CHILD v2.0 - MULTI-COIN + LIVE PRICES
 // ============================================================
 
-// --- Storage helpers ---
-function saveData(key, data) {
-  localStorage.setItem('fc_' + key, JSON.stringify(data));
-}
+// --- Coins definition ---
+const COINS = [
+  { id: 'EKO',  name: 'EKO',  icon: '💎', color: '#3b82f6', basePrice: 10 },
+  { id: 'LUNA', name: 'LUNA', icon: '🌙', color: '#8b5cf6', basePrice: 25 },
+  { id: 'STAR', name: 'STAR', icon: '⭐', color: '#f59e0b', basePrice: 5  },
+  { id: 'DINO', name: 'DINO', icon: '🦖', color: '#22c55e', basePrice: 50 },
+  { id: 'FIRE', name: 'FIRE', icon: '🔥', color: '#ef4444', basePrice: 15 },
+];
 
-function loadData(key) {
-  const d = localStorage.getItem('fc_' + key);
-  return d ? JSON.parse(d) : null;
-}
-
-function generateCode() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let code = '';
-  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
-  return code;
-}
+// --- Storage ---
+function saveData(key, data) { localStorage.setItem('fc_' + key, JSON.stringify(data)); }
+function loadData(key) { const d = localStorage.getItem('fc_' + key); return d ? JSON.parse(d) : null; }
+function generateCode() { const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let r=''; for(let i=0;i<6;i++) r+=c[Math.floor(Math.random()*c.length)]; return r; }
 
 // --- State ---
 let currentParent = null;
 let currentChild = null;
-let currentView = 'login'; // login, parent, childAccess, trading
+let currentView = 'login';
 let marketInterval = null;
-let timerInterval = null;
-let timerSeconds = 5;
 let tradeQty = 1;
-let priceHistory = [];
-let trendDirection = 1;
-let trendTicks = 10;
+let selectedCoin = 'EKO';
+let priceHistories = {};
+let trendData = {};
 let celebrationShown = false;
 
 // --- Init ---
 function init() {
   const session = loadData('session');
   if (session) {
-    if (session.type === 'parent') {
-      currentParent = session.data;
-      showParentDashboard();
-    } else if (session.type === 'child') {
-      currentChild = session.data;
-      showTradingPanel();
-    }
+    if (session.type === 'parent') { currentParent = session.data; showParentDashboard(); }
+    else if (session.type === 'child') { currentChild = session.data; showTradingPanel(); }
   }
 }
 
 // ============ AUTH ============
-
 function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach((b, i) => {
-    b.classList.toggle('active', (tab === 'login' && i === 0) || (tab === 'register' && i === 1));
-  });
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (tab==='login'&&i===0)||(tab==='register'&&i===1)));
   document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
   document.getElementById('registerForm').classList.toggle('hidden', tab !== 'register');
 }
@@ -1246,28 +413,12 @@ function handleRegister() {
   const name = document.getElementById('regName').value.trim();
   const email = document.getElementById('regEmail').value.trim();
   const password = document.getElementById('regPassword').value.trim();
-
-  if (!name || !email || !password) {
-    showError('regError', 'Preencha todos os campos');
-    return;
-  }
-
+  if (!name||!email||!password) { showError('regError','Preencha todos os campos'); return; }
   const existing = loadData('parents') || {};
-  if (existing[email]) {
-    showError('regError', 'Email ja cadastrado');
-    return;
-  }
-
-  const parent = {
-    id: Date.now().toString(),
-    name, email, password,
-    children: [],
-    created_at: new Date().toISOString()
-  };
-
+  if (existing[email]) { showError('regError','Email ja cadastrado'); return; }
+  const parent = { id: Date.now().toString(), name, email, password, created_at: new Date().toISOString() };
   existing[email] = parent;
   saveData('parents', existing);
-
   currentParent = parent;
   saveData('session', { type: 'parent', data: parent });
   showParentDashboard();
@@ -1276,42 +427,23 @@ function handleRegister() {
 function handleLogin() {
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value.trim();
-
   const parents = loadData('parents') || {};
   const parent = parents[email];
-
-  if (!parent || parent.password !== password) {
-    showError('loginError', 'Email ou senha incorretos');
-    return;
-  }
-
+  if (!parent || parent.password !== password) { showError('loginError','Email ou senha incorretos'); return; }
   currentParent = parent;
   saveData('session', { type: 'parent', data: parent });
   showParentDashboard();
 }
 
-function enterAsParent() {
-  switchTab('register');
-}
-
-function showChildAccess() {
-  showScreen('childAccess');
-}
-
-function backToLogin() {
-  showScreen('login');
-}
+function enterAsParent() { switchTab('register'); }
+function showChildAccess() { showScreen('childAccess'); }
+function backToLogin() { showScreen('login'); }
 
 function childLogin() {
   const code = document.getElementById('childCodeInput').value.trim().toUpperCase();
   const children = loadData('children') || {};
   const child = Object.values(children).find(c => c.code === code);
-
-  if (!child) {
-    showError('childLoginError', 'Codigo invalido');
-    return;
-  }
-
+  if (!child) { showError('childLoginError','Codigo invalido'); return; }
   currentChild = child;
   saveData('session', { type: 'child', data: child });
   showTradingPanel();
@@ -1319,8 +451,7 @@ function childLogin() {
 
 function logout() {
   stopMarket();
-  currentParent = null;
-  currentChild = null;
+  currentParent = null; currentChild = null;
   localStorage.removeItem('fc_session');
   celebrationShown = false;
   showScreen('login');
@@ -1328,12 +459,9 @@ function logout() {
 
 function showError(id, msg) {
   const el = document.getElementById(id);
-  el.textContent = msg;
-  el.classList.remove('hidden');
+  el.textContent = msg; el.classList.remove('hidden');
   setTimeout(() => el.classList.add('hidden'), 3000);
 }
-
-// ============ SCREEN MANAGEMENT ============
 
 function showScreen(screen) {
   currentView = screen;
@@ -1343,52 +471,36 @@ function showScreen(screen) {
   document.getElementById('tradingPanel').classList.toggle('hidden', screen !== 'trading');
 }
 
-// ============ PARENT DASHBOARD ============
-
-function showParentDashboard() {
-  showScreen('parent');
-  refreshParentData();
-}
+// ============ PARENT ============
+function showParentDashboard() { showScreen('parent'); refreshParentData(); }
 
 function refreshParentData() {
   const children = loadData('children') || {};
   const childList = Object.values(children).filter(c => c.parent_id === currentParent.id);
-
   if (childList.length === 0) {
     document.getElementById('setupChild').classList.remove('hidden');
     document.getElementById('childDashboard').classList.add('hidden');
   } else {
     document.getElementById('setupChild').classList.add('hidden');
     document.getElementById('childDashboard').classList.remove('hidden');
-
-    const child = childList[0]; // Beta: 1 child per parent
+    const child = childList[0];
     currentChild = child;
-
-    // Stats
-    const totalValue = child.balance + (child.eko_quantity * child.current_price);
-    document.getElementById('pSaldo').textContent = formatMoney(child.balance);
-    document.getElementById('pEkos').textContent = child.eko_quantity;
-    document.getElementById('pPreco').textContent = formatMoney(child.current_price);
-    document.getElementById('pTotal').textContent = formatMoney(totalValue);
-
-    // Progress
+    const totalValue = calcTotalValue(child);
+    const txs = (loadData('transactions') || {})[child.id] || [];
+    const totalCoins = COINS.reduce((s, c) => s + (child.coins?.[c.id]?.quantity || 0), 0);
+    document.getElementById('pSaldo').textContent = fmt(child.balance);
+    document.getElementById('pMoedas').textContent = totalCoins;
+    document.getElementById('pTotal').textContent = fmt(totalValue);
+    document.getElementById('pOps').textContent = txs.length;
     const pct = Math.min(100, (totalValue / child.goal_amount) * 100);
     document.getElementById('pChildName').textContent = child.name;
-    document.getElementById('pGoalText').textContent = `${formatMoney(totalValue)} / ${formatMoney(child.goal_amount)}`;
+    document.getElementById('pGoalText').textContent = `${fmt(totalValue)} / ${fmt(child.goal_amount)}`;
     document.getElementById('pProgressBar').style.width = pct + '%';
     document.getElementById('pProgressPct').textContent = Math.round(pct) + '%';
-
-    // Config
     document.getElementById('editVolatility').value = child.volatility;
     document.getElementById('editGoal').value = child.goal_amount;
-
-    // Toggle button
     document.getElementById('toggleBtn').textContent = child.is_active ? '⏸ Pausar Mercado' : '▶️ Retomar Mercado';
-
-    // Child code
     document.getElementById('childCode').textContent = child.code;
-
-    // Transactions
     renderParentTransactions(child.id);
   }
 }
@@ -1397,44 +509,31 @@ function createChildAccount() {
   const name = document.getElementById('childName').value.trim();
   const age = parseInt(document.getElementById('childAge').value);
   const balance = parseFloat(document.getElementById('childBalance').value);
-  const basePrice = parseFloat(document.getElementById('childBasePrice').value);
   const volatility = document.getElementById('childVolatility').value;
   const goalAmount = parseFloat(document.getElementById('childGoal').value);
-
-  if (!name) { showToast('Digite o nome da crianca', 'error'); return; }
-
+  if (!name) { showToast('Digite o nome da crianca','error'); return; }
   const code = generateCode();
+  const coins = {};
+  COINS.forEach(c => { coins[c.id] = { quantity: 0, current_price: c.basePrice }; });
   const child = {
-    id: Date.now().toString(),
-    parent_id: currentParent.id,
-    name, age,
-    avatar: '🧒',
-    balance,
-    initial_balance: balance,
-    eko_quantity: 0,
-    base_price: basePrice,
-    current_price: basePrice,
-    volatility,
-    goal_amount: goalAmount,
-    is_active: 1,
-    code,
-    created_at: new Date().toISOString()
+    id: Date.now().toString(), parent_id: currentParent.id,
+    name, age, balance, initial_balance: balance,
+    coins, volatility, goal_amount: goalAmount,
+    is_active: 1, code, created_at: new Date().toISOString()
   };
-
   const children = loadData('children') || {};
   children[child.id] = child;
   saveData('children', children);
-
-  // Init price history
+  // Init price histories
   const ph = loadData('price_history') || {};
-  ph[child.id] = [{ price: basePrice, time: Date.now() }];
+  COINS.forEach(c => {
+    const key = child.id + '_' + c.id;
+    ph[key] = [{ price: c.basePrice, time: Date.now() }];
+  });
   saveData('price_history', ph);
-
-  // Init transactions
   const txs = loadData('transactions') || {};
   txs[child.id] = [];
   saveData('transactions', txs);
-
   showToast(`Conta de ${name} criada! Codigo: ${code}`, 'success');
   refreshParentData();
 }
@@ -1442,15 +541,11 @@ function createChildAccount() {
 function updateConfig() {
   if (!currentChild) return;
   const children = loadData('children') || {};
-  const child = children[currentChild.id];
-  if (!child) return;
-
+  const child = children[currentChild.id]; if (!child) return;
   child.volatility = document.getElementById('editVolatility').value;
   child.goal_amount = parseFloat(document.getElementById('editGoal').value);
-  children[child.id] = child;
-  saveData('children', children);
-  currentChild = child;
-  refreshParentData();
+  children[child.id] = child; saveData('children', children);
+  currentChild = child; refreshParentData();
 }
 
 function toggleMarket() {
@@ -1458,287 +553,281 @@ function toggleMarket() {
   const children = loadData('children') || {};
   const child = children[currentChild.id];
   child.is_active = child.is_active ? 0 : 1;
-  children[child.id] = child;
-  saveData('children', children);
-  currentChild = child;
-  refreshParentData();
+  children[child.id] = child; saveData('children', children);
+  currentChild = child; refreshParentData();
 }
 
 function resetChildAccount() {
   if (!currentChild) return;
   if (!confirm('Tem certeza? Isso vai resetar todo o progresso.')) return;
-
   const balance = parseFloat(prompt('Novo saldo inicial (R$):', currentChild.initial_balance) || currentChild.initial_balance);
-  const basePrice = parseFloat(prompt('Novo preco base da EKO (R$):', currentChild.base_price) || currentChild.base_price);
   const goal = parseFloat(prompt('Nova meta (R$):', currentChild.goal_amount) || currentChild.goal_amount);
-
   const children = loadData('children') || {};
   const child = children[currentChild.id];
-  child.balance = balance;
-  child.initial_balance = balance;
-  child.eko_quantity = 0;
-  child.base_price = basePrice;
-  child.current_price = basePrice;
-  child.goal_amount = goal;
-  children[child.id] = child;
-  saveData('children', children);
-
+  child.balance = balance; child.initial_balance = balance; child.goal_amount = goal;
+  const coins = {};
+  COINS.forEach(c => { coins[c.id] = { quantity: 0, current_price: c.basePrice }; });
+  child.coins = coins;
+  children[child.id] = child; saveData('children', children);
   const ph = loadData('price_history') || {};
-  ph[child.id] = [{ price: basePrice, time: Date.now() }];
+  COINS.forEach(c => { ph[child.id+'_'+c.id] = [{ price: c.basePrice, time: Date.now() }]; });
   saveData('price_history', ph);
-
-  const txs = loadData('transactions') || {};
-  txs[child.id] = [];
-  saveData('transactions', txs);
-
-  currentChild = child;
-  showToast('Conta resetada com sucesso!', 'success');
-  refreshParentData();
+  const txs = loadData('transactions') || {}; txs[child.id] = []; saveData('transactions', txs);
+  currentChild = child; showToast('Conta resetada!','success'); refreshParentData();
 }
 
 function renderParentTransactions(childId) {
   const txs = (loadData('transactions') || {})[childId] || [];
   const container = document.getElementById('pTxList');
-
-  if (txs.length === 0) {
-    container.innerHTML = '<p style="color: var(--text2); text-align: center; padding: 20px;">Nenhuma operacao ainda</p>';
-    return;
-  }
-
+  if (txs.length === 0) { container.innerHTML = '<p style="color:var(--text2);text-align:center;padding:20px;">Nenhuma operacao ainda</p>'; return; }
   container.innerHTML = txs.slice(-20).reverse().map(tx => `
     <div class="tx-item">
-      <div>
-        <span class="tx-type ${tx.type === 'BUY' ? 'tx-buy' : 'tx-sell'}">
-          ${tx.type === 'BUY' ? '🟢 COMPROU' : '🔴 VENDEU'}
-        </span>
-        <span style="margin-left: 8px; color: var(--text2); font-size: 0.85rem;">
-          ${tx.quantity} EKO a ${formatMoney(tx.price)}
-        </span>
-      </div>
-      <div class="tx-details">
-        <div class="tx-value">${formatMoney(tx.total)}</div>
-        <div class="tx-time">${new Date(tx.time).toLocaleTimeString('pt-BR')}</div>
-      </div>
-    </div>
-  `).join('');
+      <div><span class="tx-type ${tx.type==='BUY'?'tx-buy':'tx-sell'}">${tx.type==='BUY'?'🟢 COMPROU':'🔴 VENDEU'}</span>
+      <span style="margin-left:8px;color:var(--text2);font-size:0.85rem;">${tx.quantity} ${tx.coin||'EKO'} a ${fmt(tx.price)}</span></div>
+      <div class="tx-details"><div class="tx-value">${fmt(tx.total)}</div><div class="tx-time">${new Date(tx.time).toLocaleTimeString('pt-BR')}</div></div>
+    </div>`).join('');
 }
 
-// ============ CHILD TRADING PANEL ============
-
+// ============ TRADING ============
 function showTradingPanel() {
   showScreen('trading');
-
-  // Load fresh child data
   const children = loadData('children') || {};
   currentChild = children[currentChild.id] || currentChild;
-
-  // Load price history
-  const ph = (loadData('price_history') || {})[currentChild.id] || [];
-  priceHistory = ph;
-
+  // Migrate old single-coin data
+  if (!currentChild.coins) {
+    const coins = {};
+    COINS.forEach(c => { coins[c.id] = { quantity: c.id === 'EKO' ? (currentChild.eko_quantity||0) : 0, current_price: c.id === 'EKO' ? (currentChild.current_price||c.basePrice) : c.basePrice }; });
+    currentChild.coins = coins;
+    children[currentChild.id] = currentChild; saveData('children', children);
+  }
+  loadPriceHistories();
+  selectedCoin = 'EKO';
   celebrationShown = false;
+  renderCoinTabs();
   updateTradingUI();
   startMarket();
 }
 
+function loadPriceHistories() {
+  const ph = loadData('price_history') || {};
+  priceHistories = {};
+  COINS.forEach(c => {
+    const key = currentChild.id + '_' + c.id;
+    priceHistories[c.id] = ph[key] || [{ price: c.basePrice, time: Date.now() }];
+  });
+}
+
+function renderCoinTabs() {
+  const container = document.getElementById('coinTabs');
+  container.innerHTML = COINS.map(c => {
+    const coinData = currentChild.coins?.[c.id];
+    const price = coinData?.current_price || c.basePrice;
+    const history = priceHistories[c.id] || [];
+    const prev = history.length >= 2 ? history[history.length-2].price : price;
+    const changePct = prev > 0 ? (((price - prev)/prev)*100).toFixed(1) : '0.0';
+    const isUp = price >= prev;
+    return `<div class="coin-tab ${selectedCoin===c.id?'active':''}" onclick="selectCoin('${c.id}')">
+      <span class="coin-icon">${c.icon}</span>
+      <span class="coin-name">${c.name}</span>
+      <span class="coin-price">${fmt(price)}</span>
+      <span class="coin-change ${isUp?'up':'down'}">${isUp?'+':''}${changePct}%</span>
+    </div>`;
+  }).join('');
+}
+
+function selectCoin(coinId) {
+  selectedCoin = coinId;
+  tradeQty = 1;
+  document.getElementById('qtyValue').textContent = 1;
+  renderCoinTabs();
+  updateTradingUI();
+}
+
 function startMarket() {
   stopMarket();
-  timerSeconds = 5;
-
-  // Update timer every second
-  timerInterval = setInterval(() => {
-    timerSeconds--;
-    if (timerSeconds < 0) timerSeconds = 5;
-    document.getElementById('timerCount').textContent = timerSeconds;
-    document.getElementById('timerFill').style.width = ((timerSeconds / 5) * 100) + '%';
-  }, 1000);
-
-  // Market tick every 5s
-  marketInterval = setInterval(() => {
-    tickMarket();
-    timerSeconds = 5;
-  }, 5000);
+  // Initialize trend data for each coin
+  COINS.forEach(c => {
+    if (!trendData[c.id]) trendData[c.id] = { dir: Math.random()>0.4?1:-1, ticks: Math.floor(Math.random()*10)+5 };
+  });
+  // Tick every 1.5 seconds for live feel
+  marketInterval = setInterval(tickMarket, 1500);
 }
 
-function stopMarket() {
-  if (marketInterval) clearInterval(marketInterval);
-  if (timerInterval) clearInterval(timerInterval);
-  marketInterval = null;
-  timerInterval = null;
-}
+function stopMarket() { if (marketInterval) clearInterval(marketInterval); marketInterval = null; }
 
 function tickMarket() {
   const children = loadData('children') || {};
   const child = children[currentChild.id];
   if (!child || !child.is_active) return;
 
-  const oldPrice = child.current_price;
-  const newPrice = calculateNewPrice(child);
+  const ph = loadData('price_history') || {};
 
-  child.current_price = newPrice;
+  // Update ALL coins every tick
+  COINS.forEach(coin => {
+    const coinState = child.coins[coin.id];
+    if (!coinState) return;
+    const oldPrice = coinState.current_price;
+    const newPrice = calcNewPrice(coin.id, oldPrice, coin.basePrice, child.volatility);
+    coinState.current_price = newPrice;
+
+    const key = child.id + '_' + coin.id;
+    if (!ph[key]) ph[key] = [];
+    ph[key].push({ price: newPrice, time: Date.now() });
+    if (ph[key].length > 120) ph[key] = ph[key].slice(-120);
+  });
+
   children[child.id] = child;
   saveData('children', children);
+  saveData('price_history', ph);
   currentChild = child;
 
-  // Save price history
-  const ph = loadData('price_history') || {};
-  if (!ph[child.id]) ph[child.id] = [];
-  ph[child.id].push({ price: newPrice, time: Date.now() });
-  if (ph[child.id].length > 60) ph[child.id] = ph[child.id].slice(-60);
-  saveData('price_history', ph);
-  priceHistory = ph[child.id];
+  // Update local histories
+  COINS.forEach(c => { priceHistories[c.id] = ph[child.id+'_'+c.id] || []; });
 
+  renderCoinTabs();
   updateTradingUI();
 }
 
-function calculateNewPrice(child) {
-  const { current_price, base_price, volatility } = child;
+function calcNewPrice(coinId, currentPrice, basePrice, volatility) {
   let range;
   switch (volatility) {
-    case 'baixa': range = { min: -0.02, max: 0.02 }; break;
-    case 'alta': range = { min: -0.10, max: 0.10 }; break;
-    default: range = { min: -0.05, max: 0.05 };
+    case 'baixa': range = { min: -0.015, max: 0.015 }; break;
+    case 'alta':  range = { min: -0.06,  max: 0.06 };  break;
+    default:      range = { min: -0.03,  max: 0.03 };
   }
 
-  // Trend
-  trendTicks--;
-  if (trendTicks <= 0) {
-    trendDirection = Math.random() > 0.4 ? 1 : -1;
-    trendTicks = Math.floor(Math.random() * 10) + 5;
-  }
+  let td = trendData[coinId];
+  if (!td) { td = { dir: 1, ticks: 10 }; trendData[coinId] = td; }
+  td.ticks--;
+  if (td.ticks <= 0) { td.dir = Math.random() > 0.4 ? 1 : -1; td.ticks = Math.floor(Math.random()*15)+5; }
 
-  let variation = Math.random() * (range.max - range.min) + range.min;
-  variation += trendDirection * (Math.random() * 0.02 + 0.01);
+  let v = Math.random() * (range.max - range.min) + range.min;
+  v += td.dir * (Math.random() * 0.012 + 0.005);
 
   // Mean reversion
-  const deviation = (current_price - base_price) / base_price;
-  variation -= deviation * 0.05;
+  const dev = (currentPrice - basePrice) / basePrice;
+  v -= dev * 0.03;
 
-  let newPrice = current_price * (1 + variation);
-  newPrice = Math.max(base_price * 0.10, Math.min(base_price * 3.0, newPrice));
+  let np = currentPrice * (1 + v);
+  np = Math.max(basePrice * 0.10, Math.min(basePrice * 4.0, np));
+  return Math.round(np * 100) / 100;
+}
 
-  return Math.round(newPrice * 100) / 100;
+function calcTotalValue(child) {
+  let total = child.balance;
+  COINS.forEach(c => {
+    const cd = child.coins?.[c.id];
+    if (cd) total += cd.quantity * cd.current_price;
+  });
+  return total;
 }
 
 function updateTradingUI() {
   const child = currentChild;
   if (!child) return;
 
-  const price = child.current_price;
-  const basePrice = child.base_price;
-  const totalValue = child.balance + (child.eko_quantity * price);
-
-  // Check paused
+  // Refresh from storage for pause check
   const children = loadData('children') || {};
   const freshChild = children[child.id];
   if (freshChild) {
     currentChild = freshChild;
     document.getElementById('pausedOverlay').classList.toggle('hidden', freshChild.is_active === 1);
     document.getElementById('marketDot').classList.toggle('paused', !freshChild.is_active);
-    document.getElementById('marketStatusText').textContent = freshChild.is_active ? 'Mercado aberto' : 'Mercado pausado';
+    document.getElementById('marketStatusText').textContent = freshChild.is_active ? 'Mercado ao vivo' : 'Mercado pausado';
   }
 
+  const coin = COINS.find(c => c.id === selectedCoin);
+  const coinState = child.coins?.[selectedCoin];
+  if (!coin || !coinState) return;
+
+  const price = coinState.current_price;
+  const basePrice = coin.basePrice;
+  const totalValue = calcTotalValue(child);
+
   // Balance
-  document.getElementById('cBalance').textContent = formatMoney(child.balance);
+  document.getElementById('cBalance').textContent = fmt(child.balance);
+
+  // Coin name
+  document.getElementById('cCoinName').textContent = coin.icon + ' ' + coin.name;
 
   // Price
   const priceEl = document.getElementById('cPrice');
-  priceEl.textContent = formatMoney(price);
-
-  const lastPrices = priceHistory.slice(-2);
+  priceEl.textContent = fmt(price);
+  const history = priceHistories[selectedCoin] || [];
   let prevPrice = basePrice;
-  if (lastPrices.length >= 2) prevPrice = lastPrices[lastPrices.length - 2].price;
-
+  if (history.length >= 2) prevPrice = history[history.length-2].price;
   const diff = price - prevPrice;
-  const diffPct = prevPrice > 0 ? ((diff / prevPrice) * 100).toFixed(1) : '0.0';
-
+  const diffPct = prevPrice > 0 ? ((diff/prevPrice)*100).toFixed(1) : '0.0';
   priceEl.className = 'price-value ' + (diff > 0 ? 'price-up' : diff < 0 ? 'price-down' : 'price-stable');
-
-  const emoji = document.getElementById('cEmoji');
-  emoji.textContent = diff > 0 ? '🚀' : diff < 0 ? '🪂' : '📊';
-
+  document.getElementById('cEmoji').textContent = diff > 0 ? '🚀' : diff < 0 ? '🪂' : '📊';
   const changeEl = document.getElementById('cPriceChange');
-  changeEl.textContent = `${diff >= 0 ? '+' : ''}${formatMoney(diff)} (${diffPct}%)`;
+  changeEl.textContent = `${diff>=0?'+':''}${fmt(diff)} (${diffPct}%)`;
   changeEl.style.color = diff > 0 ? 'var(--green)' : diff < 0 ? 'var(--red)' : 'var(--text2)';
 
-  // Holdings
-  document.getElementById('cEkos').textContent = child.eko_quantity;
-  document.getElementById('cEkoValue').textContent = formatMoney(child.eko_quantity * price);
-  document.getElementById('cTotal').textContent = formatMoney(totalValue);
+  // Holdings for selected coin
+  document.getElementById('cEkos').textContent = coinState.quantity;
+  document.getElementById('cEkoValue').textContent = fmt(coinState.quantity * price);
+  document.getElementById('cTotal').textContent = fmt(totalValue);
 
   // Trade buttons
   const buyCost = price * tradeQty;
-  const sellValue = price * tradeQty;
-  document.getElementById('buyCost').textContent = `${tradeQty} EKO = ${formatMoney(buyCost)}`;
-  document.getElementById('sellValue').textContent = `${tradeQty} EKO = ${formatMoney(sellValue)}`;
-
-  // Glow effects
+  document.getElementById('buyCost').textContent = `${tradeQty} ${coin.name} = ${fmt(buyCost)}`;
+  document.getElementById('sellValue').textContent = `${tradeQty} ${coin.name} = ${fmt(buyCost)}`;
   const buyBtn = document.getElementById('buyBtn');
   const sellBtn = document.getElementById('sellBtn');
-
   buyBtn.disabled = child.balance < buyCost;
-  sellBtn.disabled = child.eko_quantity < tradeQty;
+  sellBtn.disabled = coinState.quantity < tradeQty;
+  buyBtn.classList.toggle('glow-green', price < basePrice * 0.9 && child.balance >= buyCost);
+  sellBtn.classList.toggle('glow-red', price > basePrice * 1.2 && coinState.quantity >= tradeQty);
 
-  // Glow when opportunity
-  buyBtn.classList.toggle('glow-green', price < basePrice && child.balance >= buyCost);
-  sellBtn.classList.toggle('glow-red', price > basePrice * 1.15 && child.eko_quantity >= tradeQty);
+  // Portfolio
+  renderPortfolio(child);
 
   // Progress
   const pct = Math.min(100, (totalValue / child.goal_amount) * 100);
-  document.getElementById('cGoalText').textContent = `${formatMoney(totalValue)} / ${formatMoney(child.goal_amount)}`;
+  document.getElementById('cGoalText').textContent = `${fmt(totalValue)} / ${fmt(child.goal_amount)}`;
   const bar = document.getElementById('cProgressBar');
   bar.style.width = pct + '%';
   document.getElementById('cProgressPct').textContent = Math.round(pct) + '%';
-  bar.classList.remove('near-goal', 'goal-reached');
+  bar.classList.remove('near-goal','goal-reached');
   if (pct >= 100) bar.classList.add('goal-reached');
   else if (pct >= 90) bar.classList.add('near-goal');
+  if (pct >= 100 && !celebrationShown) { celebrationShown = true; showCelebration(totalValue, child.goal_amount); }
 
-  // Check goal
-  if (pct >= 100 && !celebrationShown) {
-    celebrationShown = true;
-    showCelebration(totalValue, child.goal_amount);
-  }
-
-  // Draw chart
   drawChart();
-
-  // Render transactions
   renderChildTransactions();
+}
 
-  // Also refresh parent if viewing
-  if (currentView === 'parent') refreshParentData();
+function renderPortfolio(child) {
+  const grid = document.getElementById('portfolioGrid');
+  const items = COINS.filter(c => (child.coins?.[c.id]?.quantity || 0) > 0);
+  if (items.length === 0) { grid.innerHTML = '<p style="color:var(--text2);font-size:0.8rem;grid-column:1/-1;text-align:center;">Carteira vazia - compre sua primeira moeda!</p>'; return; }
+  grid.innerHTML = items.map(c => {
+    const cd = child.coins[c.id];
+    return `<div class="portfolio-coin" onclick="selectCoin('${c.id}')" style="cursor:pointer;${selectedCoin===c.id?'border-color:'+c.color:''}">
+      <span class="pc-icon">${c.icon}</span>
+      <div class="pc-info"><div class="pc-name">${c.name}</div><div class="pc-qty">${cd.quantity} unid.</div></div>
+      <div class="pc-val" style="color:${c.color}">${fmt(cd.quantity * cd.current_price)}</div>
+    </div>`;
+  }).join('');
 }
 
 function handleBuy() {
   const children = loadData('children') || {};
   const child = children[currentChild.id];
   if (!child || !child.is_active) return;
-
-  const cost = child.current_price * tradeQty;
-  if (child.balance < cost) {
-    showToast('Saldo insuficiente!', 'error');
-    return;
-  }
-
+  const coin = COINS.find(c => c.id === selectedCoin);
+  const coinState = child.coins[selectedCoin];
+  const cost = coinState.current_price * tradeQty;
+  if (child.balance < cost) { showToast('Saldo insuficiente!','error'); return; }
   child.balance = Math.round((child.balance - cost) * 100) / 100;
-  child.eko_quantity += tradeQty;
-  children[child.id] = child;
-  saveData('children', children);
-  currentChild = child;
-
-  // Save transaction
+  coinState.quantity += tradeQty;
+  children[child.id] = child; saveData('children', children); currentChild = child;
   const txs = loadData('transactions') || {};
   if (!txs[child.id]) txs[child.id] = [];
-  txs[child.id].push({
-    type: 'BUY',
-    quantity: tradeQty,
-    price: child.current_price,
-    total: cost,
-    time: Date.now()
-  });
+  txs[child.id].push({ type:'BUY', coin: selectedCoin, quantity: tradeQty, price: coinState.current_price, total: cost, time: Date.now() });
   saveData('transactions', txs);
-
-  showToast(`Comprou ${tradeQty} EKO por ${formatMoney(cost)}!`, 'success');
+  showToast(`Comprou ${tradeQty} ${coin.icon}${coin.name} por ${fmt(cost)}!`, 'success');
   updateTradingUI();
 }
 
@@ -1746,32 +835,18 @@ function handleSell() {
   const children = loadData('children') || {};
   const child = children[currentChild.id];
   if (!child || !child.is_active) return;
-
-  if (child.eko_quantity < tradeQty) {
-    showToast('EKOs insuficientes!', 'error');
-    return;
-  }
-
-  const value = child.current_price * tradeQty;
+  const coin = COINS.find(c => c.id === selectedCoin);
+  const coinState = child.coins[selectedCoin];
+  if (coinState.quantity < tradeQty) { showToast('Moedas insuficientes!','error'); return; }
+  const value = coinState.current_price * tradeQty;
   child.balance = Math.round((child.balance + value) * 100) / 100;
-  child.eko_quantity -= tradeQty;
-  children[child.id] = child;
-  saveData('children', children);
-  currentChild = child;
-
-  // Save transaction
+  coinState.quantity -= tradeQty;
+  children[child.id] = child; saveData('children', children); currentChild = child;
   const txs = loadData('transactions') || {};
   if (!txs[child.id]) txs[child.id] = [];
-  txs[child.id].push({
-    type: 'SELL',
-    quantity: tradeQty,
-    price: child.current_price,
-    total: value,
-    time: Date.now()
-  });
+  txs[child.id].push({ type:'SELL', coin: selectedCoin, quantity: tradeQty, price: coinState.current_price, total: value, time: Date.now() });
   saveData('transactions', txs);
-
-  showToast(`Vendeu ${tradeQty} EKO por ${formatMoney(value)}!`, 'success');
+  showToast(`Vendeu ${tradeQty} ${coin.icon}${coin.name} por ${fmt(value)}!`, 'success');
   updateTradingUI();
 }
 
@@ -1782,191 +857,103 @@ function changeQty(delta) {
 }
 
 function renderChildTransactions() {
-  const txs = ((loadData('transactions') || {})[currentChild.id] || []);
+  const txs = ((loadData('transactions')||{})[currentChild.id]||[]);
   const container = document.getElementById('cTxList');
-
-  if (txs.length === 0) {
-    container.innerHTML = '<p style="color: var(--text2); text-align: center; padding: 12px; font-size: 0.9rem;">Faca sua primeira operacao!</p>';
-    return;
-  }
-
-  container.innerHTML = txs.slice(-10).reverse().map(tx => `
-    <div class="tx-feed-item">
-      <span>
-        ${tx.type === 'BUY' ? '🟢' : '🔴'}
-        ${tx.type === 'BUY' ? 'Comprou' : 'Vendeu'} ${tx.quantity} EKO a ${formatMoney(tx.price)}
-      </span>
-      <span style="font-weight: 700; color: ${tx.type === 'BUY' ? 'var(--red)' : 'var(--green)'}">
-        ${tx.type === 'BUY' ? '-' : '+'}${formatMoney(tx.total)}
-      </span>
-    </div>
-  `).join('');
+  if (txs.length === 0) { container.innerHTML = '<p style="color:var(--text2);text-align:center;padding:12px;font-size:0.9rem;">Faca sua primeira operacao!</p>'; return; }
+  container.innerHTML = txs.slice(-10).reverse().map(tx => {
+    const coin = COINS.find(c => c.id === tx.coin) || COINS[0];
+    return `<div class="tx-feed-item">
+      <span>${tx.type==='BUY'?'🟢':'🔴'} ${tx.type==='BUY'?'Comprou':'Vendeu'} ${tx.quantity} ${coin.icon}${coin.name} a ${fmt(tx.price)}</span>
+      <span style="font-weight:700;color:${tx.type==='BUY'?'var(--red)':'var(--green)'}">${tx.type==='BUY'?'-':'+'}${fmt(tx.total)}</span>
+    </div>`;
+  }).join('');
 }
 
 // ============ CHART ============
-
 function drawChart() {
   const canvas = document.getElementById('priceChart');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const rect = canvas.parentElement.getBoundingClientRect();
-  canvas.width = rect.width - 32;
-  canvas.height = rect.height - 32;
+  canvas.width = rect.width - 32; canvas.height = rect.height - 32;
 
-  const data = priceHistory.slice(-30);
+  const coin = COINS.find(c => c.id === selectedCoin);
+  const data = (priceHistories[selectedCoin] || []).slice(-60);
   if (data.length < 2) {
-    ctx.fillStyle = '#94a3b8';
-    ctx.font = '14px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('Aguardando dados...', canvas.width / 2, canvas.height / 2);
-    return;
+    ctx.fillStyle = '#94a3b8'; ctx.font = '14px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Aguardando dados...', canvas.width/2, canvas.height/2); return;
   }
-
   const prices = data.map(d => d.price);
-  const min = Math.min(...prices) * 0.95;
-  const max = Math.max(...prices) * 1.05;
+  const min = Math.min(...prices)*0.95; const max = Math.max(...prices)*1.05;
   const range = max - min || 1;
+  const w = canvas.width; const h = canvas.height; const stepX = w/(prices.length-1); const pad = 10;
 
-  const w = canvas.width;
-  const h = canvas.height;
-  const stepX = w / (prices.length - 1);
-  const padding = 10;
-
-  // Grid lines
-  ctx.strokeStyle = '#334155';
-  ctx.lineWidth = 0.5;
-  for (let i = 0; i <= 4; i++) {
-    const y = padding + ((h - padding * 2) / 4) * i;
-    ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(w, y);
-    ctx.stroke();
-
-    const val = max - (range / 4) * i;
-    ctx.fillStyle = '#64748b';
-    ctx.font = '10px sans-serif';
-    ctx.textAlign = 'left';
-    ctx.fillText(`R$${val.toFixed(1)}`, 4, y - 3);
+  // Grid
+  ctx.strokeStyle = '#334155'; ctx.lineWidth = 0.5;
+  for (let i=0; i<=4; i++) {
+    const y = pad + ((h-pad*2)/4)*i;
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke();
+    ctx.fillStyle = '#64748b'; ctx.font = '10px sans-serif'; ctx.textAlign = 'left';
+    ctx.fillText(`R$${(max-(range/4)*i).toFixed(1)}`, 4, y-3);
   }
 
   // Base price line
-  const baseY = h - padding - ((currentChild.base_price - min) / range) * (h - padding * 2);
-  ctx.strokeStyle = '#f59e0b44';
-  ctx.lineWidth = 1;
-  ctx.setLineDash([5, 5]);
-  ctx.beginPath();
-  ctx.moveTo(0, baseY);
-  ctx.lineTo(w, baseY);
-  ctx.stroke();
-  ctx.setLineDash([]);
+  const baseY = h - pad - ((coin.basePrice - min)/range)*(h-pad*2);
+  ctx.strokeStyle = '#f59e0b44'; ctx.lineWidth = 1; ctx.setLineDash([5,5]);
+  ctx.beginPath(); ctx.moveTo(0,baseY); ctx.lineTo(w,baseY); ctx.stroke(); ctx.setLineDash([]);
 
   // Price line
-  const lastPrice = prices[prices.length - 1];
-  const firstPrice = prices[0];
-  const isUp = lastPrice >= firstPrice;
-
+  const lastP = prices[prices.length-1]; const firstP = prices[0]; const isUp = lastP >= firstP;
   ctx.beginPath();
-  for (let i = 0; i < prices.length; i++) {
-    const x = i * stepX;
-    const y = h - padding - ((prices[i] - min) / range) * (h - padding * 2);
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
+  for (let i=0; i<prices.length; i++) {
+    const x = i*stepX; const y = h-pad-((prices[i]-min)/range)*(h-pad*2);
+    if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
   }
-  ctx.strokeStyle = isUp ? '#22c55e' : '#ef4444';
-  ctx.lineWidth = 2.5;
-  ctx.stroke();
+  ctx.strokeStyle = coin.color; ctx.lineWidth = 2.5; ctx.stroke();
 
-  // Gradient fill
-  const lastX = (prices.length - 1) * stepX;
-  const gradient = ctx.createLinearGradient(0, 0, 0, h);
-  gradient.addColorStop(0, isUp ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)');
-  gradient.addColorStop(1, 'rgba(0,0,0,0)');
+  // Fill
+  const lastX = (prices.length-1)*stepX;
+  const gradient = ctx.createLinearGradient(0,0,0,h);
+  gradient.addColorStop(0, coin.color + '33'); gradient.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.lineTo(lastX,h); ctx.lineTo(0,h); ctx.closePath(); ctx.fillStyle = gradient; ctx.fill();
 
-  ctx.lineTo(lastX, h);
-  ctx.lineTo(0, h);
-  ctx.closePath();
-  ctx.fillStyle = gradient;
-  ctx.fill();
-
-  // Current price dot
-  const lastY = h - padding - ((lastPrice - min) / range) * (h - padding * 2);
-  ctx.beginPath();
-  ctx.arc(lastX, lastY, 5, 0, Math.PI * 2);
-  ctx.fillStyle = isUp ? '#22c55e' : '#ef4444';
-  ctx.fill();
-  ctx.strokeStyle = 'white';
-  ctx.lineWidth = 2;
-  ctx.stroke();
+  // Dot
+  const lastY = h-pad-((lastP-min)/range)*(h-pad*2);
+  ctx.beginPath(); ctx.arc(lastX,lastY,5,0,Math.PI*2);
+  ctx.fillStyle = coin.color; ctx.fill();
+  ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
 }
 
 // ============ CELEBRATION ============
-
 function showCelebration(totalValue, goal) {
-  document.getElementById('celebrationText').textContent =
-    `Patrimonio: ${formatMoney(totalValue)} - Meta: ${formatMoney(goal)}`;
+  document.getElementById('celebrationText').textContent = `Patrimonio: ${fmt(totalValue)} - Meta: ${fmt(goal)}`;
   document.getElementById('celebrationOverlay').classList.remove('hidden');
-
-  // Confetti effect with DOM
   createConfetti();
 }
-
-function closeCelebration() {
-  document.getElementById('celebrationOverlay').classList.add('hidden');
-}
-
+function closeCelebration() { document.getElementById('celebrationOverlay').classList.add('hidden'); }
 function createConfetti() {
-  const colors = ['#22c55e', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
-  for (let i = 0; i < 60; i++) {
-    const confetti = document.createElement('div');
-    confetti.style.cssText = `
-      position: fixed;
-      width: ${Math.random() * 10 + 5}px;
-      height: ${Math.random() * 10 + 5}px;
-      background: ${colors[Math.floor(Math.random() * colors.length)]};
-      left: ${Math.random() * 100}vw;
-      top: -20px;
-      border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
-      z-index: 1001;
-      pointer-events: none;
-      animation: confettiFall ${Math.random() * 2 + 2}s ease-in forwards;
-    `;
-    document.body.appendChild(confetti);
-    setTimeout(() => confetti.remove(), 4000);
+  const colors = ['#22c55e','#3b82f6','#f59e0b','#ef4444','#8b5cf6','#ec4899'];
+  for (let i=0; i<60; i++) {
+    const c = document.createElement('div');
+    c.style.cssText = `position:fixed;width:${Math.random()*10+5}px;height:${Math.random()*10+5}px;background:${colors[Math.floor(Math.random()*colors.length)]};left:${Math.random()*100}vw;top:-20px;border-radius:${Math.random()>0.5?'50%':'2px'};z-index:1001;pointer-events:none;animation:confettiFall ${Math.random()*2+2}s ease-in forwards;`;
+    document.body.appendChild(c); setTimeout(()=>c.remove(),4000);
   }
-
-  // Add confetti animation
   if (!document.getElementById('confettiStyle')) {
-    const style = document.createElement('style');
-    style.id = 'confettiStyle';
-    style.textContent = `
-      @keyframes confettiFall {
-        to {
-          transform: translateY(110vh) rotate(${Math.random() * 720}deg);
-          opacity: 0;
-        }
-      }
-    `;
-    document.head.appendChild(style);
+    const s = document.createElement('style'); s.id = 'confettiStyle';
+    s.textContent = `@keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}`;
+    document.head.appendChild(s);
   }
 }
 
-// ============ UTILITIES ============
-
-function formatMoney(value) {
-  return 'R$ ' + (value || 0).toFixed(2).replace('.', ',');
-}
-
+// ============ UTILS ============
+function fmt(v) { return 'R$ ' + (v||0).toFixed(2).replace('.',','); }
 function showToast(msg, type) {
-  const toast = document.createElement('div');
-  toast.className = `toast toast-${type}`;
-  toast.textContent = msg;
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 3000);
+  const t = document.createElement('div'); t.className = `toast toast-${type}`; t.textContent = msg;
+  document.body.appendChild(t); setTimeout(()=>t.remove(), 3000);
 }
 
 // ============ BOOT ============
 init();
 </script>
-
 </body>
 </html>
