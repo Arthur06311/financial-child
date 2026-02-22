@@ -573,6 +573,13 @@
     .tax-row .tr-value{font-weight:900}
     .tax-tip{font-size:.72rem;color:var(--text2);margin-top:10px;padding:10px;background:rgba(0,0,0,0.15);border-radius:10px;line-height:1.5}
     .hidden{display:none!important}
+    .lang-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+    .lang-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;width:100%;max-width:600px;max-height:60vh;overflow-y:auto;padding:4px}
+    .lang-btn{padding:12px 8px;border:1.5px solid var(--glass-border);border-radius:14px;background:rgba(0,0,0,0.2);backdrop-filter:blur(8px);color:var(--text);cursor:pointer;text-align:center;transition:all .3s;font-size:.85rem;font-weight:700}
+    .lang-btn:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.3)}
+    .lang-btn .lang-flag{font-size:1.5rem;display:block;margin-bottom:4px}
+    .lang-change-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--glass-border);border-radius:10px;background:rgba(0,0,0,0.2);color:var(--text2);cursor:pointer;font-size:.78rem;font-weight:700;transition:all .3s;margin-top:12px}
+    .lang-change-btn:hover{border-color:var(--gold);color:var(--gold)}
     @media(max-width:500px){
       .config-grid{grid-template-columns:1fr}
       .stats-grid{grid-template-columns:1fr 1fr}
@@ -589,30 +596,38 @@
   </style>
 </head>
 <body>
+<!-- LANGUAGE SELECTION -->
+<div id="langScreen" class="lang-screen">
+  <div class="login-logo">Financial Child</div>
+  <div class="login-subtitle" style="margin-bottom:20px">Choose your language / Escolha seu idioma</div>
+  <div class="lang-grid" id="langGrid"></div>
+</div>
+
 <!-- LOGIN -->
-<div id="loginScreen" class="login-screen">
+<div id="loginScreen" class="login-screen hidden">
   <div class="login-logo">Financial Child</div>
   <div class="login-subtitle">Aprenda a investir brincando!</div>
   <div class="login-box">
     <div class="tab-switch"><button class="tab-btn active" onclick="switchTab('login')">Entrar</button><button class="tab-btn" onclick="switchTab('register')">Criar Conta</button></div>
     <div id="loginForm">
-      <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="seu@email.com"></div>
-      <div class="form-group"><label>Senha</label><input type="password" id="loginPassword" placeholder="Sua senha"></div>
-      <button class="btn btn-primary ripple" onclick="handleLogin()">Entrar</button>
+      <div class="form-group"><label id="lbl_email">Email</label><input type="email" id="loginEmail" placeholder="seu@email.com"></div>
+      <div class="form-group"><label id="lbl_password">Senha</label><input type="password" id="loginPassword" placeholder="Sua senha"></div>
+      <button class="btn btn-primary ripple" id="btn_login" onclick="handleLogin()">Entrar</button>
       <div id="loginError" class="error-msg hidden"></div>
       <div class="access-options">
-        <button class="access-btn" onclick="enterAsParent()"><span class="icon">👨‍👩‍👧</span><span class="label">Sou Pai/Mae</span></button>
-        <button class="access-btn" onclick="showChildAccess()"><span class="icon">🧒</span><span class="label">Sou Crianca</span></button>
+        <button class="access-btn" onclick="enterAsParent()"><span class="icon">👨‍👩‍👧</span><span class="label" id="btn_parent">Sou Pai/Mae</span></button>
+        <button class="access-btn" onclick="showChildAccess()"><span class="icon">🧒</span><span class="label" id="btn_child">Sou Crianca</span></button>
       </div>
     </div>
     <div id="registerForm" class="hidden">
-      <div class="form-group"><label>Seu Nome</label><input type="text" id="regName" placeholder="Ex: Maria"></div>
-      <div class="form-group"><label>Email</label><input type="email" id="regEmail" placeholder="seu@email.com"></div>
-      <div class="form-group"><label>Senha</label><input type="password" id="regPassword" placeholder="Crie uma senha"></div>
-      <button class="btn btn-primary ripple" onclick="handleRegister()">Criar Conta</button>
+      <div class="form-group"><label id="lbl_yourname">Seu Nome</label><input type="text" id="regName" placeholder="Ex: Maria"></div>
+      <div class="form-group"><label id="lbl_email2">Email</label><input type="email" id="regEmail" placeholder="seu@email.com"></div>
+      <div class="form-group"><label id="lbl_password2">Senha</label><input type="password" id="regPassword" placeholder="Crie uma senha"></div>
+      <button class="btn btn-primary ripple" id="btn_register" onclick="handleRegister()">Criar Conta</button>
       <div id="regError" class="error-msg hidden"></div>
     </div>
   </div>
+  <button class="lang-change-btn" onclick="showScreen('lang')">🌐 <span id="loginLangBtnText">Mudar Idioma</span></button>
 </div>
 
 <!-- PARENT DASHBOARD -->
@@ -950,7 +965,8 @@
       <h4>🏅 Conquistas</h4>
       <div class="achievement-grid" id="achievementGrid"></div>
     </div>
-    <button class="btn btn-outline" style="margin-top:14px;margin-bottom:20px;" onclick="logout()">Sair da Conta</button>
+    <button class="btn btn-outline" style="margin-top:14px;margin-bottom:10px;" onclick="logout()" id="btn_logout_profile">Sair da Conta</button>
+    <button class="lang-change-btn" style="width:100%;justify-content:center;margin-bottom:20px;" onclick="showScreen('lang')">🌐 <span id="profileLangBtnText">Mudar Idioma</span></button>
   </div>
 </div>
 
@@ -1185,10 +1201,20 @@ let marketEventLog=[];
 let fearGreedValue=50;
 
 function init() {
-  const s=load('session');
-  if(s){
-    if(s.type==='parent'){currentParent=s.data;showParentDashboard();}
-    else if(s.type==='child'){currentChild=s.data;showTradingPanel();}
+  const savedLang=localStorage.getItem('fc4_lang');
+  if(savedLang){
+    currentLang=savedLang;
+    applyTranslations();
+    const s=load('session');
+    if(s){
+      if(s.type==='parent'){currentParent=s.data;showParentDashboard();}
+      else if(s.type==='child'){currentChild=s.data;showTradingPanel();}
+      else{showScreen('login');}
+    } else {
+      showScreen('login');
+    }
+  } else {
+    showScreen('lang');
   }
 }
 
@@ -1230,14 +1256,16 @@ function childLogin(){
 function logout(){
   stopMarket();currentParent=null;currentChild=null;
   localStorage.removeItem('fc4_session');celebrationShown=false;
-  document.getElementById('bottomNav').classList.add('hidden');showScreen('login');
+  document.getElementById('bottomNav').classList.add('hidden');showScreen('login');applyTranslations();
 }
 function showError(id,msg){const el=document.getElementById(id);el.textContent=msg;el.classList.remove('hidden');setTimeout(()=>el.classList.add('hidden'),3000);}
 function showScreen(s){
   currentView=s;
-  const map={login:'loginScreen',parent:'parentDashboard',childAccess:'childAccessScreen',trading:'tradingPanel'};
-  ['loginScreen','parentDashboard','childAccessScreen','tradingPanel'].forEach(id=>document.getElementById(id).classList.toggle('hidden',id!==map[s]));
+  const map={lang:'langScreen',login:'loginScreen',parent:'parentDashboard',childAccess:'childAccessScreen',trading:'tradingPanel'};
+  ['langScreen','loginScreen','parentDashboard','childAccessScreen','tradingPanel'].forEach(id=>document.getElementById(id).classList.toggle('hidden',id!==map[s]));
   document.getElementById('bottomNav').classList.toggle('hidden',s!=='trading');
+  if(s==='lang')renderLangScreen();
+  if(s==='login')applyTranslations();
 }
 
 // ============ BOTTOM NAV / TABS ============
@@ -1336,7 +1364,7 @@ function renderParentTx(cid){
 
 // ============ TRADING ============
 function showTradingPanel(){
-  showScreen('trading');
+  showScreen('trading');applyTranslations();
   const ch=load('children')||{};currentChild=ch[currentChild.id]||currentChild;
   if(!currentChild.assets){
     const assets={};ASSETS.forEach(a=>{assets[a.id]={qty:0,price:a.basePrice,avgPrice:a.basePrice};});
@@ -2594,6 +2622,139 @@ function payDividends(){
     const balEl=document.getElementById('cBalance');if(balEl)balEl.textContent=fmt(child.balance);
     if(currentChildTab==='Empresas'){renderEmpresasPortfolio();renderMyCompanies();}
   }
+}
+
+// ============================================================
+// LANGUAGE SYSTEM
+// ============================================================
+const LANGS=[
+  {code:'pt',flag:'🇧🇷',name:'Portugues'},
+  {code:'en',flag:'🇺🇸',name:'English'},
+  {code:'es',flag:'🇪🇸',name:'Español'},
+  {code:'fr',flag:'🇫🇷',name:'Français'},
+  {code:'de',flag:'🇩🇪',name:'Deutsch'},
+  {code:'it',flag:'🇮🇹',name:'Italiano'},
+  {code:'ja',flag:'🇯🇵',name:'日本語'},
+  {code:'ko',flag:'🇰🇷',name:'한국어'},
+  {code:'zh',flag:'🇨🇳',name:'中文'},
+  {code:'ru',flag:'🇷🇺',name:'Русский'},
+  {code:'ar',flag:'🇦🇪',name:'العربية'},
+  {code:'hi',flag:'🇮🇳',name:'हिन्दी'},
+  {code:'tr',flag:'🇹🇷',name:'Türkçe'},
+  {code:'nl',flag:'🇳🇱',name:'Nederlands'},
+  {code:'pl',flag:'🇵🇱',name:'Polski'},
+  {code:'sv',flag:'🇸🇪',name:'Svenska'},
+  {code:'no',flag:'🇳🇴',name:'Norsk'},
+  {code:'da',flag:'🇩🇰',name:'Dansk'},
+  {code:'fi',flag:'🇫🇮',name:'Suomi'},
+  {code:'el',flag:'🇬🇷',name:'Ελληνικά'},
+  {code:'cs',flag:'🇨🇿',name:'Čeština'},
+  {code:'ro',flag:'🇷🇴',name:'Română'},
+  {code:'hu',flag:'🇭🇺',name:'Magyar'},
+  {code:'th',flag:'🇹🇭',name:'ไทย'},
+  {code:'vi',flag:'🇻🇳',name:'Tiếng Việt'},
+  {code:'id',flag:'🇮🇩',name:'Bahasa Indonesia'},
+  {code:'ms',flag:'🇲🇾',name:'Bahasa Melayu'},
+  {code:'tl',flag:'🇵🇭',name:'Filipino'},
+  {code:'uk',flag:'🇺🇦',name:'Українська'},
+  {code:'he',flag:'🇮🇱',name:'עברית'},
+  {code:'af',flag:'🇿🇦',name:'Afrikaans'},
+  {code:'pt_pt',flag:'🇵🇹',name:'Português (PT)'},
+  {code:'ga',flag:'🇮🇪',name:'Gaeilge'},
+  {code:'bn',flag:'🇧🇩',name:'বাংলা'},
+  {code:'ur',flag:'🇵🇰',name:'اردو'},
+];
+
+let currentLang='pt';
+
+const TRANSLATIONS={
+  app_subtitle:{pt:'Aprenda a investir brincando!',en:'Learn to invest while playing!',es:'¡Aprende a invertir jugando!',fr:'Apprends à investir en jouant!',de:'Lerne investieren beim Spielen!',it:'Impara a investire giocando!',ja:'遊びながら投資を学ぼう！',ko:'놀면서 투자 배우기!',zh:'边玩边学投资！',ru:'Учись инвестировать играя!',ar:'تعلم الاستثمار باللعب!',hi:'खेलते हुए निवेश सीखो!',tr:'Oynayarak yatırım öğren!',nl:'Leer investeren door te spelen!',pl:'Ucz się inwestować bawiąc się!',sv:'Lär dig investera medan du spelar!',no:'Lær å investere mens du spiller!',da:'Lær at investere mens du spiller!',fi:'Opi sijoittamaan leikkien!',el:'Μάθε να επενδύεις παίζοντας!',cs:'Uč se investovat při hraní!',ro:'Învață să investești jucându-te!',hu:'Tanulj befektetni játszva!',th:'เรียนรู้การลงทุนขณะเล่น!',vi:'Học đầu tư khi chơi!',id:'Belajar investasi sambil bermain!',ms:'Belajar melabur sambil bermain!',tl:'Matuto mag-invest habang naglalaro!',uk:'Вчись інвестувати граючи!',he:'למד להשקיע תוך כדי משחק!',af:'Leer belegging terwyl jy speel!',pt_pt:'Aprende a investir a brincar!',ga:'Foghlaim infheistíocht ag imirt!',bn:'খেলতে খেলতে বিনিয়োগ শেখো!',ur:'کھیلتے کھیلتے سرمایہ کاری سیکھو!'},
+  change_lang:{pt:'Mudar Idioma',en:'Change Language',es:'Cambiar Idioma',fr:'Changer la Langue',de:'Sprache ändern',it:'Cambia Lingua',ja:'言語を変える',ko:'언어 변경',zh:'更改语言',ru:'Изменить язык',ar:'تغيير اللغة',hi:'भाषा बदलो',tr:'Dili Değiştir',nl:'Taal wijzigen',pl:'Zmień język',sv:'Byta språk',no:'Bytt språk',da:'Skift sprog',fi:'Vaihda kieli',el:'Αλλαγή γλώσσας',cs:'Změnit jazyk',ro:'Schimbă limba',hu:'Nyelv váltása',th:'เปลี่ยนภาษา',vi:'Đổi ngôn ngữ',id:'Ganti Bahasa',ms:'Tukar Bahasa',tl:'Baguhin ang Wika',uk:'Змінити мову',he:'שנה שפה',af:'Verander Taal',pt_pt:'Mudar Idioma',ga:'Athraigh Teanga',bn:'ভাষা পরিবর্তন',ur:'زبان تبدیل کریں'},
+  login_title:{pt:'Entrar',en:'Log In',es:'Entrar',fr:'Connexion',de:'Anmelden',it:'Accedi',ja:'ログイン',ko:'로그인',zh:'登录',ru:'Войти',ar:'تسجيل الدخول',hi:'लॉग इन',tr:'Giriş Yap',nl:'Inloggen',pl:'Zaloguj',sv:'Logga in',no:'Logg inn',da:'Log ind',fi:'Kirjaudu',el:'Σύνδεση',cs:'Přihlásit',ro:'Conectare',hu:'Belépés',th:'เข้าสู่ระบบ',vi:'Đăng nhập',id:'Masuk',ms:'Log Masuk',tl:'Mag-login',uk:'Увійти',he:'התחבר',af:'Teken in',pt_pt:'Entrar',ga:'Log isteach',bn:'লগ ইন',ur:'لاگ ان کریں'},
+  register_title:{pt:'Criar Conta',en:'Create Account',es:'Crear Cuenta',fr:'Créer un compte',de:'Konto erstellen',it:'Crea Account',ja:'アカウント作成',ko:'계정 만들기',zh:'创建账户',ru:'Создать аккаунт',ar:'إنشاء حساب',hi:'खाता बनाओ',tr:'Hesap Oluştur',nl:'Account aanmaken',pl:'Utwórz konto',sv:'Skapa konto',no:'Opprett konto',da:'Opret konto',fi:'Luo tili',el:'Δημιουργία λογαριασμού',cs:'Vytvořit účet',ro:'Creare cont',hu:'Fiók létrehozása',th:'สร้างบัญชี',vi:'Tạo tài khoản',id:'Buat Akun',ms:'Buat Akaun',tl:'Gumawa ng Account',uk:'Створити акаунт',he:'צור חשבון',af:'Skep rekening',pt_pt:'Criar Conta',ga:'Cruthaigh Cuntas',bn:'অ্যাকাউন্ট তৈরি করো',ur:'اکاؤنٹ بنائیں'},
+  email:{pt:'Email',en:'Email',es:'Email',fr:'Email',de:'E-Mail',it:'Email',ja:'メール',ko:'이메일',zh:'邮箱',ru:'Почта',ar:'البريد',hi:'ईमेल',tr:'E-posta',nl:'E-mail',pl:'E-mail',sv:'E-post',no:'E-post',da:'E-mail',fi:'Sähköposti',el:'Email',cs:'E-mail',ro:'Email',hu:'Email',th:'อีเมล',vi:'Email',id:'Email',ms:'E-mel',tl:'Email',uk:'Пошта',he:'אימייל',af:'E-pos',pt_pt:'Email',ga:'Ríomhphost',bn:'ইমেল',ur:'ای میل'},
+  password:{pt:'Senha',en:'Password',es:'Contraseña',fr:'Mot de passe',de:'Passwort',it:'Password',ja:'パスワード',ko:'비밀번호',zh:'密码',ru:'Пароль',ar:'كلمة المرور',hi:'पासवर्ड',tr:'Şifre',nl:'Wachtwoord',pl:'Hasło',sv:'Lösenord',no:'Passord',da:'Adgangskode',fi:'Salasana',el:'Κωδικός',cs:'Heslo',ro:'Parolă',hu:'Jelszó',th:'รหัสผ่าน',vi:'Mật khẩu',id:'Kata Sandi',ms:'Kata Laluan',tl:'Password',uk:'Пароль',he:'סיסמה',af:'Wagwoord',pt_pt:'Senha',ga:'Pasfhocal',bn:'পাসওয়ার্ড',ur:'پاس ورڈ'},
+  your_name:{pt:'Seu Nome',en:'Your Name',es:'Tu Nombre',fr:'Ton Prénom',de:'Dein Name',it:'Il tuo Nome',ja:'お名前',ko:'이름',zh:'你的名字',ru:'Твоё имя',ar:'اسمك',hi:'तुम्हारा नाम',tr:'Adın',nl:'Jouw naam',pl:'Twoje imię',sv:'Ditt namn',no:'Ditt navn',da:'Dit navn',fi:'Sinun nimesi',el:'Το όνομά σου',cs:'Tvoje jméno',ro:'Numele tău',hu:'A neved',th:'ชื่อของคุณ',vi:'Tên của bạn',id:'Nama Kamu',ms:'Nama Kamu',tl:'Ang iyong Pangalan',uk:'Твоє ім\'я',he:'השם שלך',af:'Jou naam',pt_pt:'O teu Nome',ga:'D\'ainm',bn:'তোমার নাম',ur:'تمہارا نام'},
+  login_btn:{pt:'Entrar',en:'Log In',es:'Entrar',fr:'Entrer',de:'Einloggen',it:'Entra',ja:'ログイン',ko:'들어가기',zh:'进入',ru:'Войти',ar:'دخول',hi:'जाओ',tr:'Gir',nl:'Inloggen',pl:'Wejdź',sv:'Gå in',no:'Gå inn',da:'Gå ind',fi:'Kirjaudu',el:'Μπες',cs:'Přihlásit',ro:'Intră',hu:'Belép',th:'เข้า',vi:'Vào',id:'Masuk',ms:'Masuk',tl:'Pumasok',uk:'Увійти',he:'כנס',af:'Gaan in',pt_pt:'Entrar',ga:'Isteach',bn:'প্রবেশ করো',ur:'داخل ہوں'},
+  register_btn:{pt:'Criar Conta',en:'Create Account',es:'Crear Cuenta',fr:'Créer',de:'Erstellen',it:'Crea',ja:'作成',ko:'만들기',zh:'创建',ru:'Создать',ar:'إنشاء',hi:'बनाओ',tr:'Oluştur',nl:'Aanmaken',pl:'Utwórz',sv:'Skapa',no:'Opprett',da:'Opret',fi:'Luo',el:'Δημιουργία',cs:'Vytvořit',ro:'Creare',hu:'Létrehozás',th:'สร้าง',vi:'Tạo',id:'Buat',ms:'Buat',tl:'Gumawa',uk:'Створити',he:'צור',af:'Skep',pt_pt:'Criar',ga:'Cruthaigh',bn:'বানাও',ur:'بنائیں'},
+  parent_btn:{pt:'Sou Pai/Mae',en:'I am a Parent',es:'Soy Padre/Madre',fr:'Je suis parent',de:'Ich bin Elternteil',it:'Sono Genitore',ja:'保護者です',ko:'부모입니다',zh:'我是家长',ru:'Я родитель',ar:'أنا والد/والدة',hi:'मैं माता-पिता हूं',tr:'Ebeveynım',nl:'Ik ben een Ouder',pl:'Jestem Rodzicem',sv:'Jag är Förälder',no:'Jeg er Forelder',da:'Jeg er Forælder',fi:'Olen Vanhempi',el:'Είμαι Γονέας',cs:'Jsem Rodič',ro:'Sunt Părinte',hu:'Szülő vagyok',th:'ฉันเป็นผู้ปกครอง',vi:'Tôi là Phụ huynh',id:'Saya Orang Tua',ms:'Saya Ibu Bapa',tl:'Magulang ako',uk:'Я Батько/Мати',he:'אני הורה',af:'Ek is \'n Ouer',pt_pt:'Sou Pai/Mãe',ga:'Is Tuismitheoir mé',bn:'আমি অভিভাবক',ur:'میں والدین ہوں'},
+  child_btn:{pt:'Sou Crianca',en:'I am a Kid',es:'Soy Niño/a',fr:'Je suis Enfant',de:'Ich bin ein Kind',it:'Sono un Bambino',ja:'子どもです',ko:'저는 어린이입니다',zh:'我是孩子',ru:'Я ребёнок',ar:'أنا طفل',hi:'मैं बच्चा हूं',tr:'Ben Çocuğum',nl:'Ik ben een Kind',pl:'Jestem Dzieckiem',sv:'Jag är ett Barn',no:'Jeg er et Barn',da:'Jeg er et Barn',fi:'Olen Lapsi',el:'Είμαι Παιδί',cs:'Jsem Dítě',ro:'Sunt Copil',hu:'Gyerek vagyok',th:'ฉันเป็นเด็ก',vi:'Tôi là Trẻ em',id:'Saya Anak-anak',ms:'Saya Kanak-kanak',tl:'Bata ako',uk:'Я Дитина',he:'אני ילד',af:'Ek is \'n Kind',pt_pt:'Sou Criança',ga:'Is Leanbh mé',bn:'আমি শিশু',ur:'میں بچہ ہوں'},
+  market:{pt:'Mercado',en:'Market',es:'Mercado',fr:'Marché',de:'Markt',it:'Mercato',ja:'市場',ko:'시장',zh:'市场',ru:'Рынок',ar:'السوق',hi:'बाज़ार',tr:'Pazar',nl:'Markt',pl:'Rynek',sv:'Marknad',no:'Marked',da:'Marked',fi:'Markkinat',el:'Αγορά',cs:'Trh',ro:'Piață',hu:'Piac',th:'ตลาด',vi:'Thị trường',id:'Pasar',ms:'Pasaran',tl:'Merkado',uk:'Ринок',he:'שוק',af:'Mark',pt_pt:'Mercado',ga:'Margadh',bn:'বাজার',ur:'بازار'},
+  analysis:{pt:'Analise',en:'Analysis',es:'Análisis',fr:'Analyse',de:'Analyse',it:'Analisi',ja:'分析',ko:'분석',zh:'分析',ru:'Анализ',ar:'تحليل',hi:'विश्लेषण',tr:'Analiz',nl:'Analyse',pl:'Analiza',sv:'Analys',no:'Analyse',da:'Analyse',fi:'Analyysi',el:'Ανάλυση',cs:'Analýza',ro:'Analiză',hu:'Elemzés',th:'วิเคราะห์',vi:'Phân tích',id:'Analisis',ms:'Analisis',tl:'Pagsusuri',uk:'Аналіз',he:'ניתוח',af:'Analise',pt_pt:'Análise',ga:'Anailís',bn:'বিশ্লেষণ',ur:'تجزیہ'},
+  companies:{pt:'Empresas',en:'Companies',es:'Empresas',fr:'Entreprises',de:'Firmen',it:'Aziende',ja:'会社',ko:'회사',zh:'公司',ru:'Компании',ar:'شركات',hi:'कंपनियां',tr:'Şirketler',nl:'Bedrijven',pl:'Firmy',sv:'Företag',no:'Selskaper',da:'Virksomheder',fi:'Yritykset',el:'Εταιρίες',cs:'Firmy',ro:'Companii',hu:'Cégek',th:'บริษัท',vi:'Công ty',id:'Perusahaan',ms:'Syarikat',tl:'Mga Kumpanya',uk:'Компанії',he:'חברות',af:'Maatskappye',pt_pt:'Empresas',ga:'Cuideachtaí',bn:'কোম্পানি',ur:'کمپنیاں'},
+  games:{pt:'Jogos',en:'Games',es:'Juegos',fr:'Jeux',de:'Spiele',it:'Giochi',ja:'ゲーム',ko:'게임',zh:'游戏',ru:'Игры',ar:'ألعاب',hi:'खेल',tr:'Oyunlar',nl:'Spellen',pl:'Gry',sv:'Spel',no:'Spill',da:'Spil',fi:'Pelit',el:'Παιχνίδια',cs:'Hry',ro:'Jocuri',hu:'Játékok',th:'เกม',vi:'Trò chơi',id:'Permainan',ms:'Permainan',tl:'Mga Laro',uk:'Ігри',he:'משחקים',af:'Speletjies',pt_pt:'Jogos',ga:'Cluichí',bn:'গেমস',ur:'گیمز'},
+  profile:{pt:'Perfil',en:'Profile',es:'Perfil',fr:'Profil',de:'Profil',it:'Profilo',ja:'プロフィール',ko:'프로필',zh:'个人资料',ru:'Профиль',ar:'الملف',hi:'प्रोफ़ाइल',tr:'Profil',nl:'Profiel',pl:'Profil',sv:'Profil',no:'Profil',da:'Profil',fi:'Profiili',el:'Προφίλ',cs:'Profil',ro:'Profil',hu:'Profil',th:'โปรไฟล์',vi:'Hồ sơ',id:'Profil',ms:'Profil',tl:'Profil',uk:'Профіль',he:'פרופיל',af:'Profiel',pt_pt:'Perfil',ga:'Próifíl',bn:'প্রোফাইল',ur:'پروفائل'},
+  logout:{pt:'Sair',en:'Log Out',es:'Salir',fr:'Déconnexion',de:'Abmelden',it:'Esci',ja:'ログアウト',ko:'로그아웃',zh:'退出',ru:'Выйти',ar:'تسجيل الخروج',hi:'बाहर जाओ',tr:'Çıkış',nl:'Uitloggen',pl:'Wyloguj',sv:'Logga ut',no:'Logg ut',da:'Log ud',fi:'Kirjaudu ulos',el:'Αποσύνδεση',cs:'Odhlásit',ro:'Deconectare',hu:'Kijelentkezés',th:'ออกจากระบบ',vi:'Đăng xuất',id:'Keluar',ms:'Log Keluar',tl:'Mag-logout',uk:'Вийти',he:'התנתק',af:'Teken uit',pt_pt:'Sair',ga:'Logáil amach',bn:'বের হও',ur:'لاگ آؤٹ'},
+  back:{pt:'Voltar',en:'Back',es:'Volver',fr:'Retour',de:'Zurück',it:'Indietro',ja:'戻る',ko:'뒤로',zh:'返回',ru:'Назад',ar:'رجوع',hi:'वापस',tr:'Geri',nl:'Terug',pl:'Wróć',sv:'Tillbaka',no:'Tilbake',da:'Tilbage',fi:'Takaisin',el:'Πίσω',cs:'Zpět',ro:'Înapoi',hu:'Vissza',th:'กลับ',vi:'Quay lại',id:'Kembali',ms:'Kembali',tl:'Bumalik',uk:'Назад',he:'חזרה',af:'Terug',pt_pt:'Voltar',ga:'Ar ais',bn:'ফিরে যাও',ur:'واپس'},
+  buy:{pt:'Comprar',en:'Buy',es:'Comprar',fr:'Acheter',de:'Kaufen',it:'Comprare',ja:'買う',ko:'구매',zh:'购买',ru:'Купить',ar:'شراء',hi:'खरीदो',tr:'Satın Al',nl:'Kopen',pl:'Kup',sv:'Köp',no:'Kjøp',da:'Køb',fi:'Osta',el:'Αγορά',cs:'Koupit',ro:'Cumpără',hu:'Vásárlás',th:'ซื้อ',vi:'Mua',id:'Beli',ms:'Beli',tl:'Bilhin',uk:'Купити',he:'קנה',af:'Koop',pt_pt:'Comprar',ga:'Ceannaigh',bn:'কিনো',ur:'خریدیں'},
+  sell:{pt:'Vender',en:'Sell',es:'Vender',fr:'Vendre',de:'Verkaufen',it:'Vendere',ja:'売る',ko:'판매',zh:'卖出',ru:'Продать',ar:'بيع',hi:'बेचो',tr:'Sat',nl:'Verkopen',pl:'Sprzedaj',sv:'Sälj',no:'Selg',da:'Sælg',fi:'Myy',el:'Πούλα',cs:'Prodat',ro:'Vinde',hu:'Eladás',th:'ขาย',vi:'Bán',id:'Jual',ms:'Jual',tl:'Ibenta',uk:'Продати',he:'מכור',af:'Verkoop',pt_pt:'Vender',ga:'Díol',bn:'বেচো',ur:'بیچیں'},
+  cancel:{pt:'Cancelar',en:'Cancel',es:'Cancelar',fr:'Annuler',de:'Abbrechen',it:'Annulla',ja:'キャンセル',ko:'취소',zh:'取消',ru:'Отмена',ar:'إلغاء',hi:'रद्द करो',tr:'İptal',nl:'Annuleren',pl:'Anuluj',sv:'Avbryt',no:'Avbryt',da:'Annuller',fi:'Peruuta',el:'Ακύρωση',cs:'Zrušit',ro:'Anulează',hu:'Mégse',th:'ยกเลิก',vi:'Hủy',id:'Batal',ms:'Batal',tl:'Kanselahin',uk:'Скасувати',he:'בטל',af:'Kanselleer',pt_pt:'Cancelar',ga:'Cealaigh',bn:'বাতিল',ur:'منسوخ کریں'},
+  confirm:{pt:'Confirmar',en:'Confirm',es:'Confirmar',fr:'Confirmer',de:'Bestätigen',it:'Conferma',ja:'確認',ko:'확인',zh:'确认',ru:'Подтвердить',ar:'تأكيد',hi:'पक्का करो',tr:'Onayla',nl:'Bevestigen',pl:'Potwierdź',sv:'Bekräfta',no:'Bekreft',da:'Bekræft',fi:'Vahvista',el:'Επιβεβαίωση',cs:'Potvrdit',ro:'Confirmă',hu:'Megerősítés',th:'ยืนยัน',vi:'Xác nhận',id:'Konfirmasi',ms:'Sahkan',tl:'Kumpirmahin',uk:'Підтвердити',he:'אשר',af:'Bevestig',pt_pt:'Confirmar',ga:'Deimhnigh',bn:'নিশ্চিত করো',ur:'تصدیق کریں'},
+};
+
+function t(key){
+  const tr=TRANSLATIONS[key];
+  if(!tr) return key;
+  return tr[currentLang]||tr['en']||tr['pt']||key;
+}
+
+function selectLang(code){
+  currentLang=code;
+  localStorage.setItem('fc4_lang',code);
+  applyTranslations();
+  showScreen('login');
+}
+
+function renderLangScreen(){
+  const grid=document.getElementById('langGrid');
+  if(!grid) return;
+  grid.innerHTML=LANGS.map(l=>`<button class="lang-btn" onclick="selectLang('${l.code}')"><span class="lang-flag">${l.flag}</span>${l.name}</button>`).join('');
+}
+
+function applyTranslations(){
+  // Tab switch buttons
+  const tabBtns=document.querySelectorAll('.tab-btn');
+  if(tabBtns[0]) tabBtns[0].textContent=t('login_title');
+  if(tabBtns[1]) tabBtns[1].textContent=t('register_title');
+  // Login form labels
+  const lbl_email=document.getElementById('lbl_email');
+  const lbl_password=document.getElementById('lbl_password');
+  const lbl_yourname=document.getElementById('lbl_yourname');
+  const lbl_email2=document.getElementById('lbl_email2');
+  const lbl_password2=document.getElementById('lbl_password2');
+  if(lbl_email) lbl_email.textContent=t('email');
+  if(lbl_password) lbl_password.textContent=t('password');
+  if(lbl_yourname) lbl_yourname.textContent=t('your_name');
+  if(lbl_email2) lbl_email2.textContent=t('email');
+  if(lbl_password2) lbl_password2.textContent=t('password');
+  const btn_login=document.getElementById('btn_login');
+  const btn_register=document.getElementById('btn_register');
+  const btn_parent=document.getElementById('btn_parent');
+  const btn_child=document.getElementById('btn_child');
+  if(btn_login) btn_login.textContent=t('login_btn');
+  if(btn_register) btn_register.textContent=t('register_btn');
+  if(btn_parent) btn_parent.textContent=t('parent_btn');
+  if(btn_child) btn_child.textContent=t('child_btn');
+  // Login subtitle
+  const sub=document.querySelector('#loginScreen .login-subtitle');
+  if(sub) sub.textContent=t('app_subtitle');
+  // Lang change buttons text
+  const loginLangBtn=document.getElementById('loginLangBtnText');
+  const profileLangBtn=document.getElementById('profileLangBtnText');
+  if(loginLangBtn) loginLangBtn.textContent=t('change_lang');
+  if(profileLangBtn) profileLangBtn.textContent=t('change_lang');
+  // Bottom nav
+  const navLabels=[
+    {id:'navMercado', key:'market'},
+    {id:'navAnalise', key:'analysis'},
+    {id:'navEmpresas', key:'companies'},
+    {id:'navJogos', key:'games'},
+    {id:'navPerfil', key:'profile'},
+  ];
+  navLabels.forEach(n=>{
+    const el=document.getElementById(n.id);
+    if(el){const lbl=el.querySelector('.nav-label');if(lbl)lbl.textContent=t(n.key);}
+  });
 }
 
 // ============ DATA MIGRATION ============
