@@ -916,6 +916,9 @@
             <div class="criar-empresa-size-btn" onclick="selectCompanySize('small')" id="compSizeSmall"><span class="size-price">R$ 20</span><span class="size-earn">Renda: R$ 0,05/tick</span></div>
             <div class="criar-empresa-size-btn" onclick="selectCompanySize('medium')" id="compSizeMedium"><span class="size-price">R$ 50</span><span class="size-earn">Renda: R$ 0,15/tick</span></div>
             <div class="criar-empresa-size-btn" onclick="selectCompanySize('large')" id="compSizeLarge"><span class="size-price">R$ 100</span><span class="size-earn">Renda: R$ 0,40/tick</span></div>
+            <div class="criar-empresa-size-btn" onclick="selectCompanySize('xlarge')" id="compSizeXlarge"><span class="size-price">R$ 1.000</span><span class="size-earn">Renda: R$ 5,00/tick</span></div>
+            <div class="criar-empresa-size-btn" onclick="selectCompanySize('mega')" id="compSizeMega"><span class="size-price">R$ 10.000</span><span class="size-earn">Renda: R$ 60,00/tick</span></div>
+            <div class="criar-empresa-size-btn" onclick="selectCompanySize('ultra')" id="compSizeUltra"><span class="size-price">R$ 100.000</span><span class="size-earn">Renda: R$ 800,00/tick</span></div>
           </div>
         </div>
         <button class="btn btn-primary ripple" onclick="createMyCompany()">Criar Empresa 🏗️</button>
@@ -2580,12 +2583,12 @@ function sellCompanyShares(compId){
   ch[child.id]=child;save('children',ch);currentChild=child;showToast(`Vendeu ${sellQty} acao${sellQty!==1?'es':''} de ${comp.icon} ${comp.name} por ${fmt(totalValue)}!`,'success');closeCompanyModal();renderEmpresasTab();const balEl=document.getElementById('cBalance');if(balEl)balEl.textContent=fmt(child.balance);
 }
 function selectCompanySize(size){
-  selectedCompanySize=size;['small','medium','large'].forEach(s=>{const el=document.getElementById('compSize'+s.charAt(0).toUpperCase()+s.slice(1));if(el)el.classList.toggle('selected',s===size);});
+  selectedCompanySize=size;['small','medium','large','xlarge','mega','ultra'].forEach(s=>{const el=document.getElementById('compSize'+s.charAt(0).toUpperCase()+s.slice(1));if(el)el.classList.toggle('selected',s===size);});
 }
 function createMyCompany(){
   if(!currentChild)return;ensureChildCompanyData();const name=document.getElementById('myCompanyName').value.trim();const sector=document.getElementById('myCompanySector').value;
   if(!name){showToast('Digite o nome da empresa!','error');return;}if(!selectedCompanySize){showToast('Escolha o tamanho!','error');return;}
-  const sizeMap={small:{investment:20,incomeRate:0.05},medium:{investment:50,incomeRate:0.15},large:{investment:100,incomeRate:0.40}};const sizeData=sizeMap[selectedCompanySize];
+  const sizeMap={small:{investment:20,incomeRate:0.05},medium:{investment:50,incomeRate:0.15},large:{investment:100,incomeRate:0.40},xlarge:{investment:1000,incomeRate:5.00},mega:{investment:10000,incomeRate:60.00},ultra:{investment:100000,incomeRate:800.00}};const sizeData=sizeMap[selectedCompanySize];
   if(currentChild.balance<sizeData.investment){showToast('Saldo insuficiente!','error');return;}
   const ch=load('children')||{};const child=ch[currentChild.id];if(!child)return;if(!child.companies)child.companies={ownedShares:{},myCompanies:[],dividendsEarned:0};
   child.balance=Math.round((child.balance-sizeData.investment)*100)/100;const sectorIcon=SECTOR_ICONS[sector]||'🏢';
@@ -2597,12 +2600,13 @@ function createMyCompany(){
 function renderMyCompanies(){
   if(!currentChild||!currentChild.companies)return;const list=document.getElementById('myCompaniesList');if(!list)return;const myComps=currentChild.companies.myCompanies||[];
   if(!myComps.length){list.innerHTML='<p style="color:var(--text2);text-align:center;font-size:.82rem;padding:12px;">Voce ainda nao criou nenhuma empresa.</p>';return;}
-  const sizeLabels={small:'Pequena',medium:'Media',large:'Grande'};
-  list.innerHTML=myComps.map(mc=>{const upgradeCost=mc.size==='small'?30:mc.size==='medium'?80:0;const canUpgrade=mc.size!=='large'&&currentChild.balance>=upgradeCost;return `<div class="my-company-card"><span class="mc-icon">${mc.icon}</span><div class="mc-info"><div class="mc-name">${mc.name}</div><div class="mc-sector">${mc.sector} | ${sizeLabels[mc.size]||mc.size} | Nv.${mc.level}</div><div class="mc-stats"><span class="mc-stat">💰 Receita: ${fmt(mc.totalRevenue)}</span><span class="mc-stat">📈 Lucro: ${fmt(mc.totalProfit)}</span></div></div>${mc.size!=='large'?`<button class="mc-upgrade" onclick="upgradeMyCompany('${mc.id}')" ${!canUpgrade?'disabled style="opacity:0.4;cursor:not-allowed;"':''}>⬆️ Upgrade<br><span style="font-size:.6rem;">${fmt(upgradeCost)}</span></button>`:'<span style="font-size:.65rem;color:var(--gold);font-weight:800;">MAX</span>'}</div>`;}).join('');
+  const sizeLabels={small:'Pequena',medium:'Media',large:'Grande',xlarge:'Extra Grande',mega:'Mega',ultra:'Ultra'};
+  const upgCosts={small:30,medium:80,large:800,xlarge:8000,mega:80000};
+  list.innerHTML=myComps.map(mc=>{const upgradeCost=upgCosts[mc.size]||0;const canUpgrade=mc.size!=='ultra'&&upgradeCost>0&&currentChild.balance>=upgradeCost;return `<div class="my-company-card"><span class="mc-icon">${mc.icon}</span><div class="mc-info"><div class="mc-name">${mc.name}</div><div class="mc-sector">${mc.sector} | ${sizeLabels[mc.size]||mc.size} | Nv.${mc.level}</div><div class="mc-stats"><span class="mc-stat">💰 Receita: ${fmt(mc.totalRevenue)}</span><span class="mc-stat">📈 Lucro: ${fmt(mc.totalProfit)}</span></div></div>${mc.size!=='ultra'?`<button class="mc-upgrade" onclick="upgradeMyCompany('${mc.id}')" ${!canUpgrade?'disabled style="opacity:0.4;cursor:not-allowed;"':''}>⬆️ Upgrade<br><span style="font-size:.6rem;">${fmt(upgradeCost)}</span></button>`:'<span style="font-size:.65rem;color:var(--gold);font-weight:800;">MAX</span>'}</div>`;}).join('');
 }
 function upgradeMyCompany(mcId){
   if(!currentChild||!currentChild.companies)return;const ch=load('children')||{};const child=ch[currentChild.id];if(!child||!child.companies)return;const mc=child.companies.myCompanies.find(c=>c.id===mcId);if(!mc)return;
-  let upgradeCost,newSize,newRate;if(mc.size==='small'){upgradeCost=30;newSize='medium';newRate=0.15;}else if(mc.size==='medium'){upgradeCost=80;newSize='large';newRate=0.40;}else{showToast('Empresa ja esta no nivel maximo!','error');return;}
+  let upgradeCost,newSize,newRate;if(mc.size==='small'){upgradeCost=30;newSize='medium';newRate=0.15;}else if(mc.size==='medium'){upgradeCost=80;newSize='large';newRate=0.40;}else if(mc.size==='large'){upgradeCost=800;newSize='xlarge';newRate=5.00;}else if(mc.size==='xlarge'){upgradeCost=8000;newSize='mega';newRate=60.00;}else if(mc.size==='mega'){upgradeCost=80000;newSize='ultra';newRate=800.00;}else{showToast('Empresa ja esta no nivel maximo!','error');return;}
   if(child.balance<upgradeCost){showToast('Saldo insuficiente para upgrade!','error');return;}
   child.balance=Math.round((child.balance-upgradeCost)*100)/100;mc.size=newSize;mc.incomeRate=newRate;mc.investment+=upgradeCost;mc.level++;
   ch[child.id]=child;save('children',ch);currentChild=child;showToast(`${mc.name} atualizada!`,'success');renderEmpresasTab();const balEl=document.getElementById('cBalance');if(balEl)balEl.textContent=fmt(child.balance);
