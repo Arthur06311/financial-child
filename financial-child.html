@@ -1266,7 +1266,16 @@ function showTradingPanel(){
   if(!currentChild.savings)currentChild.savings={balance:0,totalInterest:0,lastUpdate:Date.now()};
   if(!currentChild.shorts)currentChild.shorts={};
   if(!currentChild.realizedGains)currentChild.realizedGains=0;
-  ASSETS.forEach(a=>{if(currentChild.assets[a.id]&&!currentChild.assets[a.id].avgPrice)currentChild.assets[a.id].avgPrice=a.basePrice;});
+  // Ensure ALL assets exist (for users upgrading from older versions)
+  const ph0=load('priceH')||{};
+  ASSETS.forEach(a=>{
+    if(!currentChild.assets[a.id]){
+      currentChild.assets[a.id]={qty:0,price:a.basePrice,avgPrice:a.basePrice};
+      if(!ph0[currentChild.id+'_'+a.id])ph0[currentChild.id+'_'+a.id]=[{p:a.basePrice,t:Date.now()}];
+    }
+    if(currentChild.assets[a.id]&&!currentChild.assets[a.id].avgPrice)currentChild.assets[a.id].avgPrice=a.basePrice;
+  });
+  save('priceH',ph0);
   ch[currentChild.id]=currentChild;save('children',ch);
   loadHistories();selectedAsset='EKO';selectedCat='cripto';selectedTime='5m';
   celebrationShown=false;tickCount=0;totalYieldEarned=currentChild.totalYield||0;
