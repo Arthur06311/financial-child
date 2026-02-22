@@ -1211,7 +1211,7 @@ let currentChild = null;
 let currentView = 'login'; // login, parent, childAccess, trading
 let marketInterval = null;
 let timerInterval = null;
-let timerSeconds = 60;
+let timerSeconds = 5;
 let tradeQty = 1;
 let priceHistory = [];
 let trendDirection = 1;
@@ -1543,21 +1543,21 @@ function showTradingPanel() {
 
 function startMarket() {
   stopMarket();
-  timerSeconds = 60;
+  timerSeconds = 5;
 
   // Update timer every second
   timerInterval = setInterval(() => {
     timerSeconds--;
-    if (timerSeconds < 0) timerSeconds = 60;
+    if (timerSeconds < 0) timerSeconds = 5;
     document.getElementById('timerCount').textContent = timerSeconds;
-    document.getElementById('timerFill').style.width = ((timerSeconds / 60) * 100) + '%';
+    document.getElementById('timerFill').style.width = ((timerSeconds / 5) * 100) + '%';
   }, 1000);
 
-  // Market tick every 60s
+  // Market tick every 5s
   marketInterval = setInterval(() => {
     tickMarket();
-    timerSeconds = 60;
-  }, 60000);
+    timerSeconds = 5;
+  }, 5000);
 }
 
 function stopMarket() {
