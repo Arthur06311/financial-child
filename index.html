@@ -219,6 +219,49 @@
     .rank-assets{font-size:.65rem;color:var(--text2)}
     .rank-value{font-size:.85rem;font-weight:800;text-align:right}
 
+    /* Max Buttons */
+    .max-buttons{display:flex;gap:6px;margin-top:8px}
+    .max-btn{flex:1;padding:8px;border:1px solid var(--card-border);border-radius:8px;background:var(--dark);color:var(--text2);cursor:pointer;font-size:.72rem;font-weight:700;transition:all .2s;text-align:center}
+    .max-btn:hover{border-color:var(--blue);color:var(--text);background:var(--dark3)}
+    .max-btn.max-buy:hover{border-color:var(--green);color:var(--green)}
+    .max-btn.max-sell:hover{border-color:var(--red);color:var(--red)}
+
+    /* News Ticker */
+    .news-section{background:var(--dark2);border:1px solid var(--card-border);border-radius:12px;padding:12px;margin-bottom:12px}
+    .news-header{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+    .news-header span{font-size:.78rem;font-weight:700;color:var(--cyan)}
+    .news-badge{font-size:.55rem;background:var(--red);color:#fff;padding:2px 6px;border-radius:4px;font-weight:700;animation:pulse 1.5s infinite}
+    .news-item{background:var(--dark);border-radius:8px;padding:10px;margin-bottom:6px;border-left:3px solid var(--cyan);font-size:.78rem;line-height:1.4}
+    .news-item:last-child{margin-bottom:0}
+    .news-item .news-hint{color:var(--gold);font-weight:700;font-size:.7rem;margin-top:4px;display:block}
+
+    /* Challenges */
+    .challenges-section{background:linear-gradient(135deg,#131a2e,#1a2233);border:1px solid var(--card-border);border-radius:14px;padding:14px;margin-bottom:12px}
+    .challenges-section h4{font-size:.82rem;color:var(--gold);margin-bottom:10px;font-weight:700}
+    .challenge-item{display:flex;align-items:center;gap:10px;padding:10px;background:var(--dark);border-radius:10px;margin-bottom:6px;border:1px solid transparent;transition:all .3s}
+    .challenge-item:last-child{margin-bottom:0}
+    .challenge-item.completed{border-color:var(--green);background:rgba(34,197,94,.05)}
+    .challenge-icon{font-size:1.3rem;flex-shrink:0}
+    .challenge-info{flex:1}
+    .challenge-name{font-size:.78rem;font-weight:700}
+    .challenge-desc{font-size:.68rem;color:var(--text2);margin-top:2px}
+    .challenge-reward{font-size:.7rem;font-weight:800;color:var(--gold);flex-shrink:0}
+    .challenge-check{color:var(--green);font-size:1rem;flex-shrink:0}
+
+    /* Trade Confirm Modal */
+    .confirm-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:950;animation:fadeIn .2s}
+    .confirm-box{background:var(--dark2);border:1px solid var(--card-border);border-radius:18px;padding:24px;width:90%;max-width:360px;animation:scaleIn .3s}
+    .confirm-title{font-size:1.1rem;font-weight:800;text-align:center;margin-bottom:4px}
+    .confirm-detail{font-size:.85rem;color:var(--text2);text-align:center;margin-bottom:16px}
+    .confirm-question{font-size:.82rem;font-weight:700;color:var(--gold);text-align:center;margin-bottom:10px}
+    .reason-options{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+    .reason-btn{padding:10px 14px;border:1px solid var(--card-border);border-radius:10px;background:var(--dark);color:var(--text);cursor:pointer;font-size:.8rem;font-weight:600;text-align:left;transition:all .2s}
+    .reason-btn:hover{border-color:var(--blue);background:var(--dark3)}
+    .reason-btn .reason-icon{margin-right:6px}
+    .confirm-actions{display:flex;gap:8px}
+    .confirm-actions .btn{flex:1;margin-top:0;padding:11px;font-size:.9rem}
+    .btn-cancel{background:var(--dark3);color:var(--text2)}
+
     .hidden{display:none!important}
 
     @media(max-width:500px){.config-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr 1fr}.price-value{font-size:2rem}.trade-btn{padding:14px 8px;font-size:.95rem}.asset-chip{min-width:72px;padding:6px 8px}.portfolio-grid{grid-template-columns:1fr}.chart-wrap{height:170px}}
@@ -317,6 +360,12 @@
     <div class="chart-wrap"><canvas class="chart-canvas" id="priceChart"></canvas></div>
   </div>
 
+  <!-- News -->
+  <div class="news-section">
+    <div class="news-header"><span>📰 Noticias do Mercado</span><span class="news-badge">AO VIVO</span></div>
+    <div id="newsContainer"></div>
+  </div>
+
   <!-- Holdings -->
   <div class="holdings-bar">
     <div class="holding-item"><div class="h-label">Quantidade</div><div class="h-value" id="cQty" style="color:var(--blue);">0</div></div>
@@ -332,9 +381,19 @@
     <h4>Negociar <span id="tradeAssetName">EKO</span></h4>
     <div class="qty-selector"><label>Qtd:</label><div class="qty-controls"><button class="qty-btn" onclick="changeQty(-1)">-</button><span class="qty-value" id="qtyValue">1</span><button class="qty-btn" onclick="changeQty(1)">+</button></div></div>
     <div class="trade-buttons">
-      <button class="trade-btn buy-btn" id="buyBtn" onclick="handleBuy()">Comprar<span class="btn-sub" id="buyCost"></span></button>
-      <button class="trade-btn sell-btn" id="sellBtn" onclick="handleSell()">Vender<span class="btn-sub" id="sellValue"></span></button>
+      <button class="trade-btn buy-btn" id="buyBtn" onclick="confirmTrade('BUY')">Comprar<span class="btn-sub" id="buyCost"></span></button>
+      <button class="trade-btn sell-btn" id="sellBtn" onclick="confirmTrade('SELL')">Vender<span class="btn-sub" id="sellValue"></span></button>
     </div>
+    <div class="max-buttons">
+      <button class="max-btn max-buy" onclick="buyMax()">💰 COMPRAR MAX</button>
+      <button class="max-btn max-sell" onclick="sellMax()">📤 VENDER TUDO</button>
+    </div>
+  </div>
+
+  <!-- Challenges -->
+  <div class="challenges-section">
+    <h4>🎯 Desafios do Investidor</h4>
+    <div id="challengesList"></div>
   </div>
 
   <!-- Yield -->
@@ -360,6 +419,19 @@
 
 <!-- Overlays -->
 <div id="celebrationOverlay" class="celebration-overlay hidden"><div class="celebration-content"><div class="celebration-emoji">🏆🎉🚀</div><div class="celebration-title">META ATINGIDA!</div><div class="celebration-text" id="celebrationText"></div><button class="btn btn-primary" style="max-width:180px;margin:0 auto;" onclick="closeCelebration()">Valeu! 🎊</button></div></div>
+<!-- Trade Confirm -->
+<div id="confirmOverlay" class="confirm-overlay hidden">
+  <div class="confirm-box">
+    <div class="confirm-title" id="confirmTitle">Comprar EKO?</div>
+    <div class="confirm-detail" id="confirmDetail">2 EKO por R$ 20,00</div>
+    <div class="confirm-question">🧠 Por que voce quer fazer isso?</div>
+    <div class="reason-options" id="reasonOptions"></div>
+    <div class="confirm-actions">
+      <button class="btn btn-cancel" onclick="cancelTrade()">Cancelar</button>
+      <button class="btn btn-primary" id="confirmBtn" onclick="executeTrade()" disabled>Confirmar</button>
+    </div>
+  </div>
+</div>
 <div id="pausedOverlay" class="paused-overlay hidden"><div class="paused-content"><div class="pause-icon">⏸️</div><div class="pause-text">Mercado Pausado</div></div></div>
 
 <script>
@@ -567,6 +639,7 @@ function tickMarket(){
   ASSETS.forEach(a=>{priceHistories[a.id]=ph[child.id+'_'+a.id]||[]});
   // Only update chips every 3rd tick to reduce DOM thrash
   if(tickCount%3===0)renderAssets();
+  if(tickCount%10===0)checkChallenges();
   updateUI();
 }
 
@@ -640,7 +713,7 @@ function updateUI(){
   if(ppct>=100)bar.classList.add('goal-reached');else if(ppct>=90)bar.classList.add('near-goal');
   if(ppct>=100&&!celebrationShown){celebrationShown=true;showCelebration(tv,child.goal_amount)}
 
-  updateYieldUI(child);renderRanking(child);drawChart();renderChildTx();
+  updateYieldUI(child);renderRanking(child);renderNews();renderChallenges();drawChart();renderChildTx();
 }
 
 // ============ RANKING ============
@@ -675,27 +748,180 @@ function renderPortfolio(child){
   grid.innerHTML=owned.map(a=>{const d=child.assets[a.id];return`<div class="portfolio-coin" onclick="selectAsset('${a.id}');selectCat('${a.cat}')" style="${selectedAsset===a.id?'border-color:'+a.color:''}"><span class="pc-icon">${a.icon}</span><div class="pc-info"><div class="pc-name">${a.name}</div><div class="pc-qty">${d.qty} unid.</div></div><div class="pc-val" style="color:${a.color}">${fmt(d.qty*d.price)}</div></div>`}).join('');
 }
 
-function handleBuy(){
+// ============ TRADE CONFIRMATION (Diario do Investidor) ============
+let pendingTrade=null,selectedReason='';
+
+const BUY_REASONS=[
+  {icon:'📉',text:'O preco caiu e esta barato (comprar na baixa)'},
+  {icon:'📊',text:'Acredito que vai subir em breve'},
+  {icon:'💎',text:'Quero ter mais dessa moeda para o rendimento'},
+  {icon:'🎯',text:'Faz parte da minha estrategia para a meta'},
+];
+const SELL_REASONS=[
+  {icon:'📈',text:'O preco subiu bastante (vender na alta)'},
+  {icon:'💰',text:'Quero garantir meu lucro agora'},
+  {icon:'🔄',text:'Quero trocar por outro ativo melhor'},
+  {icon:'🎯',text:'Preciso de saldo para outra oportunidade'},
+];
+
+function confirmTrade(type){
+  const asset=ASSETS.find(a=>a.id===selectedAsset);
+  const state=currentChild.assets?.[selectedAsset];if(!asset||!state)return;
+  const total=state.price*tradeQty;
+
+  if(type==='BUY'&&currentChild.balance<total){showToast('Saldo insuficiente!','error');return}
+  if(type==='SELL'&&state.qty<tradeQty){showToast('Quantidade insuficiente!','error');return}
+
+  pendingTrade={type,asset:selectedAsset,qty:tradeQty,price:state.price,total};
+  selectedReason='';
+
+  document.getElementById('confirmTitle').textContent=`${type==='BUY'?'Comprar':'Vender'} ${asset.icon} ${asset.name}?`;
+  document.getElementById('confirmDetail').textContent=`${tradeQty} unid. por ${fmt(total)}`;
+  document.getElementById('confirmBtn').disabled=true;
+
+  const reasons=type==='BUY'?BUY_REASONS:SELL_REASONS;
+  document.getElementById('reasonOptions').innerHTML=reasons.map((r,i)=>
+    `<button class="reason-btn" onclick="pickReason(${i})" id="reason${i}"><span class="reason-icon">${r.icon}</span>${r.text}</button>`
+  ).join('');
+
+  document.getElementById('confirmOverlay').classList.remove('hidden');
+}
+
+function pickReason(i){
+  selectedReason=i;
+  document.querySelectorAll('.reason-btn').forEach((b,j)=>{
+    b.style.borderColor=j===i?'var(--blue)':'var(--card-border)';
+    b.style.background=j===i?'var(--dark3)':'var(--dark)';
+  });
+  document.getElementById('confirmBtn').disabled=false;
+}
+
+function cancelTrade(){pendingTrade=null;document.getElementById('confirmOverlay').classList.add('hidden')}
+
+function executeTrade(){
+  if(!pendingTrade)return;
+  document.getElementById('confirmOverlay').classList.add('hidden');
+  if(pendingTrade.type==='BUY')execBuy(pendingTrade.qty);
+  else execSell(pendingTrade.qty);
+  checkChallenges();
+  pendingTrade=null;
+}
+
+function execBuy(qty){
   const ch=load('children')||{};const child=ch[currentChild.id];if(!child||!child.is_active)return;
   const asset=ASSETS.find(a=>a.id===selectedAsset);const state=child.assets[selectedAsset];
-  const cost=state.price*tradeQty;if(child.balance<cost){showToast('Saldo insuficiente!','error');return}
-  child.balance=Math.round((child.balance-cost)*100)/100;state.qty+=tradeQty;
+  const cost=state.price*qty;if(child.balance<cost)return;
+  child.balance=Math.round((child.balance-cost)*100)/100;state.qty+=qty;
   ch[child.id]=child;save('children',ch);currentChild=child;
   const tx=load('transactions')||{};if(!tx[child.id])tx[child.id]=[];
-  tx[child.id].push({type:'BUY',asset:selectedAsset,qty:tradeQty,price:state.price,total:cost,time:Date.now()});
-  save('transactions',tx);showToast(`Comprou ${tradeQty} ${asset.icon}${asset.name}!`,'success');updateUI();
+  tx[child.id].push({type:'BUY',asset:selectedAsset,qty,price:state.price,total:cost,time:Date.now()});
+  save('transactions',tx);showToast(`Comprou ${qty} ${asset.icon}${asset.name}!`,'success');updateUI();
 }
-function handleSell(){
+function execSell(qty){
   const ch=load('children')||{};const child=ch[currentChild.id];if(!child||!child.is_active)return;
   const asset=ASSETS.find(a=>a.id===selectedAsset);const state=child.assets[selectedAsset];
-  if(state.qty<tradeQty){showToast('Quantidade insuficiente!','error');return}
-  const val=state.price*tradeQty;child.balance=Math.round((child.balance+val)*100)/100;state.qty-=tradeQty;
+  if(state.qty<qty)return;
+  const val=state.price*qty;child.balance=Math.round((child.balance+val)*100)/100;state.qty-=qty;
   ch[child.id]=child;save('children',ch);currentChild=child;
   const tx=load('transactions')||{};if(!tx[child.id])tx[child.id]=[];
-  tx[child.id].push({type:'SELL',asset:selectedAsset,qty:tradeQty,price:state.price,total:val,time:Date.now()});
-  save('transactions',tx);showToast(`Vendeu ${tradeQty} ${asset.icon}${asset.name}!`,'success');updateUI();
+  tx[child.id].push({type:'SELL',asset:selectedAsset,qty,price:state.price,total:val,time:Date.now()});
+  save('transactions',tx);showToast(`Vendeu ${qty} ${asset.icon}${asset.name}!`,'success');updateUI();
 }
+
+function buyMax(){
+  const state=currentChild.assets?.[selectedAsset];if(!state)return;
+  const maxQty=Math.floor(currentChild.balance/state.price);
+  if(maxQty<=0){showToast('Saldo insuficiente!','error');return}
+  tradeQty=maxQty;document.getElementById('qtyValue').textContent=tradeQty;
+  confirmTrade('BUY');
+}
+function sellMax(){
+  const state=currentChild.assets?.[selectedAsset];if(!state||state.qty<=0){showToast('Voce nao tem esse ativo!','error');return}
+  tradeQty=state.qty;document.getElementById('qtyValue').textContent=tradeQty;
+  confirmTrade('SELL');
+}
+
 function changeQty(d){tradeQty=Math.max(1,tradeQty+d);document.getElementById('qtyValue').textContent=tradeQty;updateUI()}
+
+// ============ MARKET NEWS ============
+const NEWS_TEMPLATES=[
+  {text:'🏭 Fabrica de {asset} aumentou producao! Especialistas dizem que o preco pode {dir}.',hint:'Pense: mais oferta = preco tende a cair?',forUp:false},
+  {text:'🌍 Muitas pessoas querem comprar {asset}! A demanda esta altissima.',hint:'Dica: quando todos querem, o preco geralmente sobe!',forUp:true},
+  {text:'📱 Uma nova tecnologia usa {asset}. Investidores estao animados!',hint:'Novidades boas costumam fazer o preco subir.',forUp:true},
+  {text:'⚠️ Especialistas dizem que {asset} esta caro demais agora.',hint:'Quando esta caro, pode ser hora de vender e esperar cair.',forUp:false},
+  {text:'🎉 {asset} bateu recorde de vendas essa semana!',hint:'Recordes podem significar que o preco ainda vai subir.',forUp:true},
+  {text:'😰 Investidores estao com medo e vendendo {asset}.',hint:'Quando todos vendem, o preco cai. Pode ser hora de comprar barato!',forUp:false},
+  {text:'🏦 O Banco Central disse que {asset} e um bom investimento.',hint:'Noticias positivas de autoridades fazem o preco subir.',forUp:true},
+  {text:'🌧️ Problemas de transporte afetaram a entrega de {asset}.',hint:'Problemas = menos oferta. O que acontece com o preco?',forUp:true},
+];
+
+let currentNews=[];
+function generateNews(){
+  currentNews=[];
+  // Pick 2 random news about random assets
+  const shuffled=[...NEWS_TEMPLATES].sort(()=>Math.random()-.5);
+  for(let i=0;i<2;i++){
+    const template=shuffled[i];
+    const asset=ASSETS[~~(Math.random()*ASSETS.length)];
+    currentNews.push({
+      text:template.text.replace('{asset}',asset.icon+' '+asset.name).replace('{dir}',template.forUp?'subir':'cair'),
+      hint:template.hint,
+      asset:asset.id,
+      forUp:template.forUp
+    });
+  }
+}
+
+function renderNews(){
+  const el=document.getElementById('newsContainer');
+  if(!currentNews.length)generateNews();
+  el.innerHTML=currentNews.map(n=>`<div class="news-item">${n.text}<span class="news-hint">💡 ${n.hint}</span></div>`).join('');
+}
+
+// Rotate news every 45 seconds
+setInterval(()=>{generateNews();renderNews()},45000);
+
+// ============ CHALLENGES ============
+const CHALLENGE_DEFS=[
+  {id:'buy_low',icon:'📉',name:'Comprar na Baixa',desc:'Compre qualquer ativo quando estiver abaixo do preco base',reward:'+R$ 5',check:c=>{const txs=(load('transactions')||{})[c.id]||[];return txs.some(t=>{if(t.type!=='BUY')return false;const a=ASSETS.find(x=>x.id===t.asset);return a&&t.price<a.basePrice})}},
+  {id:'sell_high',icon:'📈',name:'Vender na Alta',desc:'Venda qualquer ativo quando estiver acima de 120% do base',reward:'+R$ 5',check:c=>{const txs=(load('transactions')||{})[c.id]||[];return txs.some(t=>{if(t.type!=='SELL')return false;const a=ASSETS.find(x=>x.id===t.asset);return a&&t.price>a.basePrice*1.2})}},
+  {id:'diversify',icon:'🌈',name:'Diversificar',desc:'Tenha pelo menos 3 ativos diferentes na carteira',reward:'+R$ 10',check:c=>ASSETS.filter(a=>(c.assets?.[a.id]?.qty||0)>0).length>=3},
+  {id:'patience',icon:'🧘',name:'Paciencia',desc:'Acumule mais de R$ 20 em rendimento passivo (EKOs)',reward:'+R$ 8',check:c=>(c.totalYield||0)>=20},
+  {id:'profit',icon:'💰',name:'Lucro Real',desc:'Tenha patrimonio 30% acima do saldo inicial',reward:'+R$ 15',check:c=>calcTotal(c)>=c.initial_balance*1.3},
+  {id:'trader',icon:'⚡',name:'Trader Ativo',desc:'Faca 10 operacoes no total',reward:'+R$ 5',check:c=>{const txs=(load('transactions')||{})[c.id]||[];return txs.length>=10}},
+];
+
+function renderChallenges(){
+  const el=document.getElementById('challengesList');
+  const child=currentChild;
+  const completed=load('challenges_'+child.id)||{};
+  el.innerHTML=CHALLENGE_DEFS.map(ch=>{
+    const done=completed[ch.id]||false;
+    return`<div class="challenge-item ${done?'completed':''}">
+      <span class="challenge-icon">${ch.icon}</span>
+      <div class="challenge-info"><div class="challenge-name">${ch.name}</div><div class="challenge-desc">${ch.desc}</div></div>
+      ${done?'<span class="challenge-check">✅</span>':`<span class="challenge-reward">${ch.reward}</span>`}
+    </div>`;
+  }).join('');
+}
+
+function checkChallenges(){
+  const ch=load('children')||{};const child=ch[currentChild.id];if(!child)return;
+  const completed=load('challenges_'+child.id)||{};
+  let earned=false;
+  CHALLENGE_DEFS.forEach(chal=>{
+    if(completed[chal.id])return;
+    if(chal.check(child)){
+      completed[chal.id]=true;
+      const reward=parseFloat(chal.reward.replace(/[^0-9.]/g,''))||0;
+      child.balance=Math.round((child.balance+reward)*100)/100;
+      earned=true;
+      showToast(`🎯 Desafio "${chal.name}" completo! ${chal.reward}`,'success');
+    }
+  });
+  if(earned){ch[child.id]=child;save('children',ch);currentChild=child;save('challenges_'+child.id,completed)}
+  renderChallenges();
+}
 
 function renderChildTx(){
   const txs=((load('transactions')||{})[currentChild.id]||[]);const el=document.getElementById('cTxList');
