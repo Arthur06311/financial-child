@@ -515,7 +515,7 @@ function renderTimeTabs(){
 }
 function selectTime(id){selectedTime=id;renderTimeTabs();drawChart()}
 
-function startMarket(){stopMarket();ASSETS.forEach(a=>{if(!trendData[a.id])trendData[a.id]={dir:Math.random()>.4?1:-1,ticks:~~(Math.random()*20)+8}});marketInterval=setInterval(tickMarket,800)}
+function startMarket(){stopMarket();ASSETS.forEach(a=>{if(!trendData[a.id])trendData[a.id]={dir:Math.random()>.4?1:-1,ticks:~~(Math.random()*20)+8}});marketInterval=setInterval(tickMarket,2500)}
 function stopMarket(){if(marketInterval)clearInterval(marketInterval);marketInterval=null;if(yieldInterval)clearInterval(yieldInterval);yieldInterval=null}
 
 // ============ YIELD (Passive Income) ============
