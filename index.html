@@ -79,7 +79,7 @@
     .tx-type{font-weight:800;font-size:.78rem;padding:4px 10px;border-radius:8px}
     .tx-buy{background:rgba(34,197,94,.12);color:var(--green)}.tx-sell{background:rgba(239,68,68,.12);color:var(--red)}
     .tx-details{text-align:right}.tx-details .tx-value{font-weight:800;font-size:.9rem}.tx-details .tx-time{color:var(--text2);font-size:.72rem}
-    .trading-panel{min-height:100vh;padding:14px 14px 90px 14px;max-width:520px;margin:0 auto;display:flex;flex-direction:column}
+    .trading-panel{min-height:100vh;padding:14px 14px 140px 14px;max-width:520px;margin:0 auto;display:flex;flex-direction:column}
     .trading-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
     .trading-header h1{font-size:1.2rem;font-weight:900;background:linear-gradient(135deg,var(--gold),#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
     .balance-display{text-align:right}
@@ -268,6 +268,24 @@
     .toast-success{background:rgba(34,197,94,0.9);color:#fff}.toast-error{background:rgba(239,68,68,0.9);color:#fff}.toast-info{background:rgba(59,130,246,0.9);color:#fff}.toast-warn{background:rgba(245,158,11,0.9);color:#000}
     @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
     @keyframes slideOut{from{transform:translateX(0);opacity:1}to{transform:translateX(100%);opacity:0}}
+    /* FIXED TRADE BAR */
+    .fixed-trade-bar{position:fixed;bottom:56px;left:0;right:0;background:rgba(10,14,26,0.95);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,0.08);padding:8px 12px;z-index:790;max-width:520px;margin:0 auto;display:none;animation:slideUpBar .3s ease}
+    @keyframes slideUpBar{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+    .ftb-row{display:flex;align-items:center;gap:8px}
+    .ftb-asset{display:flex;align-items:center;gap:6px;flex-shrink:0}
+    .ftb-asset .ftb-icon{font-size:1.2rem}
+    .ftb-asset .ftb-name{font-size:.72rem;font-weight:900;color:var(--text)}
+    .ftb-price-col{flex:1;text-align:center}
+    .ftb-price{font-size:1.1rem;font-weight:900;font-variant-numeric:tabular-nums;transition:color .3s}
+    .ftb-price.up{color:var(--green)}.ftb-price.down{color:var(--red)}.ftb-price.stable{color:var(--text)}
+    .ftb-change{font-size:.6rem;font-weight:800}
+    .ftb-change.up{color:var(--green)}.ftb-change.down{color:var(--red)}
+    .ftb-btns{display:flex;gap:6px;flex-shrink:0}
+    .ftb-buy,.ftb-sell{padding:10px 16px;border:none;border-radius:12px;font-size:.78rem;font-weight:900;cursor:pointer;transition:all .2s;letter-spacing:.3px}
+    .ftb-buy{background:linear-gradient(135deg,#14532d,var(--green));color:#fff;box-shadow:0 2px 12px rgba(34,197,94,.2)}
+    .ftb-sell{background:linear-gradient(135deg,#7f1d1d,var(--red));color:#fff;box-shadow:0 2px 12px rgba(239,68,68,.2)}
+    .ftb-buy:active,.ftb-sell:active{transform:scale(.95)}
+    .ftb-buy:disabled,.ftb-sell:disabled{opacity:.3;cursor:not-allowed;transform:none}
     .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(10,14,26,0.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-around;padding:6px 0 env(safe-area-inset-bottom,8px);z-index:800;max-width:520px;margin:0 auto}
     .nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 16px;cursor:pointer;transition:all .3s;border-radius:12px;min-width:60px}
     .nav-item:hover{background:rgba(255,255,255,0.04)}
@@ -936,6 +954,18 @@
   </div>
 </div>
 
+<!-- FIXED TRADE BAR (always visible on Mercado tab) -->
+<div id="fixedTradeBar" class="fixed-trade-bar">
+  <div class="ftb-row">
+    <div class="ftb-asset"><span class="ftb-icon" id="ftbIcon">💎</span><span class="ftb-name" id="ftbName">EKO</span></div>
+    <div class="ftb-price-col"><div class="ftb-price stable" id="ftbPrice">R$ 10,00</div><div class="ftb-change" id="ftbChange"></div></div>
+    <div class="ftb-btns">
+      <button class="ftb-buy" id="ftbBuy" onclick="confirmTrade('BUY')">COMPRAR</button>
+      <button class="ftb-sell" id="ftbSell" onclick="confirmTrade('SELL')">VENDER</button>
+    </div>
+  </div>
+</div>
+
 <!-- BOTTOM NAV (child only) -->
 <div id="bottomNav" class="bottom-nav hidden">
   <div class="nav-item active" onclick="switchChildTab('Mercado')" id="navMercado"><span class="nav-icon">📈</span><span class="nav-label">Mercado</span></div>
@@ -1223,6 +1253,7 @@ function switchChildTab(tab){
   if(tab==='Aprender')renderLessons();
   if(tab==='Empresas')renderEmpresasTab();
   if(tab==='Analise')updateAnalyticsTab();
+  showFixedTradeBar(tab==='Mercado');
 }
 
 // ============ PARENT DASHBOARD ============
@@ -1525,6 +1556,28 @@ function updateUI(){
   if(ppct>=100&&!celebrationShown){celebrationShown=true;showCelebration(tv,child.goal_amount);}
   updateYieldUI(child);renderRanking(child);renderNews();renderChallenges();drawChart();renderChildTx();updateXPUI();
   renderOrderBook(price);updateSavingsUI();
+  // Update fixed trade bar
+  updateFixedTradeBar(asset,state,child,diff,pct);
+}
+
+// ============ FIXED TRADE BAR ============
+function updateFixedTradeBar(asset,state,child,diff,pct){
+  const bar=document.getElementById('fixedTradeBar');if(!bar)return;
+  if(currentChildTab!=='Mercado'){bar.style.display='none';return;}
+  bar.style.display='block';
+  const ftbIcon=document.getElementById('ftbIcon'),ftbName=document.getElementById('ftbName');
+  const ftbPrice=document.getElementById('ftbPrice'),ftbChange=document.getElementById('ftbChange');
+  const ftbBuy=document.getElementById('ftbBuy'),ftbSell=document.getElementById('ftbSell');
+  if(ftbIcon)ftbIcon.textContent=asset.icon;
+  if(ftbName)ftbName.textContent=asset.name;
+  if(ftbPrice){ftbPrice.textContent=fmt(state.price);ftbPrice.className='ftb-price '+(diff>0?'up':diff<0?'down':'stable');}
+  if(ftbChange){ftbChange.textContent=`${diff>=0?'+':''}${pct}%`;ftbChange.className='ftb-change '+(diff>=0?'up':'down');}
+  const cost=state.price*tradeQty;const leverMult=leverageActive?2:1;const effectiveCost=cost/leverMult;
+  if(ftbBuy)ftbBuy.disabled=child.balance<effectiveCost;
+  if(ftbSell)ftbSell.disabled=state.qty<tradeQty;
+}
+function showFixedTradeBar(show){
+  const bar=document.getElementById('fixedTradeBar');if(bar)bar.style.display=show?'block':'none';
 }
 
 // ============ RANKING ============
