@@ -2560,7 +2560,6 @@ function createMyCompany(){
   const sizeMap={small:{investment:20,incomeRate:0.05},medium:{investment:50,incomeRate:0.15},large:{investment:100,incomeRate:0.40}};const sizeData=sizeMap[selectedCompanySize];
   if(currentChild.balance<sizeData.investment){showToast('Saldo insuficiente!','error');return;}
   const ch=load('children')||{};const child=ch[currentChild.id];if(!child)return;if(!child.companies)child.companies={ownedShares:{},myCompanies:[],dividendsEarned:0};
-  if(child.companies.myCompanies.length>=5){showToast('Maximo de 5 empresas proprias!','error');return;}
   child.balance=Math.round((child.balance-sizeData.investment)*100)/100;const sectorIcon=SECTOR_ICONS[sector]||'🏢';
   child.companies.myCompanies.push({id:'mc_'+Date.now(),name,sector,icon:sectorIcon,investment:sizeData.investment,incomeRate:sizeData.incomeRate,size:selectedCompanySize,totalRevenue:0,totalProfit:0,createdAt:Date.now(),level:1});
   ch[child.id]=child;save('children',ch);currentChild=child;
