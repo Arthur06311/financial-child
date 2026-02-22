@@ -191,6 +191,34 @@
     .paused-content{text-align:center;color:var(--text2)}
     .paused-content .pause-icon{font-size:3.5rem;margin-bottom:10px}
     .paused-content .pause-text{font-size:1.2rem;font-weight:700}
+    /* Yield Section */
+    .yield-section{background:linear-gradient(135deg,#131a2e,#1a2744);border:1px solid var(--card-border);border-radius:14px;padding:14px;margin-bottom:12px;position:relative;overflow:hidden}
+    .yield-section::after{content:'';position:absolute;top:-50%;right:-50%;width:100%;height:100%;background:radial-gradient(circle,rgba(34,197,94,.05),transparent);pointer-events:none}
+    .yield-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .yield-title{font-size:.82rem;font-weight:700;color:var(--green)}
+    .yield-rate{font-size:.75rem;font-weight:700;color:var(--gold);background:rgba(245,158,11,.1);padding:3px 8px;border-radius:6px}
+    .yield-info{display:flex;gap:8px}
+    .yield-card{flex:1;background:var(--dark);border-radius:10px;padding:10px;text-align:center}
+    .yield-card .y-label{font-size:.65rem;color:var(--text2);font-weight:600;text-transform:uppercase}
+    .yield-card .y-value{font-size:1rem;font-weight:800;margin-top:2px}
+    .yield-card .y-sub{font-size:.6rem;color:var(--green);font-weight:600;margin-top:1px}
+
+    /* Ranking */
+    .ranking-section{background:var(--dark2);border:1px solid var(--card-border);border-radius:14px;padding:14px;margin-bottom:12px}
+    .ranking-section h4{font-size:.82rem;color:var(--text2);margin-bottom:10px;font-weight:600}
+    .rank-list{display:flex;flex-direction:column;gap:6px}
+    .rank-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;background:var(--dark);transition:all .2s}
+    .rank-item.me{background:rgba(59,130,246,.1);border:1px solid var(--blue)}
+    .rank-pos{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;flex-shrink:0}
+    .rank-1{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000}
+    .rank-2{background:linear-gradient(135deg,#94a3b8,#64748b);color:#000}
+    .rank-3{background:linear-gradient(135deg,#cd7f32,#a0522d);color:#fff}
+    .rank-other{background:var(--dark3);color:var(--text2)}
+    .rank-info{flex:1}
+    .rank-name{font-size:.78rem;font-weight:700}
+    .rank-assets{font-size:.65rem;color:var(--text2)}
+    .rank-value{font-size:.85rem;font-weight:800;text-align:right}
+
     .hidden{display:none!important}
 
     @media(max-width:500px){.config-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr 1fr}.price-value{font-size:2rem}.trade-btn{padding:14px 8px;font-size:.95rem}.asset-chip{min-width:72px;padding:6px 8px}.portfolio-grid{grid-template-columns:1fr}.chart-wrap{height:170px}}
@@ -309,6 +337,21 @@
     </div>
   </div>
 
+  <!-- Yield -->
+  <div class="yield-section">
+    <div class="yield-header"><span class="yield-title">💰 Rendimento Passivo</span><span class="yield-rate" id="yieldRate">+0.5%/min</span></div>
+    <div class="yield-info">
+      <div class="yield-card"><div class="y-label">Ganho/min</div><div class="y-value" id="yieldPerMin" style="color:var(--green)">R$ 0,00</div><div class="y-sub">baseado nos seus EKOs</div></div>
+      <div class="yield-card"><div class="y-label">Total ganho</div><div class="y-value" id="yieldTotal" style="color:var(--gold)">R$ 0,00</div><div class="y-sub" id="yieldTime">desde o inicio</div></div>
+    </div>
+  </div>
+
+  <!-- Ranking -->
+  <div class="ranking-section">
+    <h4>🏆 Ranking de Investidores</h4>
+    <div class="rank-list" id="rankList"></div>
+  </div>
+
   <!-- Progress -->
   <div class="progress-section"><div class="progress-header"><span class="progress-label">🎯 Meta</span><span class="progress-value" id="cGoalText">R$0 / R$0</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" id="cProgressBar" style="width:0%"><span class="progress-percent" id="cProgressPct">0%</span></div></div></div>
   <div class="tx-feed"><h4>Ultimas Operacoes</h4><div id="cTxList"><p style="color:var(--text2);text-align:center;padding:10px;font-size:.85rem;">Faca sua primeira operacao!</p></div></div>
@@ -365,7 +408,7 @@ let currentParent=null,currentChild=null,currentView='login';
 let marketInterval=null,tradeQty=1;
 let selectedAsset='EKO',selectedCat='cripto',selectedTime='5m';
 let priceHistories={},trendData={},celebrationShown=false;
-let tickCount=0;
+let tickCount=0,totalYieldEarned=0,yieldInterval=null;
 
 function init(){
   const s=load('session');
@@ -446,8 +489,8 @@ function showTradingPanel(){
   showScreen('trading');
   const ch=load('children')||{};currentChild=ch[currentChild.id]||currentChild;
   if(!currentChild.assets){const assets={};ASSETS.forEach(a=>{assets[a.id]={qty:0,price:a.basePrice}});currentChild.assets=assets;ch[currentChild.id]=currentChild;save('children',ch)}
-  loadHistories();selectedAsset='EKO';selectedCat='cripto';selectedTime='5m';celebrationShown=false;tickCount=0;
-  renderCatTabs();renderAssets();renderTimeTabs();updateUI();startMarket();
+  loadHistories();selectedAsset='EKO';selectedCat='cripto';selectedTime='5m';celebrationShown=false;tickCount=0;totalYieldEarned=currentChild.totalYield||0;
+  renderCatTabs();renderAssets();renderTimeTabs();updateUI();startMarket();startYield();
 }
 function loadHistories(){const ph=load('priceH')||{};priceHistories={};ASSETS.forEach(a=>{priceHistories[a.id]=ph[currentChild.id+'_'+a.id]||[{p:a.basePrice,t:Date.now()}]})}
 
@@ -473,7 +516,41 @@ function renderTimeTabs(){
 function selectTime(id){selectedTime=id;renderTimeTabs();drawChart()}
 
 function startMarket(){stopMarket();ASSETS.forEach(a=>{if(!trendData[a.id])trendData[a.id]={dir:Math.random()>.4?1:-1,ticks:~~(Math.random()*20)+8}});marketInterval=setInterval(tickMarket,800)}
-function stopMarket(){if(marketInterval)clearInterval(marketInterval);marketInterval=null}
+function stopMarket(){if(marketInterval)clearInterval(marketInterval);marketInterval=null;if(yieldInterval)clearInterval(yieldInterval);yieldInterval=null}
+
+// ============ YIELD (Passive Income) ============
+function getYieldRate(child){
+  // Yield based on EKO holdings: 0.5% per minute of EKO value
+  // More EKOs = more passive income
+  const ekoState=child.assets?.['EKO'];
+  if(!ekoState||ekoState.qty<=0)return{rate:0,perMin:0};
+  const ekoValue=ekoState.qty*ekoState.price;
+  const rate=0.005;// 0.5% per minute
+  const perMin=ekoValue*rate;
+  return{rate,perMin,ekoValue,ekoQty:ekoState.qty};
+}
+function startYield(){
+  if(yieldInterval)clearInterval(yieldInterval);
+  // Apply yield every 10 seconds (1/6 of per-minute rate)
+  yieldInterval=setInterval(()=>{
+    const ch=load('children')||{};const child=ch[currentChild.id];
+    if(!child||!child.is_active)return;
+    const y=getYieldRate(child);if(y.perMin<=0)return;
+    const earning=Math.round((y.perMin/6)*100)/100;// 10s = 1/6 min
+    child.balance=Math.round((child.balance+earning)*100)/100;
+    totalYieldEarned=Math.round((totalYieldEarned+earning)*100)/100;
+    child.totalYield=totalYieldEarned;
+    ch[child.id]=child;save('children',ch);currentChild=child;
+    updateYieldUI(child);
+  },10000);
+}
+function updateYieldUI(child){
+  const y=getYieldRate(child);
+  document.getElementById('yieldRate').textContent=y.perMin>0?`+${(y.rate*100).toFixed(1)}%/min`:'Compre EKOs!';
+  document.getElementById('yieldPerMin').textContent=y.perMin>0?fmt(y.perMin):'R$ 0,00';
+  document.getElementById('yieldTotal').textContent=fmt(totalYieldEarned);
+  document.getElementById('yieldTime').textContent=y.ekoQty?`${y.ekoQty} EKOs gerando renda`:'compre EKOs para ganhar';
+}
 
 function tickMarket(){
   const ch=load('children')||{};const child=ch[currentChild.id];if(!child||!child.is_active)return;
@@ -563,7 +640,39 @@ function updateUI(){
   if(ppct>=100)bar.classList.add('goal-reached');else if(ppct>=90)bar.classList.add('near-goal');
   if(ppct>=100&&!celebrationShown){celebrationShown=true;showCelebration(tv,child.goal_amount)}
 
-  drawChart();renderChildTx();
+  updateYieldUI(child);renderRanking(child);drawChart();renderChildTx();
+}
+
+// ============ RANKING ============
+function renderRanking(child){
+  const el=document.getElementById('rankList');
+  // Generate simulated competitors + real player
+  const competitors=[
+    {name:'🤖 RoboTrader',value:getSimValue(180,50)},
+    {name:'🦊 RaposaEsper',value:getSimValue(150,40)},
+    {name:'🐢 TartaLenta',value:getSimValue(90,20)},
+    {name:'🦁 LeaoFeroz',value:getSimValue(200,60)},
+    {name:'🐰 CoelhoVeloz',value:getSimValue(130,30)},
+  ];
+  const myValue=calcTotal(child);
+  const all=[...competitors,{name:`⭐ ${child.name} (Voce)`,value:myValue,me:true}];
+  all.sort((a,b)=>b.value-a.value);
+
+  el.innerHTML=all.map((p,i)=>{
+    const posClass=i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-other';
+    const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+    return`<div class="rank-item ${p.me?'me':''}">
+      <div class="rank-pos ${posClass}">${medal||i+1}</div>
+      <div class="rank-info"><div class="rank-name">${p.name}</div><div class="rank-assets">${p.me?ASSETS.filter(a=>(child.assets?.[a.id]?.qty||0)>0).length+' ativos':'investidor virtual'}</div></div>
+      <div class="rank-value" style="color:${p.me?'var(--gold)':'var(--text)'}">${fmt(p.value)}</div>
+    </div>`;
+  }).join('');
+}
+function getSimValue(base,variance){
+  // Simulated competitors with slow drift
+  const time=Date.now()/60000;// minutes
+  const drift=Math.sin(time*.1+base)*variance+Math.cos(time*.07+base*.5)*variance*.5;
+  return Math.max(50,base+drift);
 }
 
 function renderPortfolio(child){
