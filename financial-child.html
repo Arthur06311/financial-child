@@ -429,6 +429,103 @@
     .levelup-title{font-size:1.8rem;font-weight:900;color:var(--gold);margin-bottom:6px}
     .levelup-level{font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:20px}
 
+    /* ===== EMPRESAS TAB ===== */
+    .empresas-portfolio-bar{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+    .empresas-portfolio-card{background:linear-gradient(135deg,rgba(245,158,11,0.08),rgba(139,92,246,0.08));backdrop-filter:blur(12px);border:1px solid rgba(245,158,11,0.15);border-radius:16px;padding:14px;text-align:center}
+    .empresas-portfolio-card .ep-label{font-size:.65rem;color:var(--text2);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+    .empresas-portfolio-card .ep-value{font-size:1.15rem;font-weight:900;margin-top:3px}
+
+    .criar-empresa-section{background:linear-gradient(135deg,rgba(34,197,94,0.1),rgba(6,182,212,0.1));backdrop-filter:blur(16px);border:1px solid rgba(34,197,94,0.2);border-radius:20px;padding:18px;margin-bottom:16px;position:relative;overflow:hidden}
+    .criar-empresa-section::before{content:'';position:absolute;top:-50%;right:-50%;width:100%;height:100%;background:radial-gradient(circle,rgba(34,197,94,.06),transparent);pointer-events:none}
+    .criar-empresa-section h4{font-size:.9rem;font-weight:900;color:var(--green);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+    .criar-empresa-form{display:grid;gap:10px}
+    .criar-empresa-form .form-group{margin-bottom:0}
+    .criar-empresa-size-options{display:flex;gap:8px}
+    .criar-empresa-size-btn{flex:1;padding:12px 8px;border:1.5px solid var(--glass-border);border-radius:12px;background:rgba(0,0,0,0.2);color:var(--text);cursor:pointer;text-align:center;transition:all .3s;font-size:.78rem;font-weight:700}
+    .criar-empresa-size-btn:hover{border-color:var(--gold);transform:translateY(-1px)}
+    .criar-empresa-size-btn.selected{border-color:var(--green);background:rgba(34,197,94,0.1);color:var(--green)}
+    .criar-empresa-size-btn .size-price{font-size:1rem;font-weight:900;display:block;margin-bottom:2px}
+    .criar-empresa-size-btn .size-earn{font-size:.65rem;color:var(--text2)}
+
+    .my-companies-section{margin-bottom:16px}
+    .my-companies-section h4{font-size:.85rem;color:var(--text2);font-weight:700;margin-bottom:10px}
+    .my-company-card{background:rgba(0,0,0,0.2);backdrop-filter:blur(12px);border:1px solid rgba(34,197,94,0.15);border-radius:16px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
+    .my-company-card .mc-icon{font-size:1.8rem;flex-shrink:0}
+    .my-company-card .mc-info{flex:1}
+    .my-company-card .mc-name{font-size:.88rem;font-weight:800}
+    .my-company-card .mc-sector{font-size:.65rem;color:var(--text2);font-weight:600}
+    .my-company-card .mc-stats{display:flex;gap:12px;margin-top:4px}
+    .my-company-card .mc-stat{font-size:.68rem;color:var(--green);font-weight:700}
+    .my-company-card .mc-upgrade{padding:8px 14px;border:1px solid rgba(245,158,11,0.3);border-radius:10px;background:rgba(245,158,11,0.08);color:var(--gold);cursor:pointer;font-size:.7rem;font-weight:800;transition:all .3s;flex-shrink:0}
+    .my-company-card .mc-upgrade:hover{background:rgba(245,158,11,0.15);transform:translateY(-1px)}
+
+    .company-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:16px}
+    .company-card{background:rgba(19,26,46,0.5);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.06);border-radius:18px;padding:16px;transition:all .3s;position:relative;overflow:hidden}
+    .company-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.25);border-color:rgba(255,255,255,0.12)}
+    .company-card-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+    .company-card-icon{font-size:1.8rem;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.2);border-radius:12px;flex-shrink:0}
+    .company-card-info{flex:1}
+    .company-card-name{font-size:.92rem;font-weight:900}
+    .company-card-sector{display:inline-block;font-size:.6rem;font-weight:800;padding:3px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+    .sector-brinquedos{background:rgba(236,72,153,0.15);color:#ec4899}
+    .sector-tecnologia{background:rgba(59,130,246,0.15);color:#3b82f6}
+    .sector-animais{background:rgba(163,230,53,0.15);color:#a3e635}
+    .sector-alimentacao{background:rgba(249,115,22,0.15);color:#f97316}
+    .sector-educacao{background:rgba(139,92,246,0.15);color:#8b5cf6}
+    .sector-esportes{background:rgba(34,197,94,0.15);color:#22c55e}
+    .sector-entretenimento{background:rgba(6,182,212,0.15);color:#06b6d4}
+    .sector-sustentabilidade{background:rgba(132,204,22,0.15);color:#84cc16}
+    .sector-comida{background:rgba(249,115,22,0.15);color:#f97316}
+    .sector-roupas{background:rgba(244,114,182,0.15);color:#f472b6}
+
+    .company-card-price-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .company-card-price{font-size:1.2rem;font-weight:900}
+    .company-card-price.up{color:var(--green)}.company-card-price.down{color:var(--red)}.company-card-price.stable{color:var(--text)}
+    .company-card-change{font-size:.72rem;font-weight:800;padding:3px 8px;border-radius:6px}
+    .company-card-change.up{background:rgba(34,197,94,0.12);color:var(--green)}
+    .company-card-change.down{background:rgba(239,68,68,0.12);color:var(--red)}
+    .company-dividend-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(251,191,36,0.15));border:1px solid rgba(245,158,11,0.25);color:var(--gold);font-size:.68rem;font-weight:900;padding:4px 10px;border-radius:8px}
+    .company-sparkline{height:30px;margin:6px 0}
+    .company-sparkline canvas{width:100%;height:100%;border-radius:6px}
+    .company-stars{color:var(--gold);font-size:.75rem;letter-spacing:1px}
+    .company-card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:10px;gap:8px}
+    .company-owned-badge{font-size:.7rem;color:var(--cyan);font-weight:800;background:rgba(6,182,212,0.1);padding:4px 10px;border-radius:8px}
+    .company-invest-btn{padding:10px 20px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;font-size:.8rem;font-weight:900;cursor:pointer;transition:all .3s;text-transform:uppercase;letter-spacing:.5px}
+    .company-invest-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(59,130,246,0.3)}
+
+    /* COMPANY INVEST MODAL */
+    .company-modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:960;animation:fadeIn .2s}
+    .company-modal-box{background:var(--dark2);border:1px solid var(--glass-border);border-radius:22px;padding:24px;width:92%;max-width:440px;max-height:88vh;overflow-y:auto;animation:scaleIn .3s;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+    .company-modal-box::-webkit-scrollbar{width:4px}
+    .company-modal-box::-webkit-scrollbar-thumb{background:var(--dark4);border-radius:4px}
+    .company-modal-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--glass-border)}
+    .company-modal-header .cm-icon{font-size:2.2rem}
+    .company-modal-header .cm-info{flex:1}
+    .company-modal-header .cm-name{font-size:1.1rem;font-weight:900}
+    .company-modal-header .cm-sector{font-size:.72rem;color:var(--text2)}
+    .company-modal-close{width:32px;height:32px;border-radius:50%;border:1px solid var(--glass-border);background:rgba(0,0,0,0.2);color:var(--text2);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .3s;flex-shrink:0}
+    .company-modal-close:hover{border-color:var(--red);color:var(--red)}
+    .company-modal-desc{font-size:.82rem;color:var(--text2);line-height:1.5;margin-bottom:14px;padding:12px;background:rgba(0,0,0,0.15);border-radius:12px}
+    .company-report{background:rgba(0,0,0,0.2);border:1px solid var(--glass-border);border-radius:14px;padding:14px;margin-bottom:14px}
+    .company-report h5{font-size:.78rem;font-weight:800;color:var(--gold);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px}
+    .company-report-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:.8rem}
+    .company-report-row:last-child{border-bottom:none}
+    .company-report-label{color:var(--text2);font-weight:600}
+    .company-report-value{font-weight:800}
+    .company-modal-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
+    .company-modal-stat{background:rgba(0,0,0,0.15);border-radius:10px;padding:10px;text-align:center}
+    .company-modal-stat .cms-val{font-size:1rem;font-weight:900;margin-bottom:2px}
+    .company-modal-stat .cms-label{font-size:.6rem;color:var(--text2);font-weight:700;text-transform:uppercase}
+    .company-trade-section{background:rgba(0,0,0,0.15);border:1px solid var(--glass-border);border-radius:14px;padding:14px;margin-bottom:10px}
+    .company-trade-section h5{font-size:.78rem;font-weight:800;color:var(--text2);margin-bottom:10px;text-align:center}
+    .company-qty-row{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:10px}
+    .company-qty-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--glass-border);background:rgba(0,0,0,0.2);color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s}
+    .company-qty-btn:hover{border-color:var(--gold);color:var(--gold)}
+    .company-qty-val{font-size:1.3rem;font-weight:900;min-width:30px;text-align:center}
+    .company-total-cost{text-align:center;font-size:.82rem;color:var(--text2);margin-bottom:12px}
+    .company-trade-btns{display:flex;gap:10px}
+    .company-trade-btns .btn{flex:1;margin-top:0;padding:12px;font-size:.88rem}
+
     .hidden{display:none!important}
     @media(max-width:500px){
       .config-grid{grid-template-columns:1fr}
@@ -440,6 +537,8 @@
       .chart-wrap{height:170px}
       .profile-stats{grid-template-columns:1fr 1fr}
       .achievement-grid{grid-template-columns:repeat(3,1fr)}
+      .empresas-portfolio-bar{grid-template-columns:1fr 1fr}
+      .company-modal-stats{grid-template-columns:1fr 1fr 1fr}
     }
   </style>
 </head>
@@ -594,6 +693,46 @@
     <div class="tx-feed"><h4>Ultimas Operacoes</h4><div id="cTxList"><p style="color:var(--text2);text-align:center;padding:10px;font-size:.85rem;">Faca sua primeira operacao!</p></div></div>
   </div>
 
+  <!-- TAB: EMPRESAS -->
+  <div id="tabEmpresas" class="tab-content">
+    <h3 style="text-align:center;margin-bottom:18px;font-size:1.2rem;font-weight:900;">🏢 Empresas & Investimentos</h3>
+
+    <!-- Portfolio Summary -->
+    <div class="empresas-portfolio-bar" id="empresasPortfolioBar">
+      <div class="empresas-portfolio-card"><div class="ep-label">Total Investido</div><div class="ep-value" id="epTotalInvested" style="color:var(--blue)">R$ 0,00</div></div>
+      <div class="empresas-portfolio-card"><div class="ep-label">Dividendos Ganhos</div><div class="ep-value" id="epDividendsEarned" style="color:var(--green)">R$ 0,00</div></div>
+      <div class="empresas-portfolio-card"><div class="ep-label">Empresas Investidas</div><div class="ep-value" id="epCompaniesCount" style="color:var(--purple)">0</div></div>
+      <div class="empresas-portfolio-card"><div class="ep-label">Renda Projetada/min</div><div class="ep-value" id="epProjectedIncome" style="color:var(--gold)">R$ 0,00</div></div>
+    </div>
+
+    <!-- Criar Minha Empresa -->
+    <div class="criar-empresa-section">
+      <h4>🚀 Criar Minha Empresa</h4>
+      <div class="criar-empresa-form">
+        <div class="form-group"><label>Nome da Empresa</label><input type="text" id="myCompanyName" placeholder="Ex: Super Lanches" maxlength="20"></div>
+        <div class="form-group"><label>Setor</label><select id="myCompanySector"><option value="Comida">🍔 Comida</option><option value="Brinquedos">🧸 Brinquedos</option><option value="Tecnologia">🎮 Tecnologia</option><option value="Roupas">👕 Roupas</option><option value="Animais">🐶 Animais</option><option value="Educacao">📚 Educacao</option></select></div>
+        <div class="form-group"><label>Investimento Inicial</label>
+          <div class="criar-empresa-size-options" id="compSizeOptions">
+            <div class="criar-empresa-size-btn" onclick="selectCompanySize('small')" id="compSizeSmall"><span class="size-price">R$ 20</span><span class="size-earn">Renda: R$ 0,05/tick</span></div>
+            <div class="criar-empresa-size-btn" onclick="selectCompanySize('medium')" id="compSizeMedium"><span class="size-price">R$ 50</span><span class="size-earn">Renda: R$ 0,15/tick</span></div>
+            <div class="criar-empresa-size-btn" onclick="selectCompanySize('large')" id="compSizeLarge"><span class="size-price">R$ 100</span><span class="size-earn">Renda: R$ 0,40/tick</span></div>
+          </div>
+        </div>
+        <button class="btn btn-primary ripple" onclick="createMyCompany()">Criar Empresa 🏗️</button>
+      </div>
+    </div>
+
+    <!-- Minhas Empresas -->
+    <div class="my-companies-section" id="myCompaniesSection">
+      <h4>🏭 Minhas Empresas</h4>
+      <div id="myCompaniesList"><p style="color:var(--text2);text-align:center;font-size:.82rem;padding:12px;">Voce ainda nao criou nenhuma empresa.</p></div>
+    </div>
+
+    <!-- Company Cards -->
+    <h4 style="font-size:.85rem;color:var(--text2);font-weight:700;margin-bottom:12px;">📊 Empresas Disponiveis para Investir</h4>
+    <div class="company-grid" id="companyGrid"></div>
+  </div>
+
   <!-- TAB: JOGOS -->
   <div id="tabJogos" class="tab-content">
     <h3 style="text-align:center;margin-bottom:18px;font-size:1.2rem;font-weight:900;">🎮 Mini-Games</h3>
@@ -654,6 +793,9 @@
   <div class="nav-item active" onclick="switchChildTab('Mercado')" id="navMercado">
     <span class="nav-icon">📈</span><span class="nav-label">Mercado</span>
   </div>
+  <div class="nav-item" onclick="switchChildTab('Empresas')" id="navEmpresas">
+    <span class="nav-icon">🏢</span><span class="nav-label">Empresas</span>
+  </div>
   <div class="nav-item" onclick="switchChildTab('Jogos')" id="navJogos">
     <span class="nav-icon">🎮</span><span class="nav-label">Jogos</span>
   </div>
@@ -690,6 +832,11 @@
     <div class="levelup-level" id="levelUpText">Nivel 2 - Aprendiz</div>
     <button class="btn btn-primary ripple" style="max-width:200px;margin:0 auto;" onclick="closeLevelUp()">Incrivel! ✨</button>
   </div>
+</div>
+
+<!-- COMPANY INVEST MODAL -->
+<div id="companyModalOverlay" class="company-modal-overlay hidden">
+  <div class="company-modal-box" id="companyModalBox"></div>
 </div>
 
 <!-- GAME OVERLAY -->
@@ -914,7 +1061,7 @@ function showScreen(s) {
 // ============ BOTTOM NAV / TABS ============
 function switchChildTab(tab) {
   currentChildTab = tab;
-  ['Mercado', 'Jogos', 'Aprender', 'Perfil'].forEach(t => {
+  ['Mercado', 'Empresas', 'Jogos', 'Aprender', 'Perfil'].forEach(t => {
     const el = document.getElementById('tab' + t);
     const nav = document.getElementById('nav' + t);
     if (el) { el.classList.toggle('active', t === tab); }
@@ -922,6 +1069,7 @@ function switchChildTab(tab) {
   });
   if (tab === 'Perfil') updateProfileTab();
   if (tab === 'Aprender') renderLessons();
+  if (tab === 'Empresas') renderEmpresasTab();
 }
 
 // ============ PARENT DASHBOARD ============
@@ -998,6 +1146,8 @@ function resetChildAccount() {
   const tx = load('transactions') || {}; tx[c.id] = []; save('transactions', tx);
   save('challenges_' + c.id, {});
   save('lessons_' + c.id, {});
+  c.companies = { ownedShares: {}, myCompanies: [], dividendsEarned: 0 };
+  localStorage.removeItem('fc4_firstDividendXP_' + c.id);
   currentChild = c; showToast('Resetado!', 'success'); refreshParent();
 }
 
@@ -1022,6 +1172,8 @@ function showTradingPanel() {
   loadHistories(); selectedAsset = 'EKO'; selectedCat = 'cripto'; selectedTime = '5m';
   celebrationShown = false; tickCount = 0; totalYieldEarned = currentChild.totalYield || 0;
   currentChildTab = 'Mercado';
+  ensureChildCompanyData();
+  initCompanyData();
   // Set welcome name
   const wbg = document.getElementById('wbGreeting');
   if (wbg) wbg.textContent = `Ola, ${currentChild.name}! 👋`;
@@ -1076,11 +1228,14 @@ function selectTime(id) { selectedTime = id; renderTimeTabs(); drawChart(); }
 function startMarket() {
   stopMarket();
   ASSETS.forEach(a => { if (!trendData[a.id]) trendData[a.id] = { dir: Math.random() > .4 ? 1 : -1, ticks: ~~(Math.random() * 20) + 8 }; });
+  initCompanyData();
   marketInterval = setInterval(tickMarket, 3000);
+  startDividendInterval();
 }
 function stopMarket() {
   if (marketInterval) clearInterval(marketInterval); marketInterval = null;
   if (yieldInterval) clearInterval(yieldInterval); yieldInterval = null;
+  stopDividendInterval();
 }
 
 // ============ YIELD ============
@@ -1133,6 +1288,13 @@ function tickMarket() {
   ASSETS.forEach(a => { priceHistories[a.id] = ph[child.id + '_' + a.id] || []; });
   if (tickCount % 3 === 0) renderAssets();
   if (tickCount % 10 === 0) checkChallenges();
+  // Tick company prices alongside market
+  tickCompanyPrices();
+  // Update empresas tab if visible
+  if (currentChildTab === 'Empresas' && tickCount % 3 === 0) {
+    renderCompanyCards();
+    renderEmpresasPortfolio();
+  }
   updateUI();
 }
 
@@ -1152,6 +1314,17 @@ function calcPrice(asset, cur, volatility) {
 function calcTotal(child) {
   let t = child.balance;
   ASSETS.forEach(a => { const d = child.assets?.[a.id]; if (d) t += d.qty * d.price; });
+  // Include company shares value
+  if (child.companies && child.companies.ownedShares) {
+    const cp = load('companyPrices') || {};
+    COMPANIES.forEach(comp => {
+      const qty = child.companies.ownedShares[comp.id] || 0;
+      if (qty > 0) {
+        const price = cp[comp.id] || comp.basePrice;
+        t += qty * price;
+      }
+    });
+  }
   return t;
 }
 
@@ -2014,6 +2187,694 @@ function shuffle(arr) {
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
+}
+
+// ============================================================
+// EMPRESAS / COMPANY SYSTEM
+// ============================================================
+
+const COMPANIES = [
+  { id:'toyworld', name:'ToyWorld', icon:'🧸', sector:'Brinquedos', basePrice:12, dividendRate:0.03, desc:'A maior loja de brinquedos do mundo! Vende bonecas, carrinhos, jogos de tabuleiro e muito mais para criancas felizes.' },
+  { id:'gamezone', name:'GameZone', icon:'🎮', sector:'Tecnologia', basePrice:25, dividendRate:0.02, desc:'Empresa de tecnologia que cria video games e aplicativos incriveis para celular e computador.' },
+  { id:'petlove', name:'PetLove', icon:'🐶', sector:'Animais', basePrice:8, dividendRate:0.04, desc:'Cuida dos animais de estimacao! Vende racao, brinquedos para pets e oferece servicos veterinarios.' },
+  { id:'foodking', name:'FoodKing', icon:'🍔', sector:'Alimentacao', basePrice:15, dividendRate:0.035, desc:'Rede de restaurantes famosa por seus hamburgueres deliciosos e batatas fritas crocantes.' },
+  { id:'bookstar', name:'BookStar', icon:'📚', sector:'Educacao', basePrice:10, dividendRate:0.05, desc:'Editora que publica livros educativos, historias infantis e materiais escolares de qualidade.' },
+  { id:'sportmax', name:'SportMax', icon:'⚽', sector:'Esportes', basePrice:20, dividendRate:0.025, desc:'Loja de artigos esportivos - bolas, tenis, roupas e equipamentos para todos os esportes!' },
+  { id:'musicbeat', name:'MusicBeat', icon:'🎵', sector:'Entretenimento', basePrice:18, dividendRate:0.02, desc:'Plataforma de musica e shows! Produz concertos, festivais e aplicativos de streaming.' },
+  { id:'ecogreen', name:'EcoGreen', icon:'🌱', sector:'Sustentabilidade', basePrice:6, dividendRate:0.06, desc:'Empresa verde que planta arvores, recicla materiais e cria produtos sustentaveis para o planeta.' },
+];
+
+const SECTOR_ICONS = { Comida:'🍔', Brinquedos:'🧸', Tecnologia:'🎮', Roupas:'👕', Animais:'🐶', Educacao:'📚', Esportes:'⚽', Entretenimento:'🎵', Sustentabilidade:'🌱', Alimentacao:'🍔' };
+const SECTOR_CLASSES = { Brinquedos:'brinquedos', Tecnologia:'tecnologia', Animais:'animais', Alimentacao:'alimentacao', Educacao:'educacao', Esportes:'esportes', Entretenimento:'entretenimento', Sustentabilidade:'sustentabilidade', Comida:'comida', Roupas:'roupas' };
+
+let companyPrices = {};
+let companyPH = {};
+let companyTrends = {};
+let companyPerformance = {};
+let dividendInterval = null;
+let selectedCompanySize = null;
+let companyModalQty = 1;
+let companyTickCount = 0;
+
+function initCompanyData() {
+  companyPrices = load('companyPrices') || {};
+  companyPH = load('companyPH') || {};
+  companyPerformance = load('companyPerf') || {};
+
+  COMPANIES.forEach(c => {
+    if (!companyPrices[c.id]) companyPrices[c.id] = c.basePrice;
+    if (!companyPH[c.id]) companyPH[c.id] = [{ p: c.basePrice, t: Date.now() }];
+    if (!companyPerformance[c.id]) companyPerformance[c.id] = Math.floor(Math.random() * 3) + 3; // 3-5 stars
+    if (!companyTrends[c.id]) companyTrends[c.id] = { dir: Math.random() > 0.4 ? 1 : -1, ticks: Math.floor(Math.random() * 25) + 10 };
+  });
+  save('companyPrices', companyPrices);
+  save('companyPH', companyPH);
+  save('companyPerf', companyPerformance);
+}
+
+function ensureChildCompanyData() {
+  if (!currentChild) return;
+  const ch = load('children') || {};
+  const child = ch[currentChild.id];
+  if (!child) return;
+  if (!child.companies) {
+    child.companies = { ownedShares: {}, myCompanies: [], dividendsEarned: 0 };
+    ch[child.id] = child;
+    save('children', ch);
+    currentChild = child;
+  }
+}
+
+function tickCompanyPrices() {
+  companyTickCount++;
+  COMPANIES.forEach(comp => {
+    const cur = companyPrices[comp.id] || comp.basePrice;
+    const perf = companyPerformance[comp.id] || 3;
+
+    let td = companyTrends[comp.id];
+    if (!td) { td = { dir: 1, ticks: 15 }; companyTrends[comp.id] = td; }
+    td.ticks--;
+    if (td.ticks <= 0) {
+      td.dir = Math.random() > 0.45 ? 1 : -1;
+      td.ticks = Math.floor(Math.random() * 25) + 10;
+    }
+
+    // Lower volatility than crypto
+    const base = 0.012;
+    let v = Math.random() * (base * 2) - base;
+    v += td.dir * (Math.random() * 0.005 + 0.002);
+    // Performance affects tendency
+    const perfBias = (perf - 3) * 0.002; // 5 stars = +0.004, 1 star = -0.004
+    v += perfBias;
+    // Mean reversion
+    v -= ((cur - comp.basePrice) / comp.basePrice) * 0.015;
+
+    let np = cur * (1 + v);
+    np = Math.max(comp.basePrice * 0.3, Math.min(comp.basePrice * 3, np));
+    np = Math.round(np * 100) / 100;
+    companyPrices[comp.id] = np;
+
+    if (!companyPH[comp.id]) companyPH[comp.id] = [];
+    companyPH[comp.id].push({ p: np, t: Date.now() });
+    if (companyPH[comp.id].length > 500) companyPH[comp.id] = companyPH[comp.id].slice(-500);
+  });
+
+  // Randomly change performance every ~40 ticks (~2 min at 3s/tick)
+  if (companyTickCount % 40 === 0) {
+    COMPANIES.forEach(comp => {
+      const change = Math.random();
+      if (change < 0.3) {
+        let perf = companyPerformance[comp.id] || 3;
+        perf += Math.random() > 0.5 ? 1 : -1;
+        perf = Math.max(1, Math.min(5, perf));
+        companyPerformance[comp.id] = perf;
+      }
+    });
+    save('companyPerf', companyPerformance);
+  }
+
+  save('companyPrices', companyPrices);
+  save('companyPH', companyPH);
+}
+
+function getCompanyRevenue(comp) {
+  const price = companyPrices[comp.id] || comp.basePrice;
+  const ratio = price / comp.basePrice;
+  return Math.round(ratio * 1000 * (0.8 + Math.random() * 0.4));
+}
+
+function getCompanyEmployees(comp) {
+  const perf = companyPerformance[comp.id] || 3;
+  return Math.round(50 + perf * 20 + Math.random() * 30);
+}
+
+function getCompanyRisk(comp) {
+  const ph = companyPH[comp.id] || [];
+  if (ph.length < 5) return 'Medio';
+  const recent = ph.slice(-10).map(x => x.p);
+  const avg = recent.reduce((a, b) => a + b, 0) / recent.length;
+  const variance = recent.reduce((s, p) => s + Math.pow(p - avg, 2), 0) / recent.length;
+  const volatility = Math.sqrt(variance) / avg;
+  if (volatility < 0.02) return 'Baixo';
+  if (volatility > 0.05) return 'Alto';
+  return 'Medio';
+}
+
+function getCompanyRecommendation(comp) {
+  const price = companyPrices[comp.id] || comp.basePrice;
+  const perf = companyPerformance[comp.id] || 3;
+  const ratio = price / comp.basePrice;
+  if (ratio < 0.85 && perf >= 3) return 'Comprar';
+  if (ratio > 1.3 && perf <= 2) return 'Vender';
+  return 'Manter';
+}
+
+function getCompanyRevenueTrend(comp) {
+  const ph = companyPH[comp.id] || [];
+  if (ph.length < 5) return 'Estavel';
+  const recent5 = ph.slice(-5).map(x => x.p);
+  const older5 = ph.slice(-10, -5).map(x => x.p);
+  if (older5.length === 0) return 'Estavel';
+  const recentAvg = recent5.reduce((a, b) => a + b, 0) / recent5.length;
+  const olderAvg = older5.reduce((a, b) => a + b, 0) / older5.length;
+  if (recentAvg > olderAvg * 1.02) return 'Subindo';
+  if (recentAvg < olderAvg * 0.98) return 'Descendo';
+  return 'Estavel';
+}
+
+function renderCompanyStars(perf) {
+  let stars = '';
+  for (let i = 1; i <= 5; i++) {
+    stars += i <= perf ? '★' : '☆';
+  }
+  return stars;
+}
+
+function drawSparkline(canvasId, companyId) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const ph = companyPH[companyId] || [];
+  const data = ph.slice(-10).map(x => x.p);
+  if (data.length < 2) return;
+
+  canvas.width = canvas.parentElement.offsetWidth;
+  canvas.height = 30;
+  const w = canvas.width, h = canvas.height;
+  const min = Math.min(...data) * 0.98;
+  const max = Math.max(...data) * 1.02;
+  const range = max - min || 1;
+  const stepX = w / (data.length - 1);
+
+  const isUp = data[data.length - 1] >= data[0];
+  const color = isUp ? '#22c55e' : '#ef4444';
+
+  ctx.beginPath();
+  ctx.moveTo(0, h - ((data[0] - min) / range) * h);
+  for (let i = 1; i < data.length; i++) {
+    ctx.lineTo(i * stepX, h - ((data[i] - min) / range) * h);
+  }
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.5;
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.stroke();
+
+  // Fill gradient
+  ctx.lineTo((data.length - 1) * stepX, h);
+  ctx.lineTo(0, h);
+  ctx.closePath();
+  const grad = ctx.createLinearGradient(0, 0, 0, h);
+  grad.addColorStop(0, color + '40');
+  grad.addColorStop(1, 'transparent');
+  ctx.fillStyle = grad;
+  ctx.fill();
+}
+
+function renderEmpresasTab() {
+  if (!currentChild) return;
+  ensureChildCompanyData();
+  initCompanyData();
+  renderEmpresasPortfolio();
+  renderMyCompanies();
+  renderCompanyCards();
+}
+
+function renderEmpresasPortfolio() {
+  if (!currentChild || !currentChild.companies) return;
+  const shares = currentChild.companies.ownedShares || {};
+  let totalInvested = 0;
+  let companiesCount = 0;
+  let projectedPerMin = 0;
+
+  COMPANIES.forEach(comp => {
+    const qty = shares[comp.id] || 0;
+    if (qty > 0) {
+      const price = companyPrices[comp.id] || comp.basePrice;
+      totalInvested += qty * price;
+      companiesCount++;
+      projectedPerMin += qty * price * comp.dividendRate;
+    }
+  });
+
+  // Add my companies
+  const myComps = currentChild.companies.myCompanies || [];
+  myComps.forEach(mc => {
+    totalInvested += mc.investment;
+    companiesCount++;
+    projectedPerMin += mc.incomeRate * 20; // ~20 ticks per min at 3s/tick
+  });
+
+  const divEarned = currentChild.companies.dividendsEarned || 0;
+
+  const elInvested = document.getElementById('epTotalInvested');
+  const elDivs = document.getElementById('epDividendsEarned');
+  const elCount = document.getElementById('epCompaniesCount');
+  const elProj = document.getElementById('epProjectedIncome');
+
+  if (elInvested) elInvested.textContent = fmt(totalInvested);
+  if (elDivs) elDivs.textContent = fmt(divEarned);
+  if (elCount) elCount.textContent = companiesCount;
+  if (elProj) elProj.textContent = fmt(projectedPerMin);
+}
+
+function renderCompanyCards() {
+  const grid = document.getElementById('companyGrid');
+  if (!grid || !currentChild) return;
+  ensureChildCompanyData();
+  const shares = currentChild.companies?.ownedShares || {};
+
+  grid.innerHTML = COMPANIES.map((comp, idx) => {
+    const price = companyPrices[comp.id] || comp.basePrice;
+    const ph = companyPH[comp.id] || [];
+    const prev = ph.length >= 2 ? ph[ph.length - 2].p : price;
+    const diff = price - prev;
+    const pctChange = prev > 0 ? ((diff / prev) * 100).toFixed(1) : '0.0';
+    const isUp = diff >= 0;
+    const perf = companyPerformance[comp.id] || 3;
+    const owned = shares[comp.id] || 0;
+    const sectorClass = SECTOR_CLASSES[comp.sector] || 'comida';
+    const canvasId = 'sparkline_' + comp.id;
+
+    return `<div class="company-card">
+      <div class="company-card-header">
+        <div class="company-card-icon">${comp.icon}</div>
+        <div class="company-card-info">
+          <div class="company-card-name">${comp.name}</div>
+          <span class="company-card-sector sector-${sectorClass}">${comp.sector}</span>
+        </div>
+        <div class="company-dividend-badge">💰 ${(comp.dividendRate * 100).toFixed(1)}%/min</div>
+      </div>
+      <div class="company-card-price-row">
+        <span class="company-card-price ${isUp ? 'up' : 'down'}">${fmt(price)}</span>
+        <span class="company-card-change ${isUp ? 'up' : 'down'}">${isUp ? '▲' : '▼'} ${isUp ? '+' : ''}${pctChange}%</span>
+      </div>
+      <div class="company-sparkline"><canvas id="${canvasId}"></canvas></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <span class="company-stars">${renderCompanyStars(perf)}</span>
+        ${owned > 0 ? `<span class="company-owned-badge">${owned} acao${owned !== 1 ? 'es' : ''}</span>` : ''}
+      </div>
+      <div class="company-card-footer">
+        <span style="font-size:.68rem;color:var(--text2);">Receita: R$ ${getCompanyRevenue(comp).toLocaleString()}</span>
+        <button class="company-invest-btn" onclick="openCompanyModal('${comp.id}')">INVESTIR</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Draw sparklines after render
+  setTimeout(() => {
+    COMPANIES.forEach(comp => {
+      drawSparkline('sparkline_' + comp.id, comp.id);
+    });
+  }, 50);
+}
+
+function openCompanyModal(compId) {
+  const comp = COMPANIES.find(c => c.id === compId);
+  if (!comp || !currentChild) return;
+  ensureChildCompanyData();
+  companyModalQty = 1;
+
+  const price = companyPrices[comp.id] || comp.basePrice;
+  const perf = companyPerformance[comp.id] || 3;
+  const owned = currentChild.companies?.ownedShares?.[comp.id] || 0;
+  const risk = getCompanyRisk(comp);
+  const recommendation = getCompanyRecommendation(comp);
+  const revTrend = getCompanyRevenueTrend(comp);
+  const revenue = getCompanyRevenue(comp);
+  const employees = getCompanyEmployees(comp);
+  const sectorClass = SECTOR_CLASSES[comp.sector] || 'comida';
+  const dividendIncome = owned > 0 ? (owned * price * comp.dividendRate).toFixed(2) : '0.00';
+
+  const riskColor = risk === 'Baixo' ? 'var(--green)' : risk === 'Alto' ? 'var(--red)' : 'var(--gold)';
+  const recColor = recommendation === 'Comprar' ? 'var(--green)' : recommendation === 'Vender' ? 'var(--red)' : 'var(--gold)';
+  const trendIcon = revTrend === 'Subindo' ? '📈' : revTrend === 'Descendo' ? '📉' : '➡️';
+
+  const box = document.getElementById('companyModalBox');
+  box.innerHTML = `
+    <div class="company-modal-header">
+      <span class="cm-icon">${comp.icon}</span>
+      <div class="cm-info">
+        <div class="cm-name">${comp.name}</div>
+        <div class="cm-sector"><span class="company-card-sector sector-${sectorClass}" style="display:inline-block;">${comp.sector}</span></div>
+      </div>
+      <button class="company-modal-close" onclick="closeCompanyModal()">✕</button>
+    </div>
+    <div class="company-modal-desc">${comp.desc}</div>
+    <div class="company-modal-stats">
+      <div class="company-modal-stat"><div class="cms-val" style="color:var(--gold)">${fmt(price)}</div><div class="cms-label">Preco/Acao</div></div>
+      <div class="company-modal-stat"><div class="cms-val" style="color:var(--green)">${renderCompanyStars(perf)}</div><div class="cms-label">Performance</div></div>
+      <div class="company-modal-stat"><div class="cms-val" style="color:var(--cyan)">${owned}</div><div class="cms-label">Suas Acoes</div></div>
+    </div>
+    <div class="company-modal-stats" style="margin-bottom:14px;">
+      <div class="company-modal-stat"><div class="cms-val" style="font-size:.82rem;">R$ ${revenue.toLocaleString()}</div><div class="cms-label">Receita</div></div>
+      <div class="company-modal-stat"><div class="cms-val" style="font-size:.82rem;">${employees}</div><div class="cms-label">Funcionarios</div></div>
+      <div class="company-modal-stat"><div class="cms-val" style="font-size:.82rem;color:var(--gold)">${(comp.dividendRate * 100).toFixed(1)}%</div><div class="cms-label">Dividendo/min</div></div>
+    </div>
+    <div class="company-report">
+      <h5>📋 Relatorio da Empresa</h5>
+      <div class="company-report-row"><span class="company-report-label">Tendencia de Receita</span><span class="company-report-value">${trendIcon} ${revTrend}</span></div>
+      <div class="company-report-row"><span class="company-report-label">Nivel de Risco</span><span class="company-report-value" style="color:${riskColor}">${risk === 'Baixo' ? '🟢' : risk === 'Alto' ? '🔴' : '🟡'} ${risk}</span></div>
+      <div class="company-report-row"><span class="company-report-label">Recomendacao</span><span class="company-report-value" style="color:${recColor}">${recommendation === 'Comprar' ? '✅' : recommendation === 'Vender' ? '❌' : '⏸️'} ${recommendation}</span></div>
+      ${owned > 0 ? `<div class="company-report-row"><span class="company-report-label">Renda de Dividendos/min</span><span class="company-report-value" style="color:var(--green)">R$ ${dividendIncome}</span></div>` : ''}
+    </div>
+    <div class="company-trade-section">
+      <h5>Comprar Acoes</h5>
+      <div class="company-qty-row">
+        <button class="company-qty-btn" onclick="changeCompanyQty(-1, '${comp.id}')">-</button>
+        <span class="company-qty-val" id="companyQtyVal">${companyModalQty}</span>
+        <button class="company-qty-btn" onclick="changeCompanyQty(1, '${comp.id}')">+</button>
+      </div>
+      <div class="company-total-cost" id="companyTotalCost">Total: ${fmt(price * companyModalQty)}</div>
+      <div class="company-trade-btns">
+        <button class="btn btn-primary ripple" onclick="buyCompanyShares('${comp.id}')" id="compBuyBtn">Comprar ${companyModalQty} Acao${companyModalQty !== 1 ? 'es' : ''}</button>
+        ${owned > 0 ? `<button class="btn btn-outline ripple" onclick="sellCompanyShares('${comp.id}')" style="border-color:rgba(239,68,68,0.3);color:var(--red);">Vender</button>` : ''}
+      </div>
+    </div>
+  `;
+  document.getElementById('companyModalOverlay').classList.remove('hidden');
+}
+
+function closeCompanyModal() {
+  document.getElementById('companyModalOverlay').classList.add('hidden');
+}
+
+function changeCompanyQty(delta, compId) {
+  companyModalQty = Math.max(1, companyModalQty + delta);
+  const comp = COMPANIES.find(c => c.id === compId);
+  if (!comp) return;
+  const price = companyPrices[comp.id] || comp.basePrice;
+  const qtyEl = document.getElementById('companyQtyVal');
+  const costEl = document.getElementById('companyTotalCost');
+  const buyBtn = document.getElementById('compBuyBtn');
+  if (qtyEl) qtyEl.textContent = companyModalQty;
+  if (costEl) costEl.textContent = 'Total: ' + fmt(price * companyModalQty);
+  if (buyBtn) buyBtn.textContent = `Comprar ${companyModalQty} Acao${companyModalQty !== 1 ? 'es' : ''}`;
+}
+
+function buyCompanyShares(compId) {
+  const comp = COMPANIES.find(c => c.id === compId);
+  if (!comp || !currentChild) return;
+  ensureChildCompanyData();
+
+  const price = companyPrices[comp.id] || comp.basePrice;
+  const totalCost = price * companyModalQty;
+
+  if (currentChild.balance < totalCost) {
+    showToast('Saldo insuficiente!', 'error');
+    return;
+  }
+
+  const ch = load('children') || {};
+  const child = ch[currentChild.id];
+  if (!child) return;
+  if (!child.companies) child.companies = { ownedShares: {}, myCompanies: [], dividendsEarned: 0 };
+
+  child.balance = Math.round((child.balance - totalCost) * 100) / 100;
+  child.companies.ownedShares[comp.id] = (child.companies.ownedShares[comp.id] || 0) + companyModalQty;
+
+  ch[child.id] = child;
+  save('children', ch);
+  currentChild = child;
+
+  showToast(`Comprou ${companyModalQty} acao${companyModalQty !== 1 ? 'es' : ''} de ${comp.icon} ${comp.name}!`, 'success');
+  addXP(8, 'Investimento em empresa!');
+
+  // Check first dividend achievement
+  if (!load('firstDividendXP_' + child.id)) {
+    // Will be triggered when first dividend is paid
+  }
+
+  closeCompanyModal();
+  renderEmpresasTab();
+  // Update balance display
+  const balEl = document.getElementById('cBalance');
+  if (balEl) balEl.textContent = fmt(child.balance);
+}
+
+function sellCompanyShares(compId) {
+  const comp = COMPANIES.find(c => c.id === compId);
+  if (!comp || !currentChild) return;
+  ensureChildCompanyData();
+
+  const owned = currentChild.companies?.ownedShares?.[comp.id] || 0;
+  if (owned <= 0) {
+    showToast('Voce nao tem acoes desta empresa!', 'error');
+    return;
+  }
+
+  const sellQty = Math.min(companyModalQty, owned);
+  const price = companyPrices[comp.id] || comp.basePrice;
+  const totalValue = price * sellQty;
+
+  const ch = load('children') || {};
+  const child = ch[currentChild.id];
+  if (!child || !child.companies) return;
+
+  child.balance = Math.round((child.balance + totalValue) * 100) / 100;
+  child.companies.ownedShares[comp.id] = owned - sellQty;
+  if (child.companies.ownedShares[comp.id] <= 0) delete child.companies.ownedShares[comp.id];
+
+  ch[child.id] = child;
+  save('children', ch);
+  currentChild = child;
+
+  showToast(`Vendeu ${sellQty} acao${sellQty !== 1 ? 'es' : ''} de ${comp.icon} ${comp.name} por ${fmt(totalValue)}!`, 'success');
+  closeCompanyModal();
+  renderEmpresasTab();
+  const balEl = document.getElementById('cBalance');
+  if (balEl) balEl.textContent = fmt(child.balance);
+}
+
+// ===== CREATE MY COMPANY =====
+function selectCompanySize(size) {
+  selectedCompanySize = size;
+  ['small', 'medium', 'large'].forEach(s => {
+    const el = document.getElementById('compSize' + s.charAt(0).toUpperCase() + s.slice(1));
+    if (el) el.classList.toggle('selected', s === size);
+  });
+}
+
+function createMyCompany() {
+  if (!currentChild) return;
+  ensureChildCompanyData();
+
+  const name = document.getElementById('myCompanyName').value.trim();
+  const sector = document.getElementById('myCompanySector').value;
+  if (!name) { showToast('Digite o nome da empresa!', 'error'); return; }
+  if (!selectedCompanySize) { showToast('Escolha o tamanho do investimento!', 'error'); return; }
+
+  const sizeMap = {
+    small: { investment: 20, incomeRate: 0.05 },
+    medium: { investment: 50, incomeRate: 0.15 },
+    large: { investment: 100, incomeRate: 0.40 },
+  };
+  const sizeData = sizeMap[selectedCompanySize];
+
+  if (currentChild.balance < sizeData.investment) {
+    showToast('Saldo insuficiente!', 'error');
+    return;
+  }
+
+  const ch = load('children') || {};
+  const child = ch[currentChild.id];
+  if (!child) return;
+  if (!child.companies) child.companies = { ownedShares: {}, myCompanies: [], dividendsEarned: 0 };
+
+  // Check max companies
+  if (child.companies.myCompanies.length >= 5) {
+    showToast('Maximo de 5 empresas proprias!', 'error');
+    return;
+  }
+
+  child.balance = Math.round((child.balance - sizeData.investment) * 100) / 100;
+  const sectorIcon = SECTOR_ICONS[sector] || '🏢';
+
+  const myComp = {
+    id: 'mc_' + Date.now(),
+    name: name,
+    sector: sector,
+    icon: sectorIcon,
+    investment: sizeData.investment,
+    incomeRate: sizeData.incomeRate,
+    size: selectedCompanySize,
+    totalRevenue: 0,
+    totalProfit: 0,
+    createdAt: Date.now(),
+    level: 1,
+  };
+
+  child.companies.myCompanies.push(myComp);
+  ch[child.id] = child;
+  save('children', ch);
+  currentChild = child;
+
+  // Reset form
+  document.getElementById('myCompanyName').value = '';
+  selectedCompanySize = null;
+  ['small', 'medium', 'large'].forEach(s => {
+    const el = document.getElementById('compSize' + s.charAt(0).toUpperCase() + s.slice(1));
+    if (el) el.classList.remove('selected');
+  });
+
+  showToast(`Empresa "${name}" criada com sucesso!`, 'success');
+  addXP(25, 'Empresa criada!');
+  renderEmpresasTab();
+  const balEl = document.getElementById('cBalance');
+  if (balEl) balEl.textContent = fmt(child.balance);
+}
+
+function renderMyCompanies() {
+  if (!currentChild || !currentChild.companies) return;
+  const list = document.getElementById('myCompaniesList');
+  const section = document.getElementById('myCompaniesSection');
+  if (!list) return;
+
+  const myComps = currentChild.companies.myCompanies || [];
+  if (myComps.length === 0) {
+    list.innerHTML = '<p style="color:var(--text2);text-align:center;font-size:.82rem;padding:12px;">Voce ainda nao criou nenhuma empresa.</p>';
+    return;
+  }
+
+  const sizeLabels = { small: 'Pequena', medium: 'Media', large: 'Grande' };
+
+  list.innerHTML = myComps.map(mc => {
+    const upgradeCost = mc.size === 'small' ? 30 : mc.size === 'medium' ? 80 : 0;
+    const canUpgrade = mc.size !== 'large' && currentChild.balance >= upgradeCost;
+    return `<div class="my-company-card">
+      <span class="mc-icon">${mc.icon}</span>
+      <div class="mc-info">
+        <div class="mc-name">${mc.name}</div>
+        <div class="mc-sector">${mc.sector} | ${sizeLabels[mc.size] || mc.size} | Nv.${mc.level}</div>
+        <div class="mc-stats">
+          <span class="mc-stat">💰 Receita: ${fmt(mc.totalRevenue)}</span>
+          <span class="mc-stat">📈 Lucro: ${fmt(mc.totalProfit)}</span>
+        </div>
+      </div>
+      ${mc.size !== 'large' ? `<button class="mc-upgrade" onclick="upgradeMyCompany('${mc.id}')" ${!canUpgrade ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : ''}>⬆️ Upgrade<br><span style="font-size:.6rem;">${fmt(upgradeCost)}</span></button>` : '<span style="font-size:.65rem;color:var(--gold);font-weight:800;">MAX</span>'}
+    </div>`;
+  }).join('');
+}
+
+function upgradeMyCompany(mcId) {
+  if (!currentChild || !currentChild.companies) return;
+  const ch = load('children') || {};
+  const child = ch[currentChild.id];
+  if (!child || !child.companies) return;
+
+  const mc = child.companies.myCompanies.find(c => c.id === mcId);
+  if (!mc) return;
+
+  let upgradeCost, newSize, newRate;
+  if (mc.size === 'small') {
+    upgradeCost = 30; newSize = 'medium'; newRate = 0.15;
+  } else if (mc.size === 'medium') {
+    upgradeCost = 80; newSize = 'large'; newRate = 0.40;
+  } else {
+    showToast('Empresa ja esta no nivel maximo!', 'error');
+    return;
+  }
+
+  if (child.balance < upgradeCost) {
+    showToast('Saldo insuficiente para upgrade!', 'error');
+    return;
+  }
+
+  child.balance = Math.round((child.balance - upgradeCost) * 100) / 100;
+  mc.size = newSize;
+  mc.incomeRate = newRate;
+  mc.investment += upgradeCost;
+  mc.level++;
+
+  ch[child.id] = child;
+  save('children', ch);
+  currentChild = child;
+
+  showToast(`${mc.name} atualizada para ${newSize === 'medium' ? 'Media' : 'Grande'}!`, 'success');
+  renderEmpresasTab();
+  const balEl = document.getElementById('cBalance');
+  if (balEl) balEl.textContent = fmt(child.balance);
+}
+
+// ===== DIVIDEND SYSTEM =====
+function startDividendInterval() {
+  if (dividendInterval) clearInterval(dividendInterval);
+  dividendInterval = setInterval(payDividends, 30000); // every 30 seconds
+}
+
+function stopDividendInterval() {
+  if (dividendInterval) clearInterval(dividendInterval);
+  dividendInterval = null;
+}
+
+function payDividends() {
+  if (!currentChild) return;
+  const ch = load('children') || {};
+  const child = ch[currentChild.id];
+  if (!child || !child.is_active || !child.companies) return;
+
+  const shares = child.companies.ownedShares || {};
+  let totalDividend = 0;
+  let dividendSources = [];
+
+  COMPANIES.forEach(comp => {
+    const qty = shares[comp.id];
+    if (!qty || qty <= 0) return;
+    const price = companyPrices[comp.id] || comp.basePrice;
+    // dividend per 30s = shares * price * rate / 2 (half minute)
+    const dividend = Math.round(qty * price * comp.dividendRate / 2 * 100) / 100;
+    if (dividend > 0) {
+      totalDividend += dividend;
+      dividendSources.push({ name: comp.name, icon: comp.icon, amount: dividend });
+    }
+  });
+
+  // My companies passive income (per 30s ~ 10 ticks at 3s)
+  const myComps = child.companies.myCompanies || [];
+  myComps.forEach(mc => {
+    const earning = Math.round(mc.incomeRate * 10 * 100) / 100; // ~10 ticks in 30s
+    if (earning > 0) {
+      mc.totalRevenue = Math.round((mc.totalRevenue + earning) * 100) / 100;
+      mc.totalProfit = Math.round((mc.totalProfit + earning) * 100) / 100;
+      totalDividend += earning;
+    }
+  });
+
+  if (totalDividend > 0) {
+    child.balance = Math.round((child.balance + totalDividend) * 100) / 100;
+    child.companies.dividendsEarned = Math.round(((child.companies.dividendsEarned || 0) + totalDividend) * 100) / 100;
+    ch[child.id] = child;
+    save('children', ch);
+    currentChild = child;
+
+    // Show toast for biggest dividend source
+    if (dividendSources.length > 0) {
+      dividendSources.sort((a, b) => b.amount - a.amount);
+      const top = dividendSources[0];
+      const othersCount = dividendSources.length - 1 + myComps.filter(mc => mc.incomeRate > 0).length;
+      let toastMsg = `Dividendo recebido: ${fmt(totalDividend)}`;
+      if (top) toastMsg = `Dividendo: +${fmt(totalDividend)} de ${top.icon}${top.name}${othersCount > 0 ? ` e +${othersCount}` : ''}`;
+      showToast(toastMsg, 'success');
+    } else if (myComps.length > 0) {
+      showToast(`Renda das empresas: +${fmt(totalDividend)}`, 'success');
+    }
+
+    // First dividend XP bonus
+    if (!load('firstDividendXP_' + child.id)) {
+      save('firstDividendXP_' + child.id, true);
+      setTimeout(() => addXP(15, 'Primeiro dividendo recebido!'), 500);
+    }
+
+    // Update balance display
+    const balEl = document.getElementById('cBalance');
+    if (balEl) balEl.textContent = fmt(child.balance);
+
+    // Update empresas portfolio if visible
+    if (currentChildTab === 'Empresas') {
+      renderEmpresasPortfolio();
+      renderMyCompanies();
+    }
+  }
 }
 
 // ============ DATA MIGRATION (v3 -> v4) ============
